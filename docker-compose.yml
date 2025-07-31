@@ -1,29 +1,47 @@
 version: '3.8'
 
 services:
-  app:
+  backend:
     build:
-      context: backend
-      dockerfile: Dockerfile
-    container_name: laravel-app
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: backend
     volumes:
-      - ./laravel:/var/www/html
+      - ./backend:/var/www
+    depends_on:
+      - postgres
     networks:
-      - laravel-net
+      - internal-net
 
   nginx:
     image: nginx:latest
-    container_name: laravel-nginx
+    container_name: backend-nginx
     ports:
       - "8282:80"
     volumes:
-      - ./laravel:/var/www/html
-      - ./nginx/laravel.conf:/etc/nginx/conf.d/default.conf
+      - ./backend:/var/www
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     depends_on:
-      - app
+      - backend
     networks:
-      - laravel-net
+      - internal-net
+
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_DB: laravel
+      POSTGRES_USER: laravel
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - internal-net
+
+volumes:
+  pgdata:
 
 networks:
-  laravel-net:
+  internal-net:
     driver: bridge

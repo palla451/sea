@@ -1,0 +1,25 @@
+FROM php:8.2-fpm
+
+# Installa estensioni PHP necessarie a Laravel
+RUN apt-get update && apt-get install -y \
+    git curl zip unzip libzip-dev libpng-dev libonig-dev libpq-dev \
+    && docker-php-ext-install pdo pdo_mysql zip
+
+# Installa Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Imposta la working directory di Laravel
+WORKDIR /var/www
+
+# Copia i file Laravel
+COPY ./backend /var/www
+
+# Copia lo script di entrypoint
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Imposta l'entrypoint e il comando finale
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["php-fpm"]
+
+EXPOSE 9000
