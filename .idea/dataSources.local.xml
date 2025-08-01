@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="PS-251.27812.52">
+    <data-source name="laravel@localhost" uuid="47d40c77-8222-445a-8f2b-ee3ed422f070">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>laravel</user-name>
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>
