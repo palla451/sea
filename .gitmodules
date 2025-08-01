@@ -1,0 +1,3 @@
+[submodule "cockpit"]
+	path = cockpit
+	url = https://Fincantieri-Digital-Ecosystem@dev.azure.com/Fincantieri-Digital-Ecosystem/MCSP-MAKE/_git/Cockpit
