@@ -31,8 +31,8 @@ services:
     container_name: postgres-db
     restart: always
     environment:
-      POSTGRES_DB: laravel
-      POSTGRES_USER: laravel
+      POSTGRES_DB: seafuture
+      POSTGRES_USER: user
       POSTGRES_PASSWORD: secret
     volumes:
       - pgdata:/var/lib/postgresql/data
