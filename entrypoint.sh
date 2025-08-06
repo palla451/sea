@@ -21,6 +21,18 @@ if ! grep -q "^APP_KEY=" .env || grep -q "APP_KEY=$" .env; then
     php artisan key:generate
 fi
 
+echo "🔄 Attendo che PostgreSQL sia pronto..."
+
+export PGPASSWORD=secret
+
+until pg_isready -h postgres -p 5432 -U user; do
+  echo "⏳ In attesa del DB..."
+  sleep 2
+done
+
+echo "✅ PostgreSQL è pronto. Avvio Laravel..."
+
+
 # 4. Imposta i permessi
 chmod -R 775 storage bootstrap/cache || true
 
