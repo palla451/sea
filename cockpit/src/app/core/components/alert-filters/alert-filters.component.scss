@@ -1,0 +1,37 @@
+@use "../../../../fonts" as fonts;
+
+.filter-buttons-container {
+  margin-bottom: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center; // Centra orizzontalmente il gruppo
+
+  &__button-group {
+    display: flex;
+    gap: 12px; // Spaziatura uniforme tra i pulsanti
+    flex-wrap: nowrap; // Garantisce che rimangano sulla stessa riga
+    justify-content: center; // Centra i pulsanti nel gruppo
+    width: fit-content; // Adatta la larghezza al contenuto
+
+    &__btn-element {
+      display: inline-block;
+      transition: all 0.3s ease;
+      min-width: 90px; // Larghezza fissa per tutti i pulsanti
+      width: 90px; // Larghezza fissa per tutti i pulsanti
+      text-align: center; // Testo centrato
+      padding: 0; // Padding verticale
+      background-color: transparent !important; // Background trasparente
+      color: white !important; // Testo bianco
+
+      &:hover {
+        opacity: 0.8; // Effetto hover leggero
+      }
+
+      // Rimuove lo stile predefinito di PrimeNG
+      &.p-button {
+        background: transparent;
+        border: 1px solid white;
+      }
+    }
+  }
+}

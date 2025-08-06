@@ -1,0 +1,66 @@
+* {
+  box-sizing: border-box;
+}
+
+:host {
+  display: block;
+  height: 100vh;
+  overflow: hidden;
+  padding: 0 2rem;
+}
+.incident-detail__container {
+  padding: 3rem 0 1.5rem 0;
+  &__header {
+  }
+  &__deck-accordion {
+    padding-bottom: 2.5rem;
+  }
+  &__wrapper {
+    display: flex;
+    width: 100%;
+    height: 24rem;
+    gap: 1rem;
+
+    &__extend {
+      height: 40rem;
+    }
+    &__timeline {
+      flex: 1;
+      height: 100%;
+
+      &__extend {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+    }
+    &__assets-involved {
+      flex: 1;
+      height: 100%;
+
+      &__extend {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+    }
+    &__remediation-overview {
+      flex: 1;
+      height: 100%;
+
+      &__extend {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+    }
+    &__divider {
+      width: 1px;
+      border-left: 1px dotted rgba(255, 255, 255, 0.4);
+      height: 100%;
+    }
+  }
+}

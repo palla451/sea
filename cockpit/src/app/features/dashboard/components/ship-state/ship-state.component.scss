@@ -1,0 +1,37 @@
+@use "../../../../../fonts" as fonts;
+@use "../../../../../variables" as variables;
+
+.ship-state {
+  margin-top: 24px;
+
+  &__title {
+    position: relative;
+    margin-bottom: 8px;
+  }
+
+  &__ship-mode {
+    @include fonts.body-mono-25-light;
+    width: calc(100% - 8px);
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding-bottom: 24px;
+    border-bottom: 1px dotted rgba(255, 255, 255, 0.4);
+
+    span {
+      display: inline-block;
+    }
+
+    &__status-indicator {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+
+      &__icon {
+        display: inline-block;
+        position: relative;
+        top: 1px;
+      }
+    }
+  }
+}

@@ -1,0 +1,56 @@
+<div class="assets-summary">
+  <!-- Sezione Assets Statement -->
+  <section class="assets-summary__statement">
+    <h2 class="assets-summary__section-title">
+      {{ "dashboardPage.assetsStatement.title" | transloco }}
+    </h2>
+
+    <div class="assets-summary__grid">
+      <!-- Categorie -->
+      <div class="assets-summary__grid__container">
+        <div class="assets-summary__grid__container__item">
+          <span class="assets-summary__grid__container__item__label">{{
+            "filters.assetStatus.operational" | transloco
+          }}</span>
+          <!-- disabilitato momentaneamente il countup per un bug relativo al refresh con signal da indagare meglio -->
+          <!-- <span [appCountUp]="operatingAssets()" [duration]="700" class="assets-summary__grid__container__item__value">{{
+            operatingAssets() 
+          }}</span> -->
+          <span class="assets-summary__grid__container__item__value">{{
+            operatingAssets()
+          }}</span>
+          <!-- modo alternativo di implementare senza direttiva count up <span class="assets-summary__grid__container__item__value">{{
+            operationalCount
+          }}</span> -->
+        </div>
+        <div class="assets-summary__grid__container__item">
+          <span class="assets-summary__grid__container__item__label">{{
+            "filters.assetStatus.maintenance" | transloco
+          }}</span>
+          <span class="assets-summary__grid__container__item__value">{{
+            maintenanceAssets()
+          }}</span>
+        </div>
+      </div>
+
+      <div class="assets-summary__grid__container">
+        <div class="assets-summary__grid__container__item">
+          <span class="assets-summary__grid__container__item__label">{{
+            "filters.assetStatus.compromised" | transloco
+          }}</span>
+          <span class="assets-summary__grid__container__item__value">{{
+            compromisedAssets()
+          }}</span>
+        </div>
+        <div class="assets-summary__grid__container__item">
+          <span class="assets-summary__grid__container__item__label">{{
+            "filters.assetStatus.turnedOff" | transloco
+          }}</span>
+          <span class="assets-summary__grid__container__item__value">{{
+            turnedOffAssets()
+          }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

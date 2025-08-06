@@ -1,0 +1,62 @@
+@use "../../../../fonts" as fonts;
+
+.accordion {
+  padding: 0 auto;
+  //position: relative; // Crea un nuovo contesto di stacking
+  //z-index: 1; // Imposta un z-index di base
+  overflow: visible; // Assicurati che non ci sia overflow hidden
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    @include fonts.body-sans-100;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    text-align: start;
+
+    &--timeline {
+      justify-content: flex-start;
+      gap: 1rem;
+    }
+    &--remediation {
+      justify-content: flex-start;
+      gap: 1rem;
+    }
+  }
+
+  &__icon {
+    transition: transform 0.3s ease;
+    font-size: 1.25rem;
+
+    &--open {
+      transform: rotate(180deg); // Freccia verso l’alto
+    }
+  }
+
+  &__content {
+    padding: 24px 0 0 0;
+    //background-color: #111;
+    color: #eee;
+
+    &--timeline {
+      padding: 0;
+    }
+  }
+
+  &__text {
+    margin: 0;
+  }
+
+  &--open {
+    border-color: #ff3c3c;
+  }
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+}

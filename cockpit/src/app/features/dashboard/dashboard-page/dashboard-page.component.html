@@ -1,0 +1,39 @@
+@if(isCyberResilienceOVVisible() === true ){
+<app-cyber-resilience-overview></app-cyber-resilience-overview>
+} @else if (isCyberResilienceOVVisible() === false ||
+isCyberResilienceOVVisible() === undefined ){
+<div class="row-container">
+  <!-- <div class="row"> -->
+  <div class="col-left">
+    <div class="ship-state">
+      <app-ship-state></app-ship-state>
+    </div>
+    <div>
+      <p class="cyber-resilience-title">
+        {{ "dashboardPage.cyberReliability" | transloco }}
+      </p>
+      <app-vessel-performance></app-vessel-performance>
+    </div>
+    <div>
+      <app-assets-statement
+        [operationalCount]="operationalCount()"
+        [compromisedCount]="compromisedCount() ?? 0"
+        [maintenanceCount]="maintenanceCount() ?? 0"
+        [turnedOffCount]="turnedOffCount() ?? 0"
+      ></app-assets-statement>
+    </div>
+  </div>
+  <div class="col-right">
+    <div>
+      <app-ship-incident-map></app-ship-incident-map>
+    </div>
+    <div>
+      <app-incident-overview-table
+        [rowsPerPage]="5"
+        [incidents]="incidents()"
+      ></app-incident-overview-table>
+    </div>
+  </div>
+  <!-- </div> -->
+</div>
+}

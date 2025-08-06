@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: {{ .Values.gateway.name }}-virtual-service
+spec:
+  gateways:
+    - {{ .Release.Namespace }}/{{ .Values.gateway.name }}-gateway
+  hosts:
+    {{- range $item := .Values.hosts | split "," }}
+    - {{ trim $item }}
+    {{- end }}
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: {{ .Values.service.name }}.{{ .Release.Namespace }}.svc.cluster.local
+            subset: v1
+            port:
+              number: {{ .Values.service.port }} 
+          weight: 100

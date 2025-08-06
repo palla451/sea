@@ -1,0 +1,29 @@
+<div class="accordion">
+  <button class="accordion__header" (click)="toggleAccordion()">
+    <div class="accordion__header-content">
+      <h2 class="accordion__title">{{ title }}</h2>
+      <h3 class="accordion__subtitle">{{ subtitle }}</h3>
+    </div>
+    <span class="accordion__icon" [class.accordion__icon--open]="isOpen">
+      <svg width="16" height="16" viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
+        />
+      </svg>
+    </span>
+  </button>
+
+  <div class="accordion__content" [class.accordion__content--open]="isOpen">
+    @if (showSearch) {
+    <div class="accordion__search">
+      <input
+        type="text"
+        class="accordion__search-input"
+        placeholder="Search or type for ID or description"
+      />
+    </div>
+    }
+    <ng-content></ng-content>
+  </div>
+</div>

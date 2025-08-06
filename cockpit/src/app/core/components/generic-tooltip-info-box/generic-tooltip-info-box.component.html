@@ -1,0 +1,8 @@
+@if(isTooltipVisible){
+<div class="tooltip-container" [ngStyle]="positionStyles">
+  <span class="tooltip-title">
+    {{ "genericTootltipInfo.title" | transloco }}
+  </span>
+  <span class="tooltip-text">{{ text }}</span>
+</div>
+}

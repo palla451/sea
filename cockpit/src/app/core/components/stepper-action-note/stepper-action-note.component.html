@@ -1,0 +1,119 @@
+@if(currAction){ @if(chechIfNoteIsVisible(currAction)){
+<div class="stepper-action-note__text-area">
+  @if(!isReadOnlyModeActive) {
+  <div class="stepper-action-note__text-area__title">
+    <span
+      class="stepper-action-note__text-area__title__label"
+      (mouseenter)="showNoteInfoBox()"
+      (mouseleave)="hideNoteInfoBox()"
+    >
+      {{ "remediationManagementModal.textArea.label" | transloco }}
+      <!-- info icon clickable -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="12"
+        height="12"
+        viewBox="0 0 12 12"
+        fill="white"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M0.625 6C0.625 3.03147 3.03147 0.625 6 0.625C8.96851 0.625 11.375 3.03147 11.375 6C11.375 8.96851 8.96851 11.375 6 11.375C3.03147 11.375 0.625 8.96851 0.625 6ZM6 1.375C3.44568 1.375 1.375 3.44568 1.375 6C1.375 8.55429 3.44568 10.625 6 10.625C8.55429 10.625 10.625 8.55429 10.625 6C10.625 3.44568 8.55429 1.375 6 1.375ZM6.25587 3.47072C6.40981 3.60928 6.42228 3.84638 6.28372 4.00032L6.27872 4.00587C6.14017 4.15981 5.90306 4.17228 5.74913 4.03372C5.59519 3.89517 5.58272 3.65806 5.72128 3.50413L5.72628 3.49857C5.86483 3.34464 6.10194 3.33217 6.25587 3.47072ZM6 5.375C6.20711 5.375 6.375 5.54289 6.375 5.75V8.25C6.375 8.45711 6.20711 8.625 6 8.625C5.79289 8.625 5.625 8.45711 5.625 8.25V5.75C5.625 5.54289 5.79289 5.375 6 5.375Z"
+          fill="white"
+        />
+      </svg>
+
+      <app-generic-tooltip-info-box
+        [isTooltipVisible]="isShowNoteInfoBox()"
+        [text]="'Text here has to be comunicated.'"
+        [rightPos]="'-270px'"
+      ></app-generic-tooltip-info-box>
+    </span>
+
+    <span class="stepper-action-note__text-area__title__noteTextCounter"
+      >{{ textArea().length }}/{{ noteMaxLength }}</span
+    >
+  </div>
+  <textarea
+    [placeholder]="
+      'remediationManagementModal.textArea.placeholder' | transloco
+    "
+    [(ngModel)]="textArea"
+    [maxLength]="noteMaxLength"
+    rows="5"
+    cols="30"
+    class="stepper-action-note__text-area__box"
+  ></textarea>
+  } @else {
+  <div class="stepper-action-note__text-area__title">
+    <span class="stepper-action-note__text-area__title__label">
+      {{ "remediationManagementModal.textArea.readonlyLabel" | transloco }}
+    </span>
+  </div>
+  @if(currAction.note && currAction.note !== ''){
+  <div class="stepper-action-note__readonly">{{ currAction.note }}</div>
+  }@else {
+  <div class="stepper-action-note__readonly">
+    {{ "remediationManagementModal.textArea.noteNotFound" | transloco }}
+  </div>
+  } }
+</div>
+} } @else { @if(!isCurrentEventMarkedAsFalsePositive()) {
+<div class="stepper-action-note__text-area__title">
+  <span
+    class="stepper-action-note__text-area__title__label"
+    (mouseenter)="showNoteInfoBox()"
+    (mouseleave)="hideNoteInfoBox()"
+  >
+    {{ "remediationManagementModal.textArea.label" | transloco }}
+    <!-- info icon clickable -->
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="white"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M0.625 6C0.625 3.03147 3.03147 0.625 6 0.625C8.96851 0.625 11.375 3.03147 11.375 6C11.375 8.96851 8.96851 11.375 6 11.375C3.03147 11.375 0.625 8.96851 0.625 6ZM6 1.375C3.44568 1.375 1.375 3.44568 1.375 6C1.375 8.55429 3.44568 10.625 6 10.625C8.55429 10.625 10.625 8.55429 10.625 6C10.625 3.44568 8.55429 1.375 6 1.375ZM6.25587 3.47072C6.40981 3.60928 6.42228 3.84638 6.28372 4.00032L6.27872 4.00587C6.14017 4.15981 5.90306 4.17228 5.74913 4.03372C5.59519 3.89517 5.58272 3.65806 5.72128 3.50413L5.72628 3.49857C5.86483 3.34464 6.10194 3.33217 6.25587 3.47072ZM6 5.375C6.20711 5.375 6.375 5.54289 6.375 5.75V8.25C6.375 8.45711 6.20711 8.625 6 8.625C5.79289 8.625 5.625 8.45711 5.625 8.25V5.75C5.625 5.54289 5.79289 5.375 6 5.375Z"
+        fill="white"
+      />
+    </svg>
+
+    <app-generic-tooltip-info-box
+      [isTooltipVisible]="isShowNoteInfoBox()"
+      [text]="'Text here has to be comunicated.'"
+      [rightPos]="'-270px'"
+    ></app-generic-tooltip-info-box>
+  </span>
+
+  <span class="stepper-action-note__text-area__title__noteTextCounter"
+    >{{ textArea().length }}/{{ noteMaxLength }}</span
+  >
+</div>
+<textarea
+  [placeholder]="'remediationManagementModal.textArea.placeholder' | transloco"
+  [(ngModel)]="textArea"
+  [maxLength]="noteMaxLength"
+  rows="5"
+  cols="30"
+  class="stepper-action-note__text-area__box"
+></textarea>
+} @else {
+<div class="stepper-action-note__text-area__title">
+  <span class="stepper-action-note__text-area__title__label">
+    {{ "remediationManagementModal.textArea.readonlyLabel" | transloco }}
+  </span>
+</div>
+@if(falsePositiveEventNote() && falsePositiveEventNote()!== ''){
+<div class="stepper-action-note__readonly">{{ falsePositiveEventNote() }}</div>
+}@else {
+<div class="stepper-action-note__readonly">
+  {{
+    "remediationManagementModal.textArea.noteNotFoundFalsePositive" | transloco
+  }}
+</div>
+} } }

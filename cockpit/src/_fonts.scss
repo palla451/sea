@@ -1,0 +1,377 @@
+@mixin monts_500 {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+@mixin monts_500_underline {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+}
+
+@mixin monts_400 {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+@mixin monts_400_underline {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+}
+
+@mixin monts_500_12p_uppercase {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.12px;
+}
+
+@mixin monts_500_12p_uppercase_underline {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: none;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+  text-underline-position: from-font;
+  text-transform: uppercase;
+}
+
+@mixin monts_300_title {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+}
+
+@mixin monts_300_content {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 200;
+  line-height: normal;
+}
+
+@mixin body-mono-100 {
+  font-family: var(--typography-family-mono, "Roboto Mono");
+  font-size: var(--body-body-100, 16px);
+  font-style: normal;
+  font-weight: var(--typography-weight-regular, 400);
+  line-height: normal;
+  letter-spacing: 0.16px;
+}
+
+@mixin body-mono-175-strong {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: 0.16px;
+}
+
+@mixin body-mono-50-strong {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 18px;
+  letter-spacing: 0.16px;
+}
+
+@mixin body-sans-100-strong {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.16px;
+}
+
+@mixin body-sans-100-light {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: 0.16px;
+}
+
+@mixin body-sans-50-light {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: 0.14px;
+}
+
+@mixin body-sans-50-strong {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.14px;
+  text-transform: uppercase;
+}
+
+@mixin body-sans-150-light {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: 0.2px;
+}
+
+@mixin utilities-link-100 {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: 0.16px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: auto;
+  text-underline-offset: auto;
+}
+
+@mixin body-sans-25 {
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.6);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.12px;
+}
+
+@mixin paginator_font {
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+@mixin unSelected_paginator_page {
+  color: rgba(255, 255, 255, 0.5);
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+@mixin heading-100 {
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.2px;
+}
+
+@mixin body-sans-50 {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.14px;
+}
+
+@mixin heading-150 {
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.32px;
+}
+
+@mixin body-mono-25-light {
+  color: #fff;
+  font-family: Roboto Mono, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: 0.12px;
+}
+
+@mixin body-mono-15 {
+  color: var(--text-secondary-default, rgba(255, 255, 255, 0.6));
+  font-family: Roboto Mono, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.1px;
+}
+@mixin body-sans-15-strong {
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.1px;
+}
+
+@mixin body-mono-200-strong {
+  color: #fff;
+  font-family: Roboto Mono, sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.32px;
+}
+
+@mixin body-sans-15 {
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.1px;
+}
+
+@mixin body-sans-100 {
+  overflow: hidden;
+  color: var(--text-primary-default, #fff);
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.16px;
+}
+
+@mixin body-sans-25-strong {
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.12px;
+}
+
+@mixin body-sans-25-ligth {
+  color: #fff;
+  font-family: Roboto Mono, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 15px;
+  letter-spacing: 0.12px;
+}
+
+@mixin utilities-button-100 {
+  overflow: hidden;
+  color: #fff;
+  text-overflow: ellipsis;
+  font-family: Montserrat, sans-serif;
+  font-size: 14px;
+  text-align: center;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.14px;
+}

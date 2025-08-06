@@ -1,0 +1,132 @@
+@use "../../../../fonts" as fonts;
+
+.menu-container {
+  font-family: "Arial", sans-serif;
+  color: white;
+  height: 100%;
+  padding: 48px 48px 24px;
+}
+
+.menu-wrapper {
+  display: flex;
+  height: 100vh;
+}
+
+.vertical-menu-container {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(255,255,255,0.40); 
+  padding-right: 180px;
+}
+
+.vertical-menu-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+
+  &__text {
+    @include fonts.heading-100;
+    display: inline-block;
+    margin-left: 16px;
+  }
+}
+
+/* circle-button.component.css */
+.circle-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.circle-button:hover {
+  background-color: #2a2a3e;
+  transform: scale(1.05);
+}
+
+.circle-button:active {
+  transform: scale(0.95);
+}
+
+.arrow-icon {
+  width: 24px;
+  height: 24px;
+  fill: white;
+}
+
+.vertical-menu {
+  display: block;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  background-color: transparent;
+  height: 100%;
+  position: relative;
+}
+
+.vertical-menu li {
+  height: 40px;
+  padding: 0;
+  cursor: pointer;
+  display: block;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.vertical-menu li:not(.active):hover {
+  background-color: #2a2a3e;
+}
+
+.vertical-menu li:not(.active)::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.vertical-menu li.active {
+  background-color: #16213e;
+}
+
+.vertical-menu li.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 2px;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.menu-item-text {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 16px;
+  @include fonts.body-sans-100;
+}
+
+.detail-content {
+  flex: 1;
+  padding: 20px;
+  background-color: transparent;
+  color: white;
+}
+
+.detail-content h2 {
+  margin-top: 0;
+  color: #4cc9f0;
+}

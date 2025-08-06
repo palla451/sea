@@ -1,0 +1,34 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  (onHide)="onHide()"
+  class="dialog"
+  [style]="{ width: dialogWidth }"
+>
+  <ng-template pTemplate="header">
+    <div class="dialog__header--title">{{ title }}</div>
+  </ng-template>
+
+  <ng-container *ngTemplateOutlet="bodyTemplate"></ng-container>
+
+  <ng-template pTemplate="footer" class="dialog__footer">
+    <button
+      pButton
+      type="button"
+      class="dialog__footer--back-button"
+      (click)="onBackClick()"
+    >
+      {{ "common.button.back" | transloco }}
+    </button>
+    <button
+      pButton
+      class="dialog__footer--save-button"
+      type="button"
+      [disabled]="!isSaveEnabled"
+      (click)="onSaveClick()"
+    >
+      {{ confirmLabel | transloco }}
+    </button>
+  </ng-template>
+</p-dialog>

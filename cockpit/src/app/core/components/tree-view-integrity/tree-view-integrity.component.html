@@ -1,0 +1,129 @@
+<app-table-filters-sidebar
+  [table]="table"
+  [isOpen]="shoFilterSidebar"
+  (onSidebarClosing)="onFiltersSidebarClosing()"
+></app-table-filters-sidebar>
+
+<div class="fixed-header">
+  <div class="cyber-resilience-params">
+    <div class="cyber-resilience-params__progressBar">
+      <app-cyber-resilience-parameters></app-cyber-resilience-parameters>
+    </div>
+    <div class="cyber-resilience-params__values">
+      <div class="cyber-resilience-params__values__data">
+        <span class="cyber-resilience-params__values__data__label">{{
+          "cyberReliabilityPage.operational" | transloco
+        }}</span>
+        <span
+          [appCountUp]="countOperatingAssetsNumber()"
+          [duration]="700"
+          class="cyber-resilience-params__values__data__value"
+          >{{ countOperatingAssets() }}</span
+        >
+      </div>
+      <div class="cyber-resilience-params__values__data__last">
+        <span class="cyber-resilience-params__values__data__label">{{
+          "cyberReliabilityPage.compromised" | transloco
+        }}</span>
+        <span
+          [appCountUp]="countCompromisedAssetsNumber()"
+          [duration]="700"
+          class="cyber-resilience-params__values__data__value"
+          >{{ countCompromisedAssets() }}</span
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Nuova riga di ricerca e filtri -->
+  <div class="search-filter-row">
+    <div class="title">
+      {{ "cyberReliabilityPage.systemBreakdown" | transloco }}
+    </div>
+
+    <div class="search-container">
+      <div class="search-input-wrapper">
+        <svg
+          class="search-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M7.33333 1.5C4.11167 1.5 1.5 4.11167 1.5 7.33333C1.5 10.555 4.11167 13.1667 7.33333 13.1667C8.76396 13.1667 10.0749 12.6512 11.0894 11.7966L13.6464 14.3536C13.8417 14.5489 14.1583 14.5489 14.3535 14.3536C14.5488 14.1583 14.5488 13.8417 14.3535 13.6465L11.7966 11.0895C12.6511 10.075 13.1667 8.76396 13.1667 7.33333C13.1667 4.11167 10.555 1.5 7.33333 1.5ZM2.5 7.33333C2.5 4.66396 4.66396 2.5 7.33333 2.5C10.0027 2.5 12.1667 4.66395 12.1667 7.33333C12.1667 8.66585 11.6281 9.87162 10.7556 10.7464L10.7556 10.7465C9.88001 11.6244 8.6705 12.1667 7.33333 12.1667C4.66395 12.1667 2.5 10.0027 2.5 7.33333Z"
+            fill="white"
+          />
+        </svg>
+
+        <input
+          type="text"
+          [placeholder]="'cyberReliabilityPage.searchPlaceholder' | transloco"
+          [(ngModel)]="searchTerm"
+          (input)="filterNodes()"
+        />
+
+        @if(searchTerm){
+        <button class="clear-button" (click)="clearSearch()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M4.15182 4.15035C4.34708 3.95509 4.66366 3.95509 4.85892 4.15035L8.00046 7.29189L11.142 4.15035C11.3372 3.95509 11.6538 3.95509 11.8491 4.15035C12.0443 4.34561 12.0443 4.6622 11.8491 4.85746L8.70756 7.999L11.8491 11.1405C12.0443 11.3358 12.0443 11.6524 11.8491 11.8476C11.6538 12.0429 11.3372 12.0429 11.142 11.8476L8.00046 8.70611L4.85892 11.8476C4.66366 12.0429 4.34708 12.0429 4.15182 11.8476C3.95656 11.6524 3.95656 11.3358 4.15182 11.1405L7.29335 7.999L4.15182 4.85746C3.95656 4.6622 3.95656 4.34561 4.15182 4.15035Z"
+              fill="white"
+            />
+          </svg>
+        </button>
+        }
+      </div>
+
+      <button class="filters-button" (click)="toggleFilters()">
+        @if(((activeSidebarFiltersCount$ | async ) ?? 0) > 0){
+        <div class="filtersAppliedAmount">
+          <span>{{ activeSidebarFiltersCount$ | async }}</span>
+        </div>
+        }
+        <span>{{ "common.button.filters" | transloco }}</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+        >
+          <path
+            d="M11.7692 12.8008C11.1446 12.8008 10.6167 12.5895 10.1853 12.1669C9.75411 11.7443 9.5385 11.2269 9.5385 10.6149C9.5385 10.0028 9.75411 9.48547 10.1853 9.06291C10.6167 8.64024 11.1446 8.4289 11.7692 8.4289C12.3938 8.4289 12.9218 8.64024 13.353 9.06291C13.7843 9.48547 14 10.0028 14 10.6149C14 11.2269 13.7843 11.7443 13.353 12.1669C12.9218 12.5895 12.3938 12.8008 11.7692 12.8008ZM11.7685 11.8209C12.1083 11.8209 12.3985 11.7032 12.6392 11.4679C12.8797 11.2325 13 10.9484 13 10.6156C13 10.2826 12.8799 9.99823 12.6397 9.7624C12.3996 9.52668 12.1096 9.40882 11.7698 9.40882C11.4301 9.40882 11.1399 9.52651 10.8993 9.76191C10.6588 9.9972 10.5385 10.2813 10.5385 10.6143C10.5385 10.9472 10.6586 11.2316 10.8987 11.4673C11.1389 11.703 11.4288 11.8209 11.7685 11.8209ZM3 11.1049V10.125H8.077V11.1049H3ZM4.23083 7.17266C3.60617 7.17266 3.07822 6.96132 2.647 6.53865C2.21567 6.11609 2 5.59876 2 4.98664C2 4.37463 2.21567 3.85729 2.647 3.43462C3.07822 3.01206 3.60617 2.80078 4.23083 2.80078C4.85539 2.80078 5.38333 3.01206 5.81467 3.43462C6.24589 3.85729 6.4615 4.37463 6.4615 4.98664C6.4615 5.59876 6.24589 6.11609 5.81467 6.53865C5.38333 6.96132 4.85539 7.17266 4.23083 7.17266ZM4.23017 6.19275C4.56994 6.19275 4.86011 6.07505 5.10067 5.83965C5.34122 5.60436 5.4615 5.32024 5.4615 4.98729C5.4615 4.65434 5.34144 4.37 5.10133 4.13428C4.86111 3.89856 4.57117 3.78069 4.2315 3.78069C3.89172 3.78069 3.6015 3.89834 3.36083 4.13363C3.12028 4.36902 3 4.65314 3 4.98599C3 5.31894 3.12011 5.60333 3.36033 5.83916C3.60044 6.07488 3.89039 6.19275 4.23017 6.19275ZM7.923 5.47659V4.49668H13V5.47659H7.923Z"
+            fill="white"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  @if(!isIntegrityHintHidden()){
+  <div class="mainLabel">
+    <div>{{ "cyberReliabilityPage.reliability" | transloco }}</div>
+  </div>
+  }
+</div>
+
+<div class="scrollable-content">
+  @for(accordionItem of (filteredData ?? accordionData()); track
+  accordionItem.id; let i = $index) {
+  <app-tree-view-node
+    [isHostRemediationManagement]="false"
+    [data]="accordionItem"
+    [initiallyExpanded]="accordionItem.isExpanded ?? false"
+  >
+  </app-tree-view-node>
+  }
+</div>

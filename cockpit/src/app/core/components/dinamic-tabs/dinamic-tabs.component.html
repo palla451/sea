@@ -1,0 +1,32 @@
+@if(dinamicTabs() && dinamicTabs().length){
+<p-tabs
+  [value]="selectedTabIndex"
+  scrollable="true"
+  class="tabs"
+  (valueChange)="setSelectedTabIndex($event)"
+>
+  <p-tablist class="tabs__list">
+    @for (tab of dinamicTabs(); track tab.value) {
+    <p-tab [value]="tab.value"
+      ><ng-container *ngIf="tab.context?.event as event">
+        @if(currentIncidentIcons() && currentIncidentIcons()[tab.value] && currentIncidentIcons()[tab.value] !== ''){
+          <img [src]="currentIncidentIcons()[tab.value]" alt="status icon" class="tab-icon" />
+        }
+        {{ tab.title }}
+      </ng-container></p-tab
+    >
+    }
+  </p-tablist>
+  <p-tabpanels>
+    @for (tab of dinamicTabs(); track tab.value) {
+    <p-tabpanel [value]="tab.value">
+      <ng-container
+        *ngTemplateOutlet="tabContentTemplate; context: tab.context"
+      />
+    </p-tabpanel>
+    }
+  </p-tabpanels>
+</p-tabs>
+}
+
+

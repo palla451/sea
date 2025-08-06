@@ -1,0 +1,21 @@
+<div class="remediation-action-statuses">
+  <div class="remediation-action-statuses__button-group">
+    <p-toggleButton
+      [(ngModel)]="selectedRemediationActionStatuses['completed']"
+      (onChange)="updateFilters()"
+      [onLabel]="'filters.remediationStatuses.actionCompleted' | transloco"
+      [offLabel]="'filters.remediationStatuses.actionCompleted' | transloco"
+      styleClass="remediation-action-statuses__button-group__btn-element"
+    >
+    </p-toggleButton>
+
+    <p-toggleButton
+      [(ngModel)]="selectedRemediationActionStatuses['rollbacked']"
+      (onChange)="updateFilters()"
+      [onLabel]="'filters.remediationStatuses.actionRollbacked' | transloco"
+      [offLabel]="'filters.remediationStatuses.actionRollbacked' | transloco"
+      styleClass="remediation-action-statuses__button-group__btn-element"
+    >
+    </p-toggleButton>
+  </div>
+</div>

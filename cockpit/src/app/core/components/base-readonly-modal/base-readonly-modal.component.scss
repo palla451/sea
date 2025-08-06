@@ -1,0 +1,13 @@
+@use "../../../../fonts" as fonts;
+
+.base-readonly-modal {
+  padding: 2.5rem;
+
+  &__projected-content {
+    margin-top: 1.5rem;
+  }
+}
+
+.remediation-impacts-title {
+  @include fonts.heading-100;
+}

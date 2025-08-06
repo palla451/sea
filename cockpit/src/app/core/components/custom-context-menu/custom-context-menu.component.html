@@ -1,0 +1,11 @@
+@if(isContextualMenuVisible){
+<div class="tooltip">
+  <ul>
+    @for (action of actions; track action; let i = $index){
+    <li class="tooltip__action" (click)="manageTooltipAction(action)">
+      {{ action }}
+    </li>
+    }
+  </ul>
+</div>
+}

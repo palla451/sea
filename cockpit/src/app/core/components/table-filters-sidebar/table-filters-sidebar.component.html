@@ -1,0 +1,612 @@
+<main class="sidebar" [class.sidebar--open]="isOpen">
+  <div class="sidebar__overlay" (click)="close()"></div>
+  <div class="sidebar__content">
+    <div class="sidebar__content__header">
+      <h2 class="sidebar__content__header__title">Filters</h2>
+      <button class="sidebar__content__header__close-button" (click)="close()">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+
+    @if(((currentHostingPage$ | async) === 'dashboard') || ((currentHostingPage$
+    | async) === 'incidents') ){
+    <div>
+      <div class="sidebar__content__accordion_container">
+        <app-sidebar-accordion
+          [accordionTitle]="'filters.accordionTitles.alertLevels' | transloco"
+        >
+          <app-alert-filters
+            (alertsSet)="getAlertsSet($event)"
+          ></app-alert-filters>
+        </app-sidebar-accordion>
+      </div>
+
+      <div class="sidebar__content__accordion_container">
+        <app-sidebar-accordion
+          [accordionTitle]="'filters.accordionTitles.event' | transloco"
+        >
+          <div class="sidebar__content__accordion_container__description">
+            <app-searchable-multiselect-dropdown
+              [table]="table"
+              [fieldName]="'description'"
+              [multiselectTitle]="
+                'filters.multiselect.titles.incident' | transloco
+              "
+              [multiselectHint]="
+                'filters.multiselect.hints.incident' | transloco
+              "
+              (descriptionsSelectionChange)="
+                descriptionsSelectionChange($event)
+              "
+              (decksSelectionChange)="decksSelectionChange($event)"
+              (framesSelectionChange)="framesSelectionChange($event)"
+              (mvzSelectionChange)="mvzSelectionChange($event)"
+            >
+            </app-searchable-multiselect-dropdown>
+          </div>
+        </app-sidebar-accordion>
+      </div>
+
+      <div class="sidebar__content__accordion_container">
+        <app-sidebar-accordion
+          [accordionTitle]="'filters.accordionTitles.dates' | transloco"
+        >
+          <div class="sidebar__content__accordion_container__startDateTime">
+            <label for="start-date">{{
+              "filters.dates.startDate" | transloco
+            }}</label>
+            <p-datepicker
+              inputId="start-date"
+              [(ngModel)]="selectedStartDate"
+              [iconDisplay]="'input'"
+              [showTime]="true"
+              [showIcon]="true"
+              [hourFormat]="'24'"
+              [panelStyleClass]="'custom-datepicker'"
+              [placeholder]="'filters.dates.datePlaceholder' | transloco"
+              dateFormat="yy-mm-dd"
+              appendTo="body"
+              [showButtonBar]="true"
+              [showTransitionOptions]="'0ms'"
+              [hideTransitionOptions]="'0ms'"
+              [panelStyle]="{
+                'min-width': '250px',
+                'border-radius': '4px'
+              }"
+              (ngModelChange)="onStartDateSelect($event)"
+            ></p-datepicker>
+          </div>
+
+          <div class="sidebar__content__accordion_container__endDateTime">
+            <label for="start-date">{{
+              "filters.dates.endDate" | transloco
+            }}</label>
+            <p-datepicker
+              inputId="end-date"
+              [(ngModel)]="selectedEndDate"
+              [iconDisplay]="'input'"
+              [showTime]="true"
+              [showIcon]="true"
+              [hourFormat]="'24'"
+              [panelStyleClass]="'custom-datepicker'"
+              [placeholder]="'filters.dates.datePlaceholder' | transloco"
+              dateFormat="yy-mm-dd"
+              appendTo="body"
+              [showButtonBar]="true"
+              [showTransitionOptions]="'0ms'"
+              [hideTransitionOptions]="'0ms'"
+              [panelStyle]="{
+                'min-width': '250px',
+                'border-radius': '4px'
+              }"
+              (ngModelChange)="onEndDateSelect($event)"
+            ></p-datepicker>
+          </div>
+        </app-sidebar-accordion>
+      </div>
+
+      <div class="sidebar__content__accordion_container">
+        <app-sidebar-accordion
+          [accordionTitle]="'filters.accordionTitles.location' | transloco"
+        >
+          <div class="sidebar__content__accordion_container__doubleSelectRow">
+            <div
+              class="sidebar__content__accordion_container__doubleSelectRow--deck"
+            >
+              <app-searchable-multiselect-dropdown
+                [table]="table"
+                [fieldName]="'deck'"
+                [multiselectTitle]="
+                  'filters.multiselect.titles.deck' | transloco
+                "
+                [multiselectHint]="
+                  'filters.multiselect.hints.search' | transloco
+                "
+                (descriptionsSelectionChange)="
+                  descriptionsSelectionChange($event)
+                "
+                (decksSelectionChange)="decksSelectionChange($event)"
+                (framesSelectionChange)="framesSelectionChange($event)"
+                (mvzSelectionChange)="mvzSelectionChange($event)"
+              >
+              </app-searchable-multiselect-dropdown>
+            </div>
+            <div
+              class="sidebar__content__accordion_container__doubleSelectRow--frame"
+            >
+              <app-searchable-multiselect-dropdown
+                [table]="table"
+                [fieldName]="'frame'"
+                [multiselectTitle]="
+                  'filters.multiselect.titles.frame' | transloco
+                "
+                [multiselectHint]="
+                  'filters.multiselect.hints.search' | transloco
+                "
+                (descriptionsSelectionChange)="
+                  descriptionsSelectionChange($event)
+                "
+                (decksSelectionChange)="decksSelectionChange($event)"
+                (framesSelectionChange)="framesSelectionChange($event)"
+                (mvzSelectionChange)="mvzSelectionChange($event)"
+              >
+              </app-searchable-multiselect-dropdown>
+            </div>
+          </div>
+
+          <app-searchable-multiselect-dropdown
+            [table]="table"
+            [fieldName]="'mvz'"
+            [multiselectTitle]="'filters.multiselect.titles.mvz' | transloco"
+            [multiselectHint]="'filters.multiselect.hints.search' | transloco"
+            (descriptionsSelectionChange)="descriptionsSelectionChange($event)"
+            (decksSelectionChange)="decksSelectionChange($event)"
+            (framesSelectionChange)="framesSelectionChange($event)"
+            (mvzSelectionChange)="mvzSelectionChange($event)"
+          >
+          </app-searchable-multiselect-dropdown>
+        </app-sidebar-accordion>
+      </div>
+    </div>
+    } @else if((currentHostingPage$ | async) === 'assetsMgmt') {
+    <div>
+      <div class="sidebar__content__accordion_container">
+        <app-sidebar-accordion
+          [accordionTitle]="'filters.accordionTitles.assets' | transloco"
+        >
+          <div class="sidebar__content__accordion_container__select-markPiece">
+            <app-searchable-multiselect-dropdown
+              [table]="table"
+              [fieldName]="'markPiece'"
+              [multiselectTitle]="
+                'filters.multiselect.titles.markPiece' | transloco
+              "
+              [multiselectHint]="'filters.multiselect.hints.search' | transloco"
+              (descriptionsSelectionChange)="
+                descriptionsSelectionChange($event)
+              "
+              (decksSelectionChange)="decksSelectionChange($event)"
+              (framesSelectionChange)="framesSelectionChange($event)"
+              (mvzSelectionChange)="mvzSelectionChange($event)"
+              (markpieceSelectionChange)="markpieceSelectionChange($event)"
+              (typeSelectionChange)="typeSelectionChange($event)"
+              (nameSelectionChange)="nameSelectionChange($event)"
+            >
+            </app-searchable-multiselect-dropdown>
+          </div>
+
+          <div
+            class="sidebar__content__accordion_container__select-description"
+          >
+            <app-searchable-multiselect-dropdown
+              [table]="table"
+              [fieldName]="'type'"
+              [multiselectTitle]="
+                'filters.multiselect.titles.description' | transloco
+              "
+              [multiselectHint]="'filters.multiselect.hints.search' | transloco"
+              (descriptionsSelectionChange)="
+                descriptionsSelectionChange($event)
+              "
+              (decksSelectionChange)="decksSelectionChange($event)"
+              (framesSelectionChange)="framesSelectionChange($event)"
+              (mvzSelectionChange)="mvzSelectionChange($event)"
+              (markpieceSelectionChange)="markpieceSelectionChange($event)"
+              (typeSelectionChange)="typeSelectionChange($event)"
+              (nameSelectionChange)="nameSelectionChange($event)"
+            >
+            </app-searchable-multiselect-dropdown>
+          </div>
+
+          <div class="sidebar__content__accordion_container__select-name">
+            <app-searchable-multiselect-dropdown
+              [table]="table"
+              [fieldName]="'name'"
+              [multiselectTitle]="'filters.multiselect.titles.name' | transloco"
+              [multiselectHint]="'filters.multiselect.hints.search' | transloco"
+              (descriptionsSelectionChange)="
+                descriptionsSelectionChange($event)
+              "
+              (decksSelectionChange)="decksSelectionChange($event)"
+              (framesSelectionChange)="framesSelectionChange($event)"
+              (mvzSelectionChange)="mvzSelectionChange($event)"
+              (markpieceSelectionChange)="markpieceSelectionChange($event)"
+              (typeSelectionChange)="typeSelectionChange($event)"
+              (nameSelectionChange)="nameSelectionChange($event)"
+            >
+            </app-searchable-multiselect-dropdown>
+          </div>
+        </app-sidebar-accordion>
+      </div>
+
+      <div class="sidebar__content__accordion_container">
+        <app-sidebar-accordion
+          [accordionTitle]="'filters.accordionTitles.status' | transloco"
+        >
+          <app-asset-status
+            (assetsStatusSet)="getAssetsStatusSet($event)"
+          ></app-asset-status>
+        </app-sidebar-accordion>
+      </div>
+    </div>
+    } @if(((currentHostingPage$ | async) === 'history')){
+    <div>
+      <div class="sidebar__content__accordion_container">
+        <app-sidebar-accordion
+          [accordionTitle]="'filters.accordionTitles.alertLevels' | transloco"
+        >
+          <app-alert-filters
+            (alertsSet)="getAlertsSet($event)"
+          ></app-alert-filters>
+        </app-sidebar-accordion>
+      </div>
+
+      <div class="sidebar__content__accordion_container">
+        <app-sidebar-accordion
+          [accordionTitle]="'filters.accordionTitles.status' | transloco"
+        >
+          <app-incident-statuses
+            (incidentStatusesSet)="getIncidentStatusSet($event)"
+          ></app-incident-statuses>
+        </app-sidebar-accordion>
+      </div>
+
+      <div class="sidebar__content__accordion_container">
+        <app-sidebar-accordion
+          [accordionTitle]="'filters.accordionTitles.event' | transloco"
+        >
+          <div class="sidebar__content__accordion_container__description">
+            <app-searchable-multiselect-dropdown
+              [table]="table"
+              [fieldName]="'description'"
+              [multiselectTitle]="
+                'filters.multiselect.titles.incident' | transloco
+              "
+              [multiselectHint]="
+                'filters.multiselect.hints.incident' | transloco
+              "
+              (descriptionsSelectionChange)="
+                descriptionsSelectionChange($event)
+              "
+              (decksSelectionChange)="decksSelectionChange($event)"
+              (framesSelectionChange)="framesSelectionChange($event)"
+              (mvzSelectionChange)="mvzSelectionChange($event)"
+            >
+            </app-searchable-multiselect-dropdown>
+          </div>
+        </app-sidebar-accordion>
+      </div>
+
+      <div class="sidebar__content__accordion_container">
+        <app-sidebar-accordion
+          [accordionTitle]="'filters.accordionTitles.dates' | transloco"
+        >
+          <div class="sidebar__content__accordion_container__startDateTime">
+            <label for="start-date">{{
+              "filters.dates.startDate" | transloco
+            }}</label>
+            <p-datepicker
+              inputId="start-date"
+              [(ngModel)]="selectedStartDate"
+              [iconDisplay]="'input'"
+              [showTime]="true"
+              [showIcon]="true"
+              [hourFormat]="'24'"
+              [panelStyleClass]="'custom-datepicker'"
+              [placeholder]="'filters.dates.datePlaceholder' | transloco"
+              dateFormat="yy-mm-dd"
+              appendTo="body"
+              [showButtonBar]="true"
+              [showTransitionOptions]="'0ms'"
+              [hideTransitionOptions]="'0ms'"
+              [panelStyle]="{
+                'min-width': '250px',
+                'border-radius': '4px'
+              }"
+              (ngModelChange)="onStartDateSelect($event)"
+            ></p-datepicker>
+          </div>
+
+          <div class="sidebar__content__accordion_container__endDateTime">
+            <label for="start-date">{{
+              "filters.dates.endDate" | transloco
+            }}</label>
+            <p-datepicker
+              inputId="end-date"
+              [(ngModel)]="selectedEndDate"
+              [iconDisplay]="'input'"
+              [showTime]="true"
+              [showIcon]="true"
+              [hourFormat]="'24'"
+              [panelStyleClass]="'custom-datepicker'"
+              [placeholder]="'filters.dates.datePlaceholder' | transloco"
+              dateFormat="yy-mm-dd"
+              appendTo="body"
+              [showButtonBar]="true"
+              [showTransitionOptions]="'0ms'"
+              [hideTransitionOptions]="'0ms'"
+              [panelStyle]="{
+                'min-width': '250px',
+                'border-radius': '4px'
+              }"
+              (ngModelChange)="onEndDateSelect($event)"
+            ></p-datepicker>
+          </div>
+        </app-sidebar-accordion>
+      </div>
+
+      <div class="sidebar__content__accordion_container">
+        <app-sidebar-accordion
+          [accordionTitle]="'filters.accordionTitles.location' | transloco"
+        >
+          <div class="sidebar__content__accordion_container__doubleSelectRow">
+            <div
+              class="sidebar__content__accordion_container__doubleSelectRow--deck"
+            >
+              <app-searchable-multiselect-dropdown
+                [table]="table"
+                [fieldName]="'deck'"
+                [multiselectTitle]="
+                  'filters.multiselect.titles.deck' | transloco
+                "
+                [multiselectHint]="
+                  'filters.multiselect.hints.search' | transloco
+                "
+                (descriptionsSelectionChange)="
+                  descriptionsSelectionChange($event)
+                "
+                (decksSelectionChange)="decksSelectionChange($event)"
+                (framesSelectionChange)="framesSelectionChange($event)"
+                (mvzSelectionChange)="mvzSelectionChange($event)"
+              >
+              </app-searchable-multiselect-dropdown>
+            </div>
+            <div
+              class="sidebar__content__accordion_container__doubleSelectRow--frame"
+            >
+              <app-searchable-multiselect-dropdown
+                [table]="table"
+                [fieldName]="'frame'"
+                [multiselectTitle]="
+                  'filters.multiselect.titles.frame' | transloco
+                "
+                [multiselectHint]="
+                  'filters.multiselect.hints.search' | transloco
+                "
+                (descriptionsSelectionChange)="
+                  descriptionsSelectionChange($event)
+                "
+                (decksSelectionChange)="decksSelectionChange($event)"
+                (framesSelectionChange)="framesSelectionChange($event)"
+                (mvzSelectionChange)="mvzSelectionChange($event)"
+              >
+              </app-searchable-multiselect-dropdown>
+            </div>
+          </div>
+
+          <app-searchable-multiselect-dropdown
+            [table]="table"
+            [fieldName]="'mvz'"
+            [multiselectTitle]="'filters.multiselect.titles.mvz' | transloco"
+            [multiselectHint]="'filters.multiselect.hints.search' | transloco"
+            (descriptionsSelectionChange)="descriptionsSelectionChange($event)"
+            (decksSelectionChange)="decksSelectionChange($event)"
+            (framesSelectionChange)="framesSelectionChange($event)"
+            (mvzSelectionChange)="mvzSelectionChange($event)"
+          >
+          </app-searchable-multiselect-dropdown>
+        </app-sidebar-accordion>
+      </div>
+    </div>
+    } @if(((currentHostingPage$ | async) === 'cyberResilienceDashboard')){
+    <div class="sidebar__content__accordion_container">
+      <app-sidebar-accordion
+        [accordionTitle]="'filters.accordionTitles.assetStatus' | transloco"
+      >
+        <app-asset-status
+          (assetsStatusSet)="getAssetsStatusInCyberResilienceSet($event)"
+        ></app-asset-status>
+      </app-sidebar-accordion>
+    </div>
+    } @if(((currentHostingPage$ | async) === 'remediations')){
+    <div>
+      <div class="sidebar__content__accordion_container">
+        <app-sidebar-accordion
+          [accordionTitle]="'filters.accordionTitles.alertLevels' | transloco"
+        >
+          <div class="sidebar__content__accordion_container__description">
+            <app-searchable-multiselect-dropdown
+              [table]="table"
+              [fieldName]="'incidentDescription'"
+              [multiselectTitle]="
+                'filters.multiselect.titles.incident' | transloco
+              "
+              [multiselectHint]="
+                'filters.multiselect.hints.incident' | transloco
+              "
+              (descriptionsSelectionChange)="
+                descriptionsSelectionChange($event)
+              "
+              (decksSelectionChange)="decksSelectionChange($event)"
+              (framesSelectionChange)="framesSelectionChange($event)"
+              (mvzSelectionChange)="mvzSelectionChange($event)"
+              (remediationIncidentDescriptionSelectionChange)="
+                onRemediationIncidentDescriptionSelectionChange($event)
+              "
+              (remediationActionDescriptionSelectionChange)="
+                onRemediationActionDescriptionSelectionChange($event)
+              "
+            >
+            </app-searchable-multiselect-dropdown>
+          </div>
+        </app-sidebar-accordion>
+      </div>
+
+      <div class="sidebar__content__accordion_container">
+        <app-sidebar-accordion
+          [accordionTitle]="'filters.accordionTitles.action' | transloco"
+        >
+          <div class="sidebar__content__accordion_container__description">
+            <app-searchable-multiselect-dropdown
+              [table]="table"
+              [fieldName]="'actionDescription'"
+              [multiselectTitle]="
+                'filters.multiselect.titles.description' | transloco
+              "
+              [multiselectHint]="
+                'filters.multiselect.hints.description' | transloco
+              "
+              (descriptionsSelectionChange)="
+                descriptionsSelectionChange($event)
+              "
+              (decksSelectionChange)="decksSelectionChange($event)"
+              (framesSelectionChange)="framesSelectionChange($event)"
+              (mvzSelectionChange)="mvzSelectionChange($event)"
+              (remediationIncidentDescriptionSelectionChange)="
+                onRemediationIncidentDescriptionSelectionChange($event)
+              "
+              (remediationActionDescriptionSelectionChange)="
+                onRemediationActionDescriptionSelectionChange($event)
+              "
+            >
+            </app-searchable-multiselect-dropdown>
+
+            <app-remediation-action-types
+              (remediationActionTypesSet)="getRemediationActionTypesSet($event)"
+            ></app-remediation-action-types>
+          </div>
+        </app-sidebar-accordion>
+      </div>
+      <div class="sidebar__content__accordion_container">
+        <app-sidebar-accordion
+          [accordionTitle]="'filters.accordionTitles.status' | transloco"
+        >
+          <div class="sidebar__content__accordion_container__description">
+            <app-remediation-action-statuses
+              (remediationActionStatusesSet)="
+                getRemediationActionStatusesSet($event)
+              "
+            ></app-remediation-action-statuses>
+          </div>
+        </app-sidebar-accordion>
+      </div>
+    </div>
+    } @if(((currentHostingPage$ | async) === 'dashboard')||((currentHostingPage$
+    | async) === 'incidents')){
+    <div class="sidebar__content__footer">
+      <button
+        class="sidebar__content__footer__button sidebar__content__footer__button--cancel"
+        (click)="resetDashboardFilters()"
+      >
+        {{ "common.button.reset" | transloco }}
+      </button>
+      <button
+        #btnSave
+        class="sidebar__content__footer__button sidebar__content__footer__button--save"
+        [ngClass]="{
+          btnSaveActive: btnSaveActiveDashboard() === true
+        }"
+        (click)="saveDashboardFilters()"
+      >
+        {{ "common.button.confirm" | transloco }}
+      </button>
+    </div>
+    } @else if((currentHostingPage$ | async) === 'assetsMgmt') {
+    <div class="sidebar__content__footer">
+      <button
+        class="sidebar__content__footer__button sidebar__content__footer__button--cancel"
+        (click)="resetAssetMngmtFilters()"
+      >
+        {{ "common.button.reset" | transloco }}
+      </button>
+      <button
+        #btnSave
+        class="sidebar__content__footer__button sidebar__content__footer__button--save"
+        [ngClass]="{
+          btnSaveActive: btnSaveActiveAssetMngmt() === true
+        }"
+        (click)="saveAssetMngmtFilters()"
+      >
+        {{ "common.button.confirm" | transloco }}
+      </button>
+    </div>
+    } @else if((currentHostingPage$ | async) === 'history') {
+    <div class="sidebar__content__footer">
+      <button
+        class="sidebar__content__footer__button sidebar__content__footer__button--cancel"
+        (click)="resetHistoryIncidentsFilters()"
+      >
+        {{ "common.button.reset" | transloco }}
+      </button>
+      <button
+        #btnSave
+        class="sidebar__content__footer__button sidebar__content__footer__button--save"
+        [ngClass]="{
+          btnSaveActive: btnSaveActiveHistoryPage() === true
+        }"
+        (click)="saveHistoryIncidentsFilters()"
+      >
+        {{ "common.button.confirm" | transloco }}
+      </button>
+    </div>
+    } @else if((currentHostingPage$ | async) === 'cyberResilienceDashboard') {
+    <div class="sidebar__content__footer">
+      <button
+        class="sidebar__content__footer__button sidebar__content__footer__button--cancel"
+        (click)="resetCyberResilienceFilters()"
+      >
+        {{ "common.button.reset" | transloco }}
+      </button>
+      <button
+        #btnSave
+        class="sidebar__content__footer__button sidebar__content__footer__button--save"
+        [ngClass]="{
+          btnSaveActive: btnSaveActiveCyberResilience() === true
+        }"
+        (click)="saveCyberResilienceFilters()"
+      >
+        {{ "common.button.confirm" | transloco }}
+      </button>
+    </div>
+    } @else if((currentHostingPage$ | async) === 'remediations') {
+    <div class="sidebar__content__footer">
+      <button
+        class="sidebar__content__footer__button sidebar__content__footer__button--cancel"
+        (click)="resetIncidentRemediationsFilters()"
+      >
+        {{ "common.button.reset" | transloco }}
+      </button>
+      <button
+        #btnSave
+        class="sidebar__content__footer__button sidebar__content__footer__button--save"
+        [ngClass]="{
+          btnSaveActive: btnSaveActiveIncidentRemediations() === true
+        }"
+        (click)="saveIncidentRemediationsFilters()"
+      >
+        {{ "common.button.confirm" | transloco }}
+      </button>
+    </div>
+    }
+  </div>
+</main>

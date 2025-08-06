@@ -1,0 +1,39 @@
+@use "../../../../fonts" as fonts;
+@use "../../../../variables" as variables;
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .triangle {
+    width: 0;
+    height: 0;
+    position: relative;
+    border: none;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 14px;
+      height: 12px;
+      left: -7px;
+      border-radius: 3px;
+      clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+      background-color: var(--triangle-color, #F64D4D);
+    }
+
+    &.up::before {
+      top: 0;
+      transform: rotate(180deg);
+    }
+
+    &.down::before {
+      top: -12px;
+    }
+  }
+
+  .caption {
+    @include fonts.body-mono-50-strong;
+  }
+}

@@ -1,0 +1,17 @@
+<app-generic-modal
+  [title]="'remediationManagementPage.rollbackModal.title' | transloco"
+  [bodyTemplate]="rollbackModalBody"
+  [visible]="isVisible"
+  (close)="onClose()"
+  [confirmLabel]="'common.button.confirm' | transloco"
+  (save)="onConfirm()"
+  (back)="onBackClick()"
+  [isSaveEnabled]="true"
+  [dialogWidth]="'426px'"
+></app-generic-modal>
+
+<ng-template #rollbackModalBody>
+  <div class="asset-modal-body">
+    {{ "remediationManagementPage.rollbackModal.body" | transloco }}
+  </div>
+</ng-template>

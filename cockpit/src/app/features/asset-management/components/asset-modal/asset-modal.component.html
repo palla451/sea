@@ -1,0 +1,35 @@
+<!-- <button (click)="openAssetModal()">Open Asset Modal</button> -->
+
+<app-generic-modal
+  [title]="'assetManagementPage.assetModal.title' | transloco"
+  [bodyTemplate]="assetModalBody"
+  [isSaveEnabled]="isSaveEnabled()"
+  [(visible)]="showAssetModal"
+  (save)="onSave()"
+  (close)="closeAssetModal()"
+  (back)="onBackClick()"
+></app-generic-modal>
+
+<ng-template #assetModalBody>
+  <div class="asset-modal-body">
+    <div class="asset-modal-body__title">
+      {{ "assetManagementPage.assetModal.status" | transloco }}
+    </div>
+    <div class="asset-modal-body__content">
+      <label
+        *ngFor="let value of state"
+        class="asset-modal-body__content--label"
+      >
+        <input
+          type="radio"
+          name="state"
+          [value]="value"
+          [checked]="selectedState() === value"
+          (change)="selectedState.set(value); onStateChange()"
+          class="asset-modal-body__content--radio"
+        />
+        {{ value }}
+      </label>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,12 @@
+.product-card-modal {
+  &__projected-content {
+    height: 100%;
+  }
+}
+
+::ng-deep .p-dialog .p-dialog-header {
+  display: none !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}

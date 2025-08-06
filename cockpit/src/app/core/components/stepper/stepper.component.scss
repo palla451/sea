@@ -1,0 +1,119 @@
+@use "../../../../variables" as variables;
+@use "../../../../fonts" as fonts;
+
+.stepper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+
+  &__step {
+    &__button {
+      background: none;
+      border: none;
+      pointer-events: none;
+
+      &--clickable {
+        cursor: pointer;
+        pointer-events: initial;
+      }
+
+      margin-top: 20px;
+    }
+  }
+  &__panel {
+    &__action {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+
+      &__readonly {
+        width: 100%;
+        padding: 0.75rem;
+        border: none;
+        border-top-right-radius: 0.25rem;
+        border-top-left-radius: 0.25rem;
+        background-color: variables.$table-bg-color;
+        margin-bottom: 6rem;
+      }
+
+      &__footer {
+        display: flex;
+        justify-content: space-between;
+        &__show-remediation {
+          border: 1px solid variables.$base-app-text-color;
+          padding: 0.5rem 1rem;
+          border-radius: 0.25rem;
+          display: flex;
+          justify-content: space-between;
+          gap: 0.75rem;
+          align-items: flex-end;
+          cursor: pointer;
+
+          button {
+            background: none;
+            border: none;
+          }
+        }
+        &__actions {
+          @include fonts.monts_300_content;
+          padding: 0.5rem 1rem;
+          border: none;
+          display: inline-block;
+          background: variables.$border-primary-default;
+          color: variables.$text-secondary-default;
+          text-decoration: none;
+          border-radius: 0.25rem;
+          text-align: center;
+          &__active {
+            background: variables.$dashboard-sidebar-checkbox-bg-color;
+            color: variables.$base-app-text-color;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+p-step-list {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  min-width: max-content;
+  padding-inline: 1rem;
+}
+p-step {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto !important;
+  min-width: 10rem;
+}
+
+.actionStep{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__actionType{
+    display: inline-block;
+    color: #fff;
+    font-size: 10px !important;
+    font-weight: 400 !important;
+  }
+}
+
+.scroll-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.false-positive-panel{
+  &__note {
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 30px;
+  }
+}
+

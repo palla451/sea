@@ -1,0 +1,70 @@
+@use "../../../../variables" as variables;
+@use "../../../../fonts" as fonts;
+
+.incident-management {
+  &__tab {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    &__false-positive {
+      display: flex;
+      justify-content: space-between;
+
+      &__details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+
+        &__description {
+          @include fonts.body-sans-100-strong;
+        }
+        &__date {
+          @include fonts.body-mono-15;
+        }
+      }
+      &__button {
+        border: 1px solid variables.$base-app-text-color;
+        background: none;
+        padding: 0.5rem 1rem;
+        border-radius: 0.25rem;
+        min-width: 177px;
+        cursor: pointer;
+      }
+    }
+    &__remediation {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      &__title {
+        @include fonts.body-sans-50-strong;
+        color: variables.$text-secondary-default;
+        text-transform: uppercase;
+      }
+
+      &__container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 1.5rem;
+        background-color: variables.$background-primary-default;
+
+        &__stepper {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.scrollable-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

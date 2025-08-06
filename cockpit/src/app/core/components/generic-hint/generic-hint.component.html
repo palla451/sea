@@ -1,0 +1,81 @@
+<div class="card-container">
+  <div class="card-content">
+    <div>
+      @if(checkIfCurrentEventIsMarkedAsFalsePositive()){
+      <!-- icona a forma di croce dentro cerchio -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+      >
+        <path
+          d="M5.29242 4.56813C5.09261 4.36832 4.76867 4.36832 4.56887 4.56813C4.36906 4.76793 4.36906 5.09188 4.56887 5.29168L7.27687 7.99969L4.56887 10.7077C4.36906 10.9075 4.36906 11.2314 4.56886 11.4312C4.76867 11.631 5.09261 11.631 5.29242 11.4312L8.00042 8.72324L10.7084 11.4312C10.9082 11.631 11.2321 11.631 11.432 11.4312C11.6318 11.2314 11.6318 10.9075 11.432 10.7077L8.72397 7.99969L11.432 5.29168C11.6318 5.09187 11.6318 4.76793 11.432 4.56813C11.2321 4.36832 10.9082 4.36833 10.7084 4.56813L8.00042 7.27613L5.29242 4.56813Z"
+          fill="#FFCF26"
+        />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M8.00032 0.666504C3.95024 0.666504 0.666992 3.94975 0.666992 7.99984C0.666992 12.0499 3.95023 15.3332 8.00032 15.3332C12.0504 15.3332 15.3337 12.0499 15.3337 7.99984C15.3337 3.94975 12.0504 0.666504 8.00032 0.666504ZM1.69025 7.99984C1.69025 4.51488 4.51536 1.68976 8.00032 1.68976C11.4853 1.68976 14.3104 4.51488 14.3104 7.99984C14.3104 11.4848 11.4853 14.3099 8.00032 14.3099C4.51537 14.3099 1.69025 11.4848 1.69025 7.99984Z"
+          fill="#FFCF26"
+        />
+      </svg>
+      <span class="card-content__warning">{{
+        "remediationManagementModal.remediation.genericHint.warningTitles.falsePositive"
+          | transloco
+      }}</span>
+      } @else {
+      <!-- icona a forma di punto esclamativo dentro triangolo -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+      >
+        <path
+          d="M13.3619 14.0001H2.63805C1.61269 14.0001 0.971066 12.8911 1.48217 12.0022L6.84415 2.67701C7.35681 1.7854 8.64321 1.7854 9.15588 2.677L14.5179 12.0022C15.0289 12.8911 14.3873 14.0001 13.3619 14.0001Z"
+          stroke="#FFCF26"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M8 6V8.66667"
+          stroke="#FFCF26"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        />
+        <path
+          d="M8 11.3399L8.00667 11.3325"
+          stroke="#FFCF26"
+          stroke-width="1.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+      <span class="card-content__warning">{{
+        "remediationManagementModal.remediation.genericHint.warningTitles.warning"
+          | transloco
+      }}</span>
+      }
+    </div>
+
+    @if(isMarkAsFalsePositiveRequiredSignal()){
+    <span class="card-content__hint">{{
+      "remediationManagementModal.markAsFalsePositive.warningMessage"
+        | transloco
+    }}</span>
+    } @else if(checkIfCurrentEventIsMarkedAsFalsePositive()){
+    <span class="card-content__hint">{{
+      "remediationManagementModal.markAsFalsePositive.confirmFalsePositive"
+        | transloco
+    }}</span>
+    } @else {
+    <span class="card-content__hint">{{
+      "remediationManagementModal.remediation.genericHint.assistedAction.warningMessage"
+        | transloco
+    }}</span>
+    }
+  </div>
+</div>

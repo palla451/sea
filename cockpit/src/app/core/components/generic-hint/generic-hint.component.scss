@@ -1,0 +1,27 @@
+@use "../../../../fonts" as fonts;
+
+.card-container {
+  width: 100%;
+  border: none;
+  overflow: hidden;
+  margin: 0;
+  padding: 0 24px;
+}
+
+.card-content {
+  padding: 0;
+  @include fonts.body-sans-50-light;
+
+  &__warning {
+    display: inline-block;
+    @include fonts.body-sans-15-strong;
+    color: rgba(255, 255, 255, 0.6) !important;
+    transform: translateY(-50%);
+    margin-left: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  &__hint {
+    display: inline-block;
+  }
+}

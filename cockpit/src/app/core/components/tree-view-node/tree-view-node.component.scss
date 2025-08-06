@@ -1,0 +1,194 @@
+@use "../../../../fonts" as fonts;
+
+.accordion {
+  width: 100%;
+
+  &__header {
+    color: #fff;
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.14px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 5px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &__content {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 0.5px dotted rgba(255, 255, 255, 0.4);
+
+      &__title {
+        display: inline-block;
+      }
+
+      &__trend {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+
+        &__integrity {
+          display: inline-block;
+          width: 45px;
+          background-color: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          border-radius: 4px;
+          padding: 4px 0;
+        }
+
+        &__percentage {
+          margin-left: 4px;
+        }
+      }
+
+      &__leaf {
+        padding: 6px 0;
+
+        &__assetName {
+          display: inline-block;
+          padding-left: 8px;
+          padding-right: 16px;
+        }
+      }
+    }
+  }
+
+  &__arrow {
+    margin-right: 12px;
+    transition: transform 0.3s ease;
+
+    svg {
+      vertical-align: middle;
+    }
+  }
+
+  &__content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden; // Nascondi l'overflow quando è chiuso
+    padding-left: 40px; // Allineamento con la freccia
+    transition: max-height 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 0.9s ease 0.1s;
+    padding-top: 0;
+
+    // Stile per lo scroll quando è aperto
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+  }
+
+  &__list {
+    list-style: none;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+  }
+
+  &__item {
+    color: #fff;
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 0.14px;
+    padding: 8px 0 8px;
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: -20px;
+      top: 0;
+      transform: translateY(0%);
+      width: 20px;
+      height: 100%;
+      background-color: transparent;
+      border-left: 1px solid #555;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: -20px;
+      top: 34px;
+      transform: translateY(0%);
+      width: 20px;
+      height: 1px;
+      background-color: #555;
+    }
+  }
+
+  &__item:last-child::before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: 0;
+    transform: translateY(0%);
+    width: 20px;
+    height: 50%;
+    background-color: transparent;
+    border-left: 1px solid #555;
+    border-bottom: 1px solid #555;
+  }
+
+  &__item:last-child::after {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: 0;
+    transform: translateY(0%);
+    width: 20px;
+    height: 50%;
+    background-color: transparent;
+    border: none;
+  }
+
+  // Stato espanso
+  &.expanded {
+    > .accordion__header .accordion__arrow {
+      transform: rotate(90deg);
+    }
+
+    > .accordion__content {
+      max-height: 70vh; /* Altezza massima del 70% della viewport */
+      opacity: 1;
+      padding: 8px 0 8px 40px;
+      overflow-y: auto; /* Abilita scroll verticale */
+      overflow-x: hidden; /* Disabilita scroll orizzontale */
+
+      /* Stile per lo scroll invisibile */
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+      &::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+      }
+    }
+  }
+}
+
+.accordionHeaderHidden {
+  visibility: hidden;
+  height: 0;
+}
+
+.no-results-message {
+  @include fonts.monts_300_title;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 16px;
+  text-align: center;
+  font-style: italic;
+  border-bottom: 0.5px dotted rgba(255, 255, 255, 0.4);
+}

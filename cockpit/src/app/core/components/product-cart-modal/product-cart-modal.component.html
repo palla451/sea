@@ -1,0 +1,12 @@
+<div class="product-card">
+  <div class="product-card__image">
+    <img [src]="`${imagesPath}${product.image}`" [alt]="product.name" />
+  </div>
+
+  <div class="product-card__content">
+    <div class="product-card__content--title">{{ product.name }}</div>
+    <div class="product-card__content--description">
+      {{ product.description }}
+    </div>
+  </div>
+</div>

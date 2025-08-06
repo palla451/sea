@@ -1,0 +1,337 @@
+@use "sass:math";
+@use "sass:list";
+@use "../../../../fonts" as fonts;
+
+/* Base styles */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  height: 4.5rem;
+  background-color: transparent;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 100;
+  border: none;
+
+  /* App brand */
+  &__app-brand {
+    display: flex;
+    flex: 1;
+
+    &__app-name {
+      margin: 0;
+      @include fonts.body-sans-100-strong;
+    }
+  }
+
+  /* Navigation */
+  &__nav-container {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    position: relative;
+    margin-left: 24px; // Spostamento di 24px a destra
+
+    &__nav-list {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      justify-content: center;
+      padding: 22px 0;
+      position: relative;
+      border: none;
+
+      // Bordo grigio inferiore più lungo
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: -56px; // Estensione a sinistra
+        right: -56px; // Estensione a destra
+        height: 1px;
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      // Elementi del menu
+      &__nav-item {
+        padding: 0.75rem 0.5rem;
+        text-decoration: none;
+        @include fonts.body-sans-50-strong;
+        position: relative;
+        transition: color 0.2s ease;
+        border-radius: 4px;
+        outline: none;
+        white-space: nowrap;
+        text-align: center;
+
+        // Spazio costante di 24px tra gli elementi
+        &:not(:last-child) {
+          margin-right: 24px;
+        }
+
+        // Sottolineatura base (inizialmente nascosta)
+        &::after {
+          content: "";
+          position: absolute;
+          bottom: -5px;
+          left: 50%;
+          width: 0;
+          height: 4px;
+          background-color: #ffffff;
+          border-radius: 8px 8px 0 0;
+          transform: translateX(-50%);
+          transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+            opacity 0.4s ease;
+          opacity: 0;
+        }
+
+        // Stato attivo
+        &.active {
+          color: #ffffff;
+          font-weight: 500;
+
+          &::after {
+            width: 20%;
+            opacity: 1;
+          }
+        }
+
+        // Effetto hover (opzionale)
+        &:hover::after {
+          width: 20%;
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+
+  /* Profile section */
+  &__profile-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 0;
+    background: transparent;
+    padding: 4px 0 4px 12px;
+
+    &__user-avatar {
+      margin-right: 12px;
+      border: 2px solid white;
+    }
+
+    &__user-info {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      margin-right: 1.5rem;
+
+      &--user-role {
+        font-size: 0.65rem;
+        color: rgba(255, 255, 255, 0.7);
+        line-height: 1;
+        margin-bottom: 4px;
+        display: inline-block;
+      }
+
+      &--user-name {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: white;
+        line-height: 1;
+        display: inline-block;
+      }
+    }
+
+    &__language-select {
+      width: 85px !important;
+    }
+
+    &__separator {
+      height: 40px;
+      width: 1px;
+      margin: 0 24px;
+      background: transparent;
+      position: relative;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 70%; /* Regola questa percentuale per accorciare la linea */
+        transform: translateY(-50%);
+        border-left: 1px dotted rgba(255, 255, 255, 0.5);
+      }
+    }
+
+    &__logout-button {
+      background: transparent;
+      border-radius: 8px; // Angoli arrotondati (personalizza il valore a piacere)
+      padding: 8px; // Padding uniforme (aggiustabile)
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      width: 40px; // Larghezza aumentata per forma quadrata
+      height: 40px; // Altezza aumentata per forma quadrata
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2); // Effetto hover più visibile
+      }
+
+      &:focus-visible {
+        outline: none;
+        box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #3b82f6;
+      }
+
+      .pi {
+        font-size: 1.2rem; // Icona leggermente più grande
+        color: #ffffff;
+      }
+    }
+  }
+
+  .avatar-wrapper {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+
+    .avatar-frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2; // sopra l’avatar
+      pointer-events: none;
+    }
+
+    .avatar-inner {
+      position: absolute;
+      top: 2px; // aggiusta in base allo spessore del bordo della cornice
+      left: 2px;
+      width: 36px;
+      height: 36px;
+      z-index: 1;
+      border: none;
+      object-fit: cover;
+    }
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+  .header {
+    padding: 0 1rem;
+
+    &__nav-container {
+      margin: 0 1rem;
+
+      &__nav-list {
+        &__nav-item {
+          padding: 0.75rem 0.5rem;
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    &__profile-section {
+      padding: 0;
+
+      &__user-info {
+        &--user-role {
+          @include fonts.monts_500_12p_uppercase;
+          color: rgba(255, 255, 255, 0.6);
+          display: inline-block;
+        }
+        &--user-name {
+          @include fonts.body-sans-100-strong;
+          display: inline-block;
+        }
+      }
+
+      &__separator {
+        margin: 0 8px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 1rem;
+    gap: 1rem;
+
+    &__app-brand {
+      order: 1;
+      flex: 1;
+    }
+
+    &__nav-container {
+      order: 3;
+      width: 100%;
+      margin: 0;
+
+      &__nav-list {
+        justify-content: space-around;
+
+        &__nav-item {
+          max-width: none;
+          flex: 0 1 auto;
+          padding: 0.5rem;
+          font-size: 0.75rem;
+        }
+      }
+    }
+
+    &__profile-section {
+      .user-info {
+        display: flex; // Mantieni visibile anche su mobile
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    &__nav-container {
+      &__nav-list {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+
+        &__nav-item {
+          flex: 1 1 100px;
+          font-size: 0.7rem;
+        }
+      }
+    }
+
+    &__profile-section {
+      .user-avatar {
+        width: 28px;
+        height: 28px;
+        margin-right: 8px;
+      }
+
+      .user-name {
+        font-size: 0.7rem;
+      }
+
+      .logout-button {
+        width: 28px;
+        height: 28px;
+      }
+    }
+  }
+}

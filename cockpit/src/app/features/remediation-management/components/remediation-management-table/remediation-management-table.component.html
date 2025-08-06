@@ -1,0 +1,209 @@
+<main class="incident-overview-table">
+  <app-column-settings-sidebar
+    [tableContext]="'remediationList'"
+    [isOpen]="showSettingsSidebar"
+    (onSidebarClosing)="onSettingsSidebarClosing()"
+  ></app-column-settings-sidebar>
+
+  <app-table-filters-sidebar
+    [table]="remediationMNGMTtable"
+    [isOpen]="showFiltersSidebar"
+    (onSidebarClosing)="onFiltersSidebarClosing()"
+  ></app-table-filters-sidebar>
+
+  <div class="incident-overview-table__header">
+    <div class="incident-overview-table__header--title">
+      <span>{{
+        "remediationManagementPage.remediationTable.title" | transloco
+      }}</span>
+    </div>
+    <div class="incident-overview-table__header--call-to-actions">
+      <button
+        (click)="toggleSettings()"
+        class="incident-overview-table__header--call-to-actions--settings settingsBtn"
+      >
+        <span class="label">{{ "common.button.settings" | transloco }}</span>
+        <span class="icon">
+          <img src="assets/svg/gear.svg" alt="Settings Icon" />
+        </span>
+      </button>
+
+      <button
+        class="custom-button"
+        (click)="toggleFilters()"
+        class="incident-overview-table__header--call-to-actions--filters filtersBtn"
+      >
+        @if(((activeSidebarFiltersCount$ | async ) ?? 0) > 0){
+        <div class="filtersAppliedAmount">
+          <span>{{ activeSidebarFiltersCount$ | async }}</span>
+        </div>
+        }
+        <span class="label">{{ "common.button.filters" | transloco }}</span>
+        <span class="icon">
+          <img src="assets/svg/filter.svg" alt="Filters Icon" />
+        </span>
+      </button>
+    </div>
+  </div>
+  <p-table
+    #remediationMNGMTtable
+    dataKey="id"
+    currentPageReportTemplate=""
+    [columns]="(selectedColumns$ | async) ?? []"
+    [value]="remediations"
+    [paginator]="true"
+    [rows]="rows()"
+    [resizableColumns]="true"
+    sortMode="multiple"
+    [responsiveLayout]="'stack'"
+    [showCurrentPageReport]="false"
+    [showFirstLastIcon]="false"
+    [autoLayout]="true"
+    (onPage)="onPageChange($event)"
+  >
+    <ng-template #header let-columns>
+      <tr>
+        @for ( col of columns; track col.field ) { @if (col.visible) {
+        @if(col.sortable){
+        <th
+          pSortableColumn="{{ col.field }}"
+          [ngClass]="{
+                incidentDescriptionWidth: col.field === 'incidentDescription',
+                actionTypeWidth: col.field === 'actionType',
+                actionDescriptionWidth: col.field === 'actionDescription',
+                statusWidth: col.field === 'status',
+              }"
+        >
+          {{ col.header }}
+          <p-sortIcon field="{{ col.field }}"></p-sortIcon>
+        </th>
+        } @else {
+        <th
+          [ngClass]="{
+            incidentIdWidth: col.field === 'incidentId',
+            actionWidth: col.field === 'action',
+          }"
+        >
+          {{ col.header }}
+        </th>
+        } } }
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="sorticon" let-sortOrder>
+      <ng-container *ngIf="sortOrder === 0">
+        <img
+          src="assets/svg/sorting-ascending-descending.svg"
+          alt="Ascending-Descending"
+          class="ascendingDescendingSortIcon"
+        />
+      </ng-container>
+      <ng-container *ngIf="sortOrder === 1">
+        <img
+          src="assets/svg/sorting-ascending.svg"
+          alt="Ascending"
+          class="ascendingSortIcon"
+        />
+      </ng-container>
+      <ng-container *ngIf="sortOrder === -1">
+        <img src="assets/svg/sorting-descending.svg" alt="Descending" />
+      </ng-container>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-remediation>
+      <tr>
+        @if (checkIfColumnIsVisible(((selectedColumns$ |
+        async)??[]),'incidentId')) {
+        <td>
+          <span>{{ remediation.incidentId }}</span>
+        </td>
+        } @if (checkIfColumnIsVisible(((selectedColumns$ |
+        async)??[]),'incidentDescription')){
+        <td>
+          <span class="incident-overview-table__incident-description">{{
+            remediation.incidentDescription
+          }}</span>
+        </td>
+        } @if (checkIfColumnIsVisible(((selectedColumns$ |
+        async)??[]),'actionType')){
+        <td class="incident-overview-table__action-type">
+          <span class="incident-overview-table__action-type__label">
+            {{ remediation.actionType }}
+          </span>
+        </td>
+        } @if (checkIfColumnIsVisible(((selectedColumns$ |
+        async)??[]),'actionDescription')){
+        <td class="incident-overview-table__action-description">
+          {{ remediation.description }}
+        </td>
+        }@if (checkIfColumnIsVisible(((selectedColumns$ |
+        async)??[]),'status')){
+        <td class="incident-overview-table__status">
+          {{ remediation.status }}
+        </td>
+        } @if (checkIfColumnIsVisible(((selectedColumns$ |
+        async)??[]),'action')){
+        <td class="context-menu-cell">
+          <a class="p-text-primary">
+            @if(checkIfActionIsRollbackable(remediation)&& (hasPrivilegedAccess$
+            | async)){
+            <app-custom-context-menu
+              [actions]="['Roll back', 'Incident detail']"
+              [isContextualMenuVisible]="checkActiveMenuId(remediation)"
+              [incidentId]="remediation.incidentId"
+              (rollBackAction)="openRollbackModal(remediation.actionId)"
+            ></app-custom-context-menu>
+            <img
+              src="assets/png/more.png"
+              alt="ContextualMenuIcon"
+              width="16"
+              height="16"
+              (click)="openContextualMenu(remediation)"
+            />
+            } @else {
+            <svg
+              (click)="navigateToIncidentDetail(remediation)"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              fill="none"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M5.64645 3.64645C5.84171 3.45118 6.15829 3.45118 6.35355 3.64645L10.3536 7.64645C10.5488 7.84171 10.5488 8.15829 10.3536 8.35355L6.35355 12.3536C6.15829 12.5488 5.84171 12.5488 5.64645 12.3536C5.45118 12.1583 5.45118 11.8417 5.64645 11.6464L9.29289 8L5.64645 4.35355C5.45118 4.15829 5.45118 3.84171 5.64645 3.64645Z"
+                fill="white"
+              />
+            </svg>
+            }
+          </a>
+        </td>
+        }
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <div class="incident-overview-table__paginator-container">
+    <div class="incident-overview-table__paginator-container__report">
+      @if (remediations && remediations.length) {
+      <span
+        >Items: {{ first() + 1 }} -
+        {{
+          first() + rows() < remediations.length
+            ? first() + rows()
+            : remediations.length
+        }}
+        of {{ remediations.length }}
+      </span>
+      }
+    </div>
+  </div>
+</main>
+<app-rollback-modal
+  [visible]="showRollbackModal()"
+  [rollbackedActionId]="rollbackActionId()"
+  (close)="closeRollbackModal()"
+  (save)="confirmRollback()"
+  (back)="closeRollbackModal()"
+></app-rollback-modal>

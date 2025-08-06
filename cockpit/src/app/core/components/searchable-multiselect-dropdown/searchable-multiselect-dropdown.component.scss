@@ -1,0 +1,109 @@
+@use "../../../../fonts" as fonts;
+
+.multiselect-container {
+  width: 100%;
+  position: relative;
+  padding: 0;
+}
+
+.multiselect-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  @include fonts.body-sans-15;
+}
+
+.multiselect-wrapper {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  padding: 8px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.multiselect-wrapper.open {
+  border-bottom: 1px solid white;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.multiselect-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  @include fonts.body-sans-25;
+  width: 100%;
+
+  &__icon {
+    transition: transform 0.3s ease;
+    font-size: 1.25rem;
+
+    &--open {
+      transform: rotate(180deg); // Freccia verso l’alto
+    }
+  }
+}
+
+.multiselect-dropdown {
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #ffffff1a;
+  border-radius: 4px;
+  margin-top: 4px;
+  padding: 0.8rem 12px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  max-height: 300px;
+  overflow-y: auto;
+  backdrop-filter: blur(10px);
+  z-index: 1010;
+}
+
+.checkbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+//   .checkbox-item {
+//     display: flex;
+//     align-items: center;
+//     gap: 0.8rem;
+//     cursor: pointer;
+//     font-size: 0.95rem;
+//     color: #e0e0e0;
+//   }
+
+//   .checkbox-item input[type='checkbox'] {
+//     width: 18px;
+//     height: 18px;
+//     border-radius: 5px;
+//     accent-color: #999;
+//   }
+
+.label-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  @include fonts.body-sans-25;
+  color: #fff;
+}
+
+.multiselect-selected-values {
+  padding: 0 0.5rem;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.valueSelected {
+  border-bottom: 1px solid #fff !important;
+}

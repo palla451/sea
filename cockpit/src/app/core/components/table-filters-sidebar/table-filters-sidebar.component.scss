@@ -1,0 +1,163 @@
+@use "../../../../fonts" as fonts;
+@use "../../../../variables" as variables;
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -30rem;
+  width: 30rem;
+  height: 100vh;
+  border-top: 1px solid var(--border-primary-default, rgba(255, 255, 255, 0.1));
+  background: #000d1a;
+  color: variables.$base-app-text-color;
+  transition: right 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+
+  &--open {
+    right: 0;
+  }
+
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: variables.$sidebar-overlay-bg-color;
+    backdrop-filter: blur(0.313rem);
+    z-index: 90;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out;
+    clip-path: inset(0 30rem 0 0);
+  }
+
+  &--open &__overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  &__content {
+    padding: 1rem 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 13, 26, 0) -16.67%,
+      #000d1a 50%
+    );
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 1rem;
+
+      &__title {
+        @include fonts.monts_300_title;
+        margin: 0;
+      }
+
+      &__close-button {
+        background: variables.$app-transparent-bg;
+        border: none;
+        color: variables.$base-app-text-color;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+    }
+
+    &__accordion_container {
+      padding: 24px 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+
+      &__select-markPiece, 
+      &__select-description,
+      &__select-name {
+        padding-bottom: 1rem;
+      }
+
+      &__doubleSelectRow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        gap: 1rem;
+        z-index: 2;
+        margin-bottom: 1rem;
+
+        &--deck,
+        &--frame {
+          flex: 1;
+        }
+      }
+
+      &__startDateTime,
+      &__endDateTime {
+        @include fonts.body-sans-15;
+
+        label {
+          display: inline-block;
+          margin-bottom: 0.5rem;
+          padding-left: 0.5rem;
+        }
+      }
+
+      &__endDateTime {
+        margin-top: 12px;
+      }
+    }
+
+    &__footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: auto;
+      padding: 1rem 2rem;
+      border-top: 0.063rem solid variables.$sidebar-footer-border;
+      width: 100%;
+
+      &__button {
+        padding: 0.5rem 1rem;
+        border: none;
+        cursor: pointer;
+
+        &--cancel {
+          background: variables.$app-transparent-bg;
+          color: variables.$base-app-text-color;
+          text-decoration: underline;
+          width: 30%;
+          @include fonts.monts_300_content;
+        }
+
+        &--save {
+          display: inline-block;
+          //background: variables.$dashboard-sidebar-checkbox-bg-color;
+          background-color: rgba(255, 255, 255, 0.1);
+          color: variables.$base-app-text-color;
+          text-decoration: none;
+          border-radius: 5%;
+          text-align: center;
+          width: 30%;
+          @include fonts.monts_300_content;
+        }
+      }
+    }
+  }
+}
+
+.btnSaveActive {
+  display: inline-block;
+          background: variables.$dashboard-sidebar-checkbox-bg-color;
+          color: variables.$base-app-text-color;
+          text-decoration: none;
+          border-radius: 5%;
+          text-align: center;
+          width: 30%;
+          @include fonts.monts_300_content;
+}

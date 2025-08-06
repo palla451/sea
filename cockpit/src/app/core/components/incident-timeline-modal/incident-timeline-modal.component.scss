@@ -1,0 +1,130 @@
+@use "./../../../../variables" as variables;
+
+.incident-timeline-modal {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 1.5rem 0;
+  width: 100%;
+  &__container {
+    &__number--icons {
+      display: flex;
+      width: 2rem;
+      height: 2rem;
+      align-items: center;
+      justify-content: center;
+      color: variables.$base-app-text-color;
+      border-radius: calc(infinity * 1px);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    &__incident {
+      display: flex;
+      position: relative;
+
+      &__accordion {
+        width: 100%;
+
+        &__detail {
+          width: 100%;
+          display: flex;
+          padding: 1.5rem 2rem;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          gap: 0.75rem;
+          background-color: variables.$border-primary-default;
+
+          &__container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            align-self: stretch;
+
+            &__title {
+              display: flex;
+              gap: 0.25rem;
+              text-transform: uppercase;
+              font-size: 0.75rem;
+              align-items: center;
+
+              &__tooltip-wrapper {
+                position: relative;
+                display: inline-block;
+                display: flex;
+                align-items: center;
+                &__tooltip {
+                  position: absolute;
+                  top: -4rem;
+                  left: 1.5rem;
+                  z-index: 1000;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  align-self: stretch;
+                  gap: 0.5rem;
+                  padding: 0.75rem 1rem;
+                  cursor: pointer;
+                  max-width: 12.5rem;
+                  width: max-content;
+                  text-transform: none;
+                  background-color: variables.$border-primary-default;
+                  border-radius: 0.5rem;
+                  border-bottom-left-radius: 0px;
+                  font-size: 0.75rem;
+                  backdrop-filter: blur(calc(30px / 2));
+
+                  &--content {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    &--title {
+                      font-weight: 500;
+                      text-transform: uppercase;
+                    }
+                    &--description {
+                      font-weight: 300;
+                    }
+                  }
+                }
+              }
+            }
+
+            &__data {
+              font-size: 0.875rem;
+            }
+          }
+        }
+      }
+
+      &__message {
+        display: flex;
+        flex-direction: column;
+        //ellipsis
+
+        &__assets {
+          color: variables.$text-secondary-default;
+        }
+      }
+      &__date {
+        position: absolute;
+        padding: 0.5rem 0;
+        top: 0;
+        right: 0;
+        text-align: right;
+        font-family: "Roboto Mono";
+        font-size: 0.625rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        letter-spacing: 0.1px;
+        width: 4.25rem;
+      }
+    }
+  }
+}
+
+.icon {
+  font-size: 0.75rem;
+}

@@ -1,0 +1,26 @@
+<div class="assets-involved">
+  <div class="assets-involved__header">
+    <p class="assets-involved__header--title">
+      {{ "incidentDetailPage.assetsInvolved.title" | transloco }}
+    </p>
+    <p class="assets-involved__header--count">{{ assets().length }}</p>
+  </div>
+  <div class="assets-involved__container">
+    <div
+      class="assets-involved__container__asset"
+      *ngFor="let asset of assets()"
+    >
+      <div class="assets-involved__container__asset__name">
+        <img
+          [src]="iconAssetsInvolvedMap[asset.type.toLowerCase()]"
+          alt="Asset Type Icon"
+        />
+        <p>Asset {{ asset.description }}</p>
+      </div>
+
+      <div class="assets-involved__container__asset__tag">
+        {{ asset.assetRole }}
+      </div>
+    </div>
+  </div>
+</div>

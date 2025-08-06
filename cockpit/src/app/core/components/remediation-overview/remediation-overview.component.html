@@ -1,0 +1,97 @@
+<div class="remediation-overview">
+  <div class="remediation-overview__title">
+    <p>{{ "incidentDetailPage.remediationOverview.title" | transloco }}</p>
+  </div>
+  <div class="remediation-overview__container">
+    @for(event of events();track event.id; let i = $index){
+    <app-sidebar-accordion
+      [accordionTitle]="
+        'incidentDetailPage.remediationOverview.eventName'
+          | transloco : { index: i + 1 }
+      "
+      class="remediation-overview__accordion"
+      [variant]="'remediationOverview'"
+      [eventStatus]="event.remediation.status"
+    >
+      <div
+        class="remediation-overview__container__accordion__event"
+        [ngClass]="{ expanded: expandedIndex === i }"
+      >
+        <div class="remediation-overview__container__accordion__event__content">
+          <p-timeline
+            [value]="event.remediation.actions"
+            class="remediation-overview__container__accordion__event__content__timeline"
+          >
+            <ng-template #marker let-action>
+              <span
+                class="remediation-overview__container__accordion__event__content__timeline__marker"
+                [ngClass]="{
+                  'remediation-overview__container__accordion__event__content__timeline__marker--diamond-marker':
+                    action.status !== 'New' || action.status === 'Pending'
+                }"
+              >
+                <img
+                  class="remediation-overview__container__accordion__event__content__timeline__marker__icon"
+                  [ngClass]="{
+                    'remediation-overview__container__accordion__event__content__timeline__marker__icon--rotate':
+                      action.status !== 'New' && action.status !== 'Pending'
+                  }"
+                  [src]="
+                    action.status.toLowerCase() === 'new' ||
+                    action.status === 'pending'
+                      ? iconActionMap[action.actionType.toLowerCase()]
+                      : iconActionMap[action.status.toLowerCase()]
+                  "
+                  alt="Status Icon"
+                />
+              </span>
+            </ng-template>
+            <ng-template #content let-action>
+              <div
+                class="remediation-overview__container__accordion__event__content__timeline__overview"
+              >
+                <div
+                  class="remediation-overview__container__accordion__event__content__timeline__overview__description"
+                >
+                  <p
+                    class="remediation-overview__container__accordion__event__content__timeline__overview__description__action"
+                  >
+                    {{ action.actionType }}
+                  </p>
+                  <p
+                    class="remediation-overview__container__accordion__event__content__timeline__overview__description__message"
+                  >
+                    {{ action.description }}
+                  </p>
+                </div>
+              </div>
+            </ng-template>
+          </p-timeline>
+        </div>
+      </div>
+    </app-sidebar-accordion>
+
+    }
+  </div>
+  @if ((hasPrivilegedAccess$ | async)) {
+  <div class="manageButtonContainer">
+    <app-incident-manage-button
+      [onManage]="onManageActionCallback"
+    ></app-incident-manage-button>
+  </div>
+  }
+</div>
+
+<app-base-readonly-modal
+  [isModalVisible]="isIncidentModalOpened"
+  [modalTitle]="''"
+  (modalClosed)="manageModalClosedState()"
+  [heightPx]="850"
+>
+  <!-- <app-incident-management-modal
+    [events]="selectedIncident"
+    [currentIncidentId]="currentIncidentId"
+  ></app-incident-management-modal> -->
+
+  <app-incident-management-modal></app-incident-management-modal>
+</app-base-readonly-modal>

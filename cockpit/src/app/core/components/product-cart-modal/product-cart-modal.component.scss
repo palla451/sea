@@ -1,0 +1,39 @@
+.product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  height: 100%;
+
+  &__image {
+    display: flex;
+    justify-content: center;
+    background-color: whitesmoke;
+    padding: 2rem;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
+    height: 15rem;
+  }
+  &__image img {
+    object-fit: contain;
+    width: 100%;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    padding: 0 3rem;
+    margin-bottom: 3rem;
+    gap: 1rem;
+
+    &--title {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    &--description {
+      overflow: auto;
+      text-align: justify;
+      height: 400px;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-mcsp-deployment
+  labels:
+    app: fe-mcsp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fe-mcsp
+  template:
+    metadata:
+      labels:
+        app: fe-mcsp
+        version: v1
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: fe-mcsp
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 80
+

@@ -1,0 +1,42 @@
+<main class="product-cart-slider">
+  <div class="product-cart-slider__title">
+    <h2>{{ currentTitle }}</h2>
+    <div>{{ currentSubtitle }}</div>
+  </div>
+
+  <p-carousel
+    [value]="products"
+    [numVisible]="3"
+    [numScroll]="1"
+    [circular]="true"
+    autoplayInterval="3000"
+    (onPage)="handlePageChange($event)"
+    [responsiveOptions]="responsiveOptions"
+    class="product-cart-slider__carousel"
+  >
+    <ng-template let-product #item>
+      <div class="product-cart-slider__carousel__card">
+        <a
+          class="product-cart-slider__carousel__card__container"
+          [href]="product.link"
+          target="_blank"
+          rel="noopener"
+        >
+          <img
+            [src]="`${imagesPath}${product.image}`"
+            [alt]="product.name"
+            class="product-cart-slider__carousel__card__container__image"
+          />
+        </a>
+        <div class="product-cart-slider__carousel__card__info">
+          <div class="product-cart-slider__carousel__card__info__name">
+            {{ product.name }}
+          </div>
+          <div class="product-cart-slider__carousel__card__info__description">
+            {{ product.description }}
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</main>

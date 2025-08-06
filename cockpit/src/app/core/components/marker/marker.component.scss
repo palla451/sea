@@ -1,0 +1,39 @@
+@use "../../../../variables" as variables;
+
+.marker {
+  display: inline-flex;
+  width: 36px;
+  height: 36px;
+  align-items: center;
+  justify-content: center;
+  color: variables.$base-app-text-color;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.15);
+
+  &.active {
+    background-color: white;
+    img {
+      color: variables.$icon-dark;
+    }
+  }
+
+  &.rounded {
+    border-radius: 9999px; // cerchio
+  }
+
+  &.diamond {
+    transform: rotate(45deg);
+    border-radius: 0;
+    width: 28px;
+    height: 28px;
+    img {
+      transform: rotate(-45deg);
+    }
+  }
+
+  img {
+    height: 16px;
+    width: 16px;
+  }
+}

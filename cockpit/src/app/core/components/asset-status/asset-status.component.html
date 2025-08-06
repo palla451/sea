@@ -1,0 +1,39 @@
+<div class="asset-status-buttons-container">
+  <div class="asset-status-buttons-container__button-group">
+    <p-toggleButton
+      [(ngModel)]="selectedLevels['operational']"
+      (onChange)="updateFilters()"
+      [onLabel]="'filters.assetStatus.operational' | transloco"
+      [offLabel]="'filters.assetStatus.operational' | transloco"
+      styleClass="asset-status-buttons-container__button-group__btn-element"
+    >
+    </p-toggleButton>
+
+    <p-toggleButton
+      [(ngModel)]="selectedLevels['turnedOff']"
+      (onChange)="updateFilters()"
+      [onLabel]="'filters.assetStatus.turnedOff' | transloco"
+      [offLabel]="'filters.assetStatus.turnedOff' | transloco"
+      styleClass="asset-status-buttons-container__button-group__btn-element"
+    >
+    </p-toggleButton>
+
+    <p-toggleButton
+      [(ngModel)]="selectedLevels['maintenance']"
+      (onChange)="updateFilters()"
+      [onLabel]="'filters.assetStatus.maintenance' | transloco"
+      [offLabel]="'filters.assetStatus.maintenance' | transloco"
+      styleClass="asset-status-buttons-container__button-group__btn-element"
+    >
+    </p-toggleButton>
+
+    <p-toggleButton
+      [(ngModel)]="selectedLevels['compromised']"
+      (onChange)="updateFilters()"
+      [onLabel]="'filters.assetStatus.compromised' | transloco"
+      [offLabel]="'filters.assetStatus.compromised' | transloco"
+      styleClass="asset-status-buttons-container__button-group__btn-element"
+    >
+    </p-toggleButton>
+  </div>
+</div>

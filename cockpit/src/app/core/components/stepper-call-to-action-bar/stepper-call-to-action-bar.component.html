@@ -1,0 +1,46 @@
+@if(currAction){
+<div class="stepper__call_to_action_bar">
+  @if(!isCurrentlySelectedEventMarkedAsFalsePositive()){
+  <div class="stepper__call_to_action_bar__show-remediation">
+    <img src="assets/svg/show.svg" alt="show icon" />
+    <button (click)="openRemediationImpactModal()">
+      {{ "remediationManagementModal.remediationImpact.button" | transloco }}
+    </button>
+  </div>
+  } @if (!isReadOnlyMode()) {
+  <button
+    [disabled]="!isCurrentStepCTAActive()"
+    (click)="onPanelButtonClick(currAction)"
+    class="stepper__call_to_action_bar__actions"
+    [ngClass]="{
+      stepper__call_to_action_bar__actions__active: isCurrentStepCTAActive()
+    }"
+  >
+    {{ getActionButtonLabel(currAction) | transloco }}
+  </button>
+  }
+</div>
+}@else if(isMarkAsFalsePositiveRequired()){
+<div class="false-positive-panel__footer">
+  <button
+    (click)="disableFalsePositiveMode()"
+    class="false-positive-panel__footer__cancel"
+  >
+    {{ "common.button.cancel" | transloco }}
+  </button>
+
+  <button
+    (click)="onMarkFalsePositive()"
+    [disabled]="!isProceedAndMarkAsFalsePositiveActive()"
+    class="false-positive-panel__footer__actions"
+    [ngClass]="{
+      'false-positive-panel__footer__actions__active':
+        isProceedAndMarkAsFalsePositiveActive()
+    }"
+  >
+    {{
+      "remediationManagementModal.markAsFalsePositive.confirmButton" | transloco
+    }}
+  </button>
+</div>
+}

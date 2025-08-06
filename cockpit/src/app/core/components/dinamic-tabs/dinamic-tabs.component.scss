@@ -1,0 +1,34 @@
+@use "../../../../variables" as variables;
+@use "../../../../fonts" as fonts;
+
+::ng-deep .p-tab {
+  background: none !important;
+  border-color: variables.$table-border-color !important;
+  overflow: hidden !important;
+  color: var(--text-primary-default, #fff) !important;
+  text-overflow: ellipsis !important;
+  font-family: Montserrat, sans-serif !important;
+  font-size: 16px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: normal !important;
+}
+
+::ng-deep .p-tabpanels {
+  background: none !important;
+  border-color: variables.$base-app-text-color !important;
+  padding: 0 !important;
+  padding-top: 1.5rem !important;
+}
+
+::ng-deep .p-tablist-tab-list {
+  background: none !important;
+  border-bottom: 1px solid transparent !important;
+}
+::ng-deep .p-tablist-nav-button {
+  background: #000d1a !important;
+}
+::ng-deep .p-tablist-active-bar {
+  background: variables.$base-app-text-color !important;
+  height: 2px !important;
+}

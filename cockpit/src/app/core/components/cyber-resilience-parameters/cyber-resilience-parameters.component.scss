@@ -1,0 +1,154 @@
+// .cyber-resilience-ov {
+//     position: relative;
+//     width: 100%;
+  
+//     &__progressBar {
+//       width: 452px;
+//       padding: 4px 0;
+      
+//       &__card {
+//         position: relative;
+//         z-index: 1;
+//         height: 72px;
+  
+//         .progress-container {
+//           display: flex;
+//           align-items: center;
+//           gap: 0.5rem;
+//           width: 100%;
+  
+//           .progress-wrapper {
+//             position: relative;
+//             flex-grow: 1;
+//           }
+//         }
+  
+//         &__indicator-container {
+//           position: relative;
+//           width: 100%;
+//           margin-bottom: 1rem;
+//           display: flex;
+  
+//           &--arrow {
+//             position: absolute;
+//             bottom: -0.125rem;
+//             width: 0;
+//             height: 0;
+//             border-left: 0.5rem solid transparent;
+//             border-right: 0.5rem solid transparent;
+//             border-bottom: 0.5rem solid #007ad9;
+//             transform: translateX(-50%);
+//           }
+  
+//           &--value {
+//             margin-top: 0.5rem;
+  
+//             span {
+//               bottom: -1.25rem;
+//               display: inline-block;
+//               position: absolute;
+//               transform: translateX(-50%);
+//               font-size: 0.75rem;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+
+.cyber-resilience-ov {
+  position: relative;
+  width: 100%;
+
+  &__progressBar {
+    width: 452px;
+    padding: 4px 0;
+    
+    &__card {
+      position: relative;
+      z-index: 1;
+      height: 72px;
+
+      .progress-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: 100%;
+
+        .progress-wrapper {
+          position: relative;
+          flex-grow: 1;
+
+          .remediation-impact {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            border-radius: 6px;
+          }
+        }
+      }
+
+      &__indicator-container {
+        position: relative;
+        width: 100%;
+        margin-bottom: 1rem;
+        display: flex;
+
+        &--arrow {
+          position: absolute;
+          bottom: -0.125rem;
+          width: 0;
+          height: 0;
+          border-left: 0.5rem solid transparent;
+          border-right: 0.5rem solid transparent;
+          border-bottom: 0.5rem solid #007ad9;
+          transform: translateX(-50%);
+        }
+
+        &--value {
+          margin-top: 0.5rem;
+
+          span {
+            bottom: -1.25rem;
+            display: inline-block;
+            position: absolute;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Classes for progress bar colors
+.progress-red {
+  ::ng-deep .p-progressbar-value {
+    background: #ff3d32;
+  }
+}
+
+.progress-yellow {
+  ::ng-deep .p-progressbar-value {
+    background: #ffb300;
+  }
+}
+
+.progress-green {
+  ::ng-deep .p-progressbar-value {
+    background: #4caf50;
+  }
+}
+
+// Classes for arrow colors
+.arrow-red {
+  border-bottom-color: #ff3d32 !important;
+}
+
+.arrow-yellow {
+  border-bottom-color: #ffb300 !important;
+}
+
+.arrow-green {
+  border-bottom-color: #4caf50 !important;
+}

@@ -1,0 +1,62 @@
+@if(incidentData){
+<div class="header-container">
+  <div class="header-container__back-info">
+    <button class="circle-button" (click)="navigateToIncidentDetailInitiator()">
+      <img src="assets/svg/arrow-left.svg" alt="Back" class="arrow-icon" />
+    </button>
+    <div class="header-container__back-info__info">
+      <p class="header-container__back-info__info__incident-name">
+        {{ incidentData.title }}
+      </p>
+      <p class="header-container__back-info__info__notification">
+        {{ incidentData.description }}
+      </p>
+    </div>
+  </div>
+
+  <div class="header-container__right-info">
+    <div class="header-container__right-info__impacted-system">
+      <p class="uppercase">
+        {{
+          "incidentDetailPage.incidentDetailHeader.impactedSystem.title"
+            | transloco
+        }}
+      </p>
+      <p>{{ getIncidentImpactedSystems() }}</p>
+    </div>
+    <div class="header-container__right-info__divider"></div>
+    <div class="header-container__right-info__date">
+      <p class="uppercase">
+        {{ "incidentDetailPage.incidentDetailHeader.date.title" | transloco }}
+      </p>
+      <p>{{ incidentData.createdAt | date : "dd/MM/yyyy - HH:mm" }}</p>
+    </div>
+    <div class="header-container__right-info__divider"></div>
+    <div class="header-container__right-info__alertLevel">
+      <p class="uppercase">
+        {{
+          "incidentDetailPage.incidentDetailHeader.alertLevel.title" | transloco
+        }}
+      </p>
+
+      <div class="header-container__right-info__alertLevel__alert">
+        <p>{{ capitalizeFirstLetter(incidentData.severity) }}</p>
+        <span
+          class="header-container__right-info__alertLevel__alert__icon"
+          [ngStyle]="{
+                'background-color': getAlertSeverityColor(incidentData.severity),
+                'box-shadow': getAlertSeverityShadow(incidentData.severity),
+              }"
+        ></span>
+      </div>
+    </div>
+    <div class="header-container__right-info__divider"></div>
+    <div class="header-container__right-info__status">
+      <p class="uppercase">
+        {{ "incidentDetailPage.incidentDetailHeader.status.title" | transloco }}
+      </p>
+      <p>{{ capitalizeFirstLetter(incidentData.status) }}</p>
+    </div>
+  </div>
+</div>
+}

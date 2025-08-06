@@ -1,0 +1,212 @@
+<div class="svg-wrapper">
+  @if(incidentDetailDeckTopView() && incidentDetailDeckTopView()!==''){
+  <svg
+    viewBox="0 0 1776 330"
+    xmlns="http://www.w3.org/2000/svg"
+    preserveAspectRatio="xMidYMid meet"
+  >
+    <line
+      x1="0"
+      y1="165"
+      x2="1776"
+      y2="165"
+      stroke="rgba(255, 255, 255, 0.20)"
+      stroke-width="1"
+      stroke-dasharray="10,5"
+    />
+
+    <!-- linee verticali di demarcazione mvz -->
+    <line
+      x1="362"
+      y1="0"
+      x2="362"
+      y2="330"
+      stroke="rgba(255, 255, 255, 0.20)"
+      stroke-width="1"
+      stroke-dasharray="10,5"
+    />
+
+    <line
+      x1="715"
+      y1="0"
+      x2="715"
+      y2="330"
+      stroke="rgba(255, 255, 255, 0.20)"
+      stroke-width="1"
+      stroke-dasharray="10,5"
+    />
+
+    <line
+      x1="1013"
+      y1="0"
+      x2="1013"
+      y2="330"
+      stroke="rgba(255, 255, 255, 0.20)"
+      stroke-width="1"
+      stroke-dasharray="10,5"
+    />
+
+    <line
+      x1="1385"
+      y1="0"
+      x2="1385"
+      y2="330"
+      stroke="rgba(255, 255, 255, 0.20)"
+      stroke-width="1"
+      stroke-dasharray="10,5"
+    />
+
+    <image
+      [attr.href]="incidentDetailDeckTopView()"
+      width="1776"
+      height="330"
+    />
+
+    <!-- incident indicator -->
+
+    @for(asset of assetsByCurrentlySelectedDeck(); track asset.id; let i =
+    $index ){
+    <!-- Coordinate mvz di riferimento -->
+    <text
+      [attr.x]="112"
+      [attr.y]="305"
+      class="mvz-label"
+      [attr.fill]="getMVZColor('1', asset)"
+    >
+      MVZ 1
+    </text>
+
+    <!-- Icona SVG -->
+    @if(checkIfCurrentMVZHasIncidents('1',asset)){
+    <image
+      [attr.href]="'assets/svg/priority-high.svg'"
+      [attr.x]="160"
+      [attr.y]="292"
+      width="15"
+      height="15"
+      preserveAspectRatio="xMidYMid meet"
+    />
+    }
+
+    <text
+      [attr.x]="510"
+      [attr.y]="305"
+      class="mvz-label"
+      [attr.fill]="getMVZColor('2', asset)"
+    >
+      MVZ 2
+    </text>
+
+    <!-- Icona SVG -->
+    @if(checkIfCurrentMVZHasIncidents('2',asset)){
+    <image
+      [attr.href]="'assets/svg/priority-high.svg'"
+      [attr.x]="559"
+      [attr.y]="292"
+      width="15"
+      height="15"
+      preserveAspectRatio="xMidYMid meet"
+    />
+    }
+
+    <text
+      [attr.x]="825"
+      [attr.y]="305"
+      class="mvz-label"
+      [attr.fill]="getMVZColor('3', asset)"
+    >
+      MVZ 3
+    </text>
+
+    <!-- Icona SVG -->
+    @if(checkIfCurrentMVZHasIncidents('3',asset)){
+    <image
+      [attr.href]="'assets/svg/priority-high.svg'"
+      [attr.x]="874"
+      [attr.y]="292"
+      width="15"
+      height="15"
+      preserveAspectRatio="xMidYMid meet"
+    />
+    }
+
+    <text
+      [attr.x]="1180"
+      [attr.y]="305"
+      class="mvz-label"
+      [attr.fill]="getMVZColor('4', asset)"
+    >
+      MVZ 4
+    </text>
+
+    <!-- Icona SVG -->
+    @if(checkIfCurrentMVZHasIncidents('4',asset)){
+    <image
+      [attr.href]="'assets/svg/priority-high.svg'"
+      [attr.x]="1229"
+      [attr.y]="292"
+      width="15"
+      height="15"
+      preserveAspectRatio="xMidYMid meet"
+    />
+    }
+
+    <text
+      [attr.x]="1501"
+      [attr.y]="305"
+      class="mvz-label"
+      [attr.fill]="getMVZColor('5', asset)"
+    >
+      MVZ 5
+    </text>
+
+    <!-- Icona SVG -->
+    @if(checkIfCurrentMVZHasIncidents('5',asset)){
+    <image
+      [attr.href]="'assets/svg/priority-high.svg'"
+      [attr.x]="1550"
+      [attr.y]="292"
+      width="15"
+      height="15"
+      preserveAspectRatio="xMidYMid meet"
+    />
+    }
+
+    <g style="isolation: isolate">
+      <circle
+        [attr.cx]="convertFrameInXPosition(asset)"
+        [attr.cy]="getAssetYPosition(asset)"
+        r="20"
+        fill="#ccc"
+      />
+      <!-- outer ring -->
+      <circle
+        [attr.cx]="convertFrameInXPosition(asset)"
+        [attr.cy]="getAssetYPosition(asset)"
+        r="18"
+        fill="white"
+      />
+      <!-- middle ring -->
+      <circle
+        [attr.cx]="convertFrameInXPosition(asset)"
+        [attr.cy]="getAssetYPosition(asset)"
+        r="16"
+        [attr.fill]="alertIndicatorColor()"
+        class="share-indicator__inner-ring"
+      />
+      <!-- internal warning icon -->
+      <image
+        [attr.href]="iconImagePath()"
+        [attr.x]="convertFrameInXPosition(asset, true)"
+        [attr.y]="getAssetYPosition(asset, true)"
+        width="16"
+        height="16"
+        preserveAspectRatio="xMidYMid meet"
+      />
+    </g>
+    }
+  </svg>
+  }@else{
+  <app-local-spinner></app-local-spinner>
+  }
+</div>

@@ -1,0 +1,24 @@
+@if(currAction){
+    <div
+    class="assisted-action-status"
+    (mouseenter)="showNoteInfoBox()"
+    (mouseleave)="hideNoteInfoBox()"
+    >
+    <span
+        class="assisted-action-status--alert-icon"
+        [ngStyle]="{
+                    'background-color': getAssistedActionStatusColor(currAction.status),
+                    'box-shadow': getAssistedActionStatusShadow(currAction.status),
+                }"
+    ></span>
+    <span class="assisted-action-status--alert-hint">
+        {{ mapLabelForActionStatus(currAction.status) }}</span
+    >
+
+    <app-generic-tooltip-info-box
+        [isTooltipVisible]="isShowNoteInfoBox() && isCurrentActionPending()"
+        [text]="'The service is working in background, it might require some additional time.'"
+        [leftPos]="'-270px'"
+    ></app-generic-tooltip-info-box>
+    </div>
+}

@@ -1,0 +1,62 @@
+<div class="metric-container">
+  <div class="left-section">
+    <div class="label">{{ reliabilityBarTitle }}</div>
+
+    <div class="bar-wrapper">
+      <div class="bar">
+        <div
+          class="fill"
+          [ngStyle]="getPercentageWidthByFinalPercentage(macrofuncOVPercentage)"
+          [ngClass]="getProgressBarClass()"
+        ></div>
+        <div
+          class="threshold"
+          [ngStyle]="
+            getPercentageLeftPosByFinalPercentage(macrofuncOVPercentage)
+          "
+          [ngClass]="getArrowClass()"
+        ></div>
+        <div
+          class="trendFill"
+          [ngStyle]="
+            getTrendPercentageBarStyle(
+              macrofuncOVPercentage,
+              macrofuncTrenPercentage
+            )
+          "
+        ></div>
+      </div>
+      <div
+        class="bar-value"
+        [ngStyle]="getPercentageLeftPosByFinalPercentage(macrofuncOVPercentage)"
+      >
+        {{ macrofuncOVPercentage }}%
+      </div>
+    </div>
+  </div>
+
+  <div class="right-section">
+    <div class="metric-title">
+      {{
+        "remediationManagementModal.remediationImpact.reliability.title"
+          | transloco
+      }}
+    </div>
+    <div class="metric-value">
+      <span class="value">{{ macrofuncOVPercentage }}</span
+      ><span class="unit">%</span>
+      <div class="divider"></div>
+      <div class="impact">
+        <app-remediation-trend
+          [trendPercentage]="macrofuncTrenPercentage"
+        ></app-remediation-trend>
+        <div class="impact-label">
+          {{
+            "remediationManagementModal.remediationImpact.reliability.impact"
+              | transloco
+          }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

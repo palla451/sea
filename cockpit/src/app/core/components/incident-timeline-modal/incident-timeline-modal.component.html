@@ -1,0 +1,77 @@
+<div class="incident-timeline-modal">
+  <p-timeline
+    [value]="timelineModalEvents()"
+    class="incident-timeline-modal__container"
+  >
+    <ng-template #marker let-timelineModalEvent>
+      <span class="incident-timeline-modal__container__number--icons">
+        <p>{{ timelineModalEvent.event.icon }}</p>
+      </span>
+    </ng-template>
+    <ng-template #content let-timelineModalEvent let-index="index">
+      <div class="incident-timeline-modal__container__incident">
+        <app-sidebar-accordion
+          accordionTitle="{{ timelineModalEvent.event.description }}"
+          class="incident-timeline-modal__container__incident__accordion"
+          [variant]="'timeline'"
+        >
+          <div
+            class="incident-timeline-modal__container__incident__accordion__detail"
+            [ngClass]="{ expanded: expandedIndex === index }"
+          >
+            <div
+              class="incident-timeline-modal__container__incident__accordion__detail__container"
+              *ngFor="let asset of timelineModalEvent.asset | keyvalue : noSort"
+            >
+              <div
+                class="incident-timeline-modal__container__incident__accordion__detail__container__title"
+              >
+                <span>{{ asset.key }}</span>
+                <div
+                  class="incident-timeline-modal__container__incident__accordion__detail__container__title__tooltip-wrapper"
+                  *ngIf="getTooltip(asset.key)"
+                >
+                  <i
+                    class="pi pi-info-circle icon"
+                    (mouseenter)="tooltipVisible = index + '-' + asset.key"
+                    (mouseleave)="tooltipVisible = null"
+                  ></i>
+
+                  <div
+                    class="incident-timeline-modal__container__incident__accordion__detail__container__title__tooltip-wrapper__tooltip"
+                    *ngIf="tooltipVisible === index + '-' + asset.key"
+                  >
+                    <div
+                      class="incident-timeline-modal__container__incident__accordion__detail__container__title__tooltip-wrapper__tooltip--content"
+                    >
+                      <div
+                        class="incident-timeline-modal__container__incident__accordion__detail__container__title__tooltip-wrapper__tooltip--content--title"
+                      >
+                        {{ "genericTootltipInfo.title" | transloco }}
+                      </div>
+                      <div
+                        class="incident-timeline-modal__container__incident__accordion__detail__container__title__tooltip-wrapper__tooltip--content--description"
+                      >
+                        {{ getTooltip(asset.key) | transloco }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <span
+                class="incident-timeline-modal__container__incident__accordion__detail__container__data"
+                >{{ asset.value }}</span
+              >
+            </div>
+          </div>
+        </app-sidebar-accordion>
+
+        <div class="incident-timeline-modal__container__incident__date">
+          <p>{{ timelineModalEvent.event.creationDate }}</p>
+          <p>{{ timelineModalEvent.event.creationTime }}</p>
+        </div>
+      </div>
+    </ng-template>
+  </p-timeline>
+</div>

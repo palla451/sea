@@ -1,0 +1,178 @@
+<div class="multiselect-container">
+  <label class="multiselect-label">{{ multiselectTitle }}</label>
+  <div
+    class="multiselect-wrapper"
+    (click)="toggleDropdown()"
+    [class.open]="dropdownOpen"
+    [ngClass]="{
+          valueSelected: (selectedDisplayText &&  selectedDisplayText!== '' && !dropdownOpen),
+        }"
+  >
+    @if(selectedDisplayText && !dropdownOpen) {
+      <div class="multiselect-selected-values">{{ selectedDisplayText }}</div>
+    } @else {
+      <input
+        type="text"
+        class="multiselect-input"
+        placeholder="{{ multiselectHint }}"
+        [(ngModel)]="searchTerm"
+        (input)="filterOptions()"
+        (click)="$event.stopPropagation()"
+      />
+    }
+    <span
+      class="multiselect-input__icon"
+      [attr.aria-hidden]="true"
+      [class.multiselect-input__icon--open]="dropdownOpen"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M3.64645 5.64645C3.84171 5.45118 4.15829 5.45118 4.35355 5.64645L8 9.29289L11.6464 5.64645C11.8417 5.45118 12.1583 5.45118 12.3536 5.64645C12.5488 5.84171 12.5488 6.15829 12.3536 6.35355L8.35355 10.3536C8.15829 10.5488 7.84171 10.5488 7.64645 10.3536L3.64645 6.35355C3.45118 6.15829 3.45118 5.84171 3.64645 5.64645Z"
+          fill="white"
+        />
+      </svg>
+    </span>
+  </div>
+
+  <div class="multiselect-dropdown" *ngIf="dropdownOpen" (appClickOutside)="clickedOutsideDD()">
+    @if(fieldName){ @switch (fieldName) { @case ('description') {
+    <div class="checkbox-list">
+      <label
+        *ngFor="let option of filteredDescriptionOptions"
+        class="multiselect-container__checkbox-item"
+      >
+        <input
+          type="checkbox"
+          [checked]="isSelected(option)"
+          (change)="toggleSelection(option, fieldName)"
+        />
+        <span class="label-text">{{ option }}</span>
+      </label>
+    </div>
+    } @case ('deck') {
+    <div class="checkbox-list">
+      <label
+        *ngFor="let option of filteredDecksOptions"
+        class="multiselect-container__checkbox-item"
+      >
+        <input
+          type="checkbox"
+          [checked]="isSelected(option)"
+          (change)="toggleSelection(option, fieldName)"
+        />
+        <span class="label-text">{{ option }}</span>
+      </label>
+    </div>
+    } @case ('frame') {
+    <div class="checkbox-list">
+      <label
+        *ngFor="let option of filteredFramesOptions"
+        class="multiselect-container__checkbox-item"
+      >
+        <input
+          type="checkbox"
+          [checked]="isSelected(option)"
+          (change)="toggleSelection(option, fieldName)"
+        />
+        <span class="label-text">{{ option }}</span>
+      </label>
+    </div>
+    } @case ('mvz') {
+    <div class="checkbox-list">
+      <label
+        *ngFor="let option of filteredMVZOptions"
+        class="multiselect-container__checkbox-item"
+      >
+        <input
+          type="checkbox"
+          [checked]="isSelected(option)"
+          (change)="toggleSelection(option, fieldName)"
+        />
+        <span class="label-text">{{ option }}</span>
+      </label>
+    </div>
+    } @case ('markPiece') {
+    <div class="checkbox-list">
+      <label
+        *ngFor="let option of fiteredMarkPieceOptions"
+        class="multiselect-container__checkbox-item"
+      >
+        <input
+          type="checkbox"
+          [checked]="isSelected(option)"
+          (change)="toggleSelection(option, fieldName)"
+        />
+        <span class="label-text">{{ option }}</span>
+      </label>
+    </div>
+    } @case ('type') {
+    <div class="checkbox-list">
+      <label
+        *ngFor="let option of fiteredTypeOptions"
+        class="multiselect-container__checkbox-item"
+      >
+        <input
+          type="checkbox"
+          [checked]="isSelected(option)"
+          (change)="toggleSelection(option, fieldName)"
+        />
+        <span class="label-text">{{ option }}</span>
+      </label>
+    </div>
+    } @case ('name') {
+    <div class="checkbox-list">
+      <label
+        *ngFor="let option of fiteredNameOptions"
+        class="multiselect-container__checkbox-item"
+      >
+        <input
+          type="checkbox"
+          [checked]="isSelected(option)"
+          (change)="toggleSelection(option, fieldName)"
+        />
+        <span class="label-text">{{ option }}</span>
+      </label>
+    </div>
+    } @case ('actionDescription') {
+    <div class="checkbox-list">
+      <label
+        *ngFor="let option of fiteredActionDescriptionOptions"
+        class="multiselect-container__checkbox-item"
+      >
+        <input
+          type="checkbox"
+          [checked]="isSelected(option)"
+          (change)="toggleSelection(option, fieldName)"
+        />
+        <span class="label-text">{{ option }}</span>
+      </label>
+    </div>
+    }@case ('incidentDescription') {
+    <div class="checkbox-list">
+      <label
+        *ngFor="let option of fiteredIncidentDescriptionOptions"
+        class="multiselect-container__checkbox-item"
+      >
+        <input
+          type="checkbox"
+          [checked]="isSelected(option)"
+          (change)="toggleSelection(option, fieldName)"
+        />
+        <span class="label-text">{{ option }}</span>
+      </label>
+    </div>
+    }
+  
+  
+  
+  } }
+  </div>
+</div>

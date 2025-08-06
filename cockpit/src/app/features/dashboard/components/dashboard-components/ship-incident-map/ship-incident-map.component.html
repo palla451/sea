@@ -1,0 +1,231 @@
+<div class="container">
+  <!-- Colonna destra -->
+
+  <div class="content">
+    <svg
+      viewBox="0 0 1200 400"
+      preserveAspectRatio="xMidYMid meet"
+      class="ship-svg"
+    >
+      <!-- Definizione del gradiente caso warn -->
+      <defs>
+        <linearGradient
+          id="deckHighlightGradientWarn"
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="0%"
+        >
+          <stop offset="0%" stop-color="rgba(255, 207, 38, 0.00)" />
+          <stop offset="10%" stop-color="rgba(255, 207, 38, 0.50)" />
+          <stop offset="91.5%" stop-color="rgba(255, 207, 38, 0.50)" />
+          <stop offset="100%" stop-color="rgba(255, 207, 38, 0.00)" />
+        </linearGradient>
+
+        <!-- Maschera per la striscia -->
+        <mask id="stripMaskWarn">
+          <rect width="100%" height="100%" fill="white" />
+        </mask>
+      </defs>
+
+      <!-- Definizione del gradiente caso error -->
+      <defs>
+        <defs>
+          <linearGradient
+            id="deckHighlightGradientError"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="0%"
+          >
+            <stop offset="0%" stop-color="rgba(246, 77, 77, 0)" />
+            <stop offset="10%" stop-color="rgba(246, 77, 77, 0.5)" />
+            <stop offset="91.5%" stop-color="rgba(246, 77, 77, 0.5)" />
+            <stop offset="100%" stop-color="rgba(246, 77, 77, 0)" />
+          </linearGradient>
+        </defs>
+
+        <!-- Maschera per la striscia -->
+        <mask id="stripMaskError">
+          <rect width="100%" height="100%" fill="white" />
+        </mask>
+      </defs>
+
+      <!-- Definizione del gradiente caso medium severity -->
+      <defs>
+        <defs>
+          <linearGradient
+            id="deckHighlightGradientMedium"
+            x1="0%"
+            y1="0%"
+            x2="100%"
+            y2="0%"
+          >
+            <stop offset="0%" stop-color="rgba(255, 136, 38, 0)" />
+            <stop offset="10%" stop-color="rgba(255, 136, 38, 0.5)" />
+            <stop offset="91.5%" stop-color="rgba(255, 136, 38, 0.5)" />
+            <stop offset="100%" stop-color="rgba(255, 136, 38, 0)" />
+          </linearGradient>
+        </defs>
+
+         <!-- Maschera per la striscia -->
+         <mask id="stripMaskMedium">
+          <rect width="100%" height="100%" fill="white" />
+        </mask>
+      </defs>
+
+      <!-- Sfondo semitrasparente -->
+      <rect width="100%" height="100%" fill="transparent" />
+
+      <!-- Immagine della nave - MODIFICATO QUI -->
+      <image
+        href="assets/svg/Lateral Boat + Deck - spostato.svg"
+        width="100%"
+        height="100%"
+        preserveAspectRatio="xMidYMid meet"
+      />
+
+      <!-- Griglia (disegnata DOPO l'immagine per sovrapposizione) -->
+      <g class="grid">
+        <!-- Disegno della griglia -->
+        <ng-container *ngFor="let line of gridLines">
+          <!-- Righe orizzontali -->
+          <line
+            *ngIf="line.orientation === 'horizontal'"
+            [attr.x1]="line.x1"
+            [attr.y1]="line.y1"
+            [attr.x2]="line.x2"
+            [attr.y2]="line.y2"
+            stroke="rgba(255, 255, 255, 0.20)"
+            stroke-dasharray="5,5"
+          />
+
+          <!-- Righe verticali -->
+          <line
+            *ngIf="line.orientation === 'vertical'"
+            [attr.x1]="line.x1"
+            [attr.y1]="line.y1"
+            [attr.x2]="line.x2"
+            [attr.y2]="line.y2"
+            stroke="rgba(255, 255, 255, 0.20)"
+            stroke-dasharray="5,5"
+          />
+
+          <!-- Coordinate di riferimento -->
+          <text
+            [attr.x]="line.x1 + 3"
+            [attr.y]="line.y1 - 5"
+            class="grid-label"
+            [attr.fill] = "getDeckLabelColor(line?.lineLabel)"
+          >
+            {{ line?.lineLabel }}
+          </text>
+
+          <!-- Icona SVG -->
+          @if(line.orientation === 'horizontal' && line?.lineLabel){
+          <image
+            [attr.href]="
+              checkIfDeckHasIncidents(line?.lineLabel)
+                ? 'assets/svg/priority-high.svg'
+                : 'assets/svg/priority-high-disabled.svg'
+            "
+            [attr.x]="line.x1 + 19"
+            [attr.y]="line.y1 - 17"
+            width="15"
+            height="15"
+            preserveAspectRatio="xMidYMid meet"
+          />
+          }
+
+          <!-- Indicatori degli Incidents presenti su ogni line (deck) -->
+          @if(checkIfDeckHasIncidents(line.lineLabel) &&
+          convertFrameInXPosition(highlightedIncident(),line.lineLabel)){
+
+          <!-- highligth del deck con incidents -->
+
+          @if(highlightedIncidentSeverity() === 'high' ||
+          highlightedIncidentSeverity() === 'critical'){
+          <g>
+            <rect
+              [attr.x]="line.x1"
+              [attr.y]="line.y1 - (line.sectorTickness || 2)"
+              [attr.width]="line.x2 - line.x1"
+              [attr.height]="line.sectorTickness || 2"
+              fill="url(#deckHighlightGradientError)"
+              mask="url(#stripMaskError)"
+            />
+          </g>
+          } @else if (highlightedIncidentSeverity() === 'low') {
+          <g>
+            <rect
+              [attr.x]="line.x1"
+              [attr.y]="line.y1 - (line.sectorTickness || 2)"
+              [attr.width]="line.x2 - line.x1"
+              [attr.height]="line.sectorTickness || 2"
+              fill="url(#deckHighlightGradientWarn)"
+              mask="url(#stripMaskWarn)"
+            />
+          </g>
+          }
+          @else if (highlightedIncidentSeverity() === 'medium') {
+          <g>
+            <rect
+              [attr.x]="line.x1"
+              [attr.y]="line.y1 - (line.sectorTickness || 2)"
+              [attr.width]="line.x2 - line.x1"
+              [attr.height]="line.sectorTickness || 2"
+              fill="url(#deckHighlightGradientMedium)"
+              mask="url(#stripMaskMedium)"
+            />
+          </g>
+          }
+          <g style="isolation: isolate">
+            <circle
+              [attr.cx]="
+                convertFrameInXPosition(highlightedIncident(), line.lineLabel)
+              "
+              [attr.cy]="line.y1 - 10"
+              r="20"
+              fill="#ccc"
+            />
+            <!-- outer ring -->
+            <circle
+              [attr.cx]="
+                convertFrameInXPosition(highlightedIncident(), line.lineLabel)
+              "
+              [attr.cy]="line.y1 - 10"
+              r="18"
+              fill="white"
+            />
+            <!-- middle ring -->
+            <circle
+              [attr.cx]="
+                convertFrameInXPosition(highlightedIncident(), line.lineLabel)
+              "
+              [attr.cy]="line.y1 - 10"
+              r="16"
+              [attr.fill]="alertIndicatorColor()"
+              class="share-indicator__inner-ring"
+            />
+            <!-- internal warning icon -->
+            <image
+              [attr.href]="iconImagePath()"
+              [attr.x]="
+                convertFrameInXPosition(
+                  highlightedIncident(),
+                  line.lineLabel,
+                  true
+                )
+              "
+              [attr.y]="line.y1 - 20"
+              width="16"
+              height="16"
+              preserveAspectRatio="xMidYMid meet"
+            />
+          </g>
+          }
+        </ng-container>
+      </g>
+    </svg>
+  </div>
+</div>

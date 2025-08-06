@@ -1,0 +1,60 @@
+@use "./../../../../variables" as variables;
+
+.assets-involved {
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+
+    &--title {
+      font-size: 1.25rem;
+    }
+
+    &--count {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    max-height: 20rem;
+    gap: 1rem;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+
+    .expanded {
+      max-height: 30rem;
+    }
+
+    &__asset {
+      display: flex;
+      justify-content: space-between;
+      background-color: rgba(255, 255, 255, 0.15);
+      padding: 1rem;
+      border-radius: 0.15rem;
+
+      &__name {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      &__tag {
+        width: 4.125rem;
+        height: 1.563rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0.25rem;
+        border: 1px solid variables.$border-secondary-default;
+        background: variables.$border-primary-default;
+        padding: 0.25rem 0.5rem;
+        text-transform: capitalize;
+      }
+    }
+  }
+}

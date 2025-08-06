@@ -1,0 +1,187 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  name: 'SelfHosted-Harbor'
+  demands:
+    - Agent.OS -equals Linux
+
+
+parameters:
+  - name: harborServiceConnection
+    displayName: "Seleziona Service Connection Harbor"
+    type: string
+    default: HarborRegistryConnectionEdge
+    values:
+      - HarborRegistryConnectionAShore
+      - HarborRegistryConnectionEdge
+  - name: environment
+    type: string
+    default: dev
+    values:
+      - dev
+      - test                  # Resource Group in cui risiede la Web App
+ 
+variables:
+ 
+  - name: IMAGE_NAME
+    value: 'fe-mcsp'
+ 
+  - name: IMAGE_TAG
+    value: 'latest'
+ 
+  - name: CHART_NAME
+    value: 'fe-mcsp-chart'
+ 
+  - name: CHART_VERSION
+    value: '$(Build.BuildId)'
+  - name: HARBOR_PROJECT
+    value: 'mcsp-apps-containers'
+ 
+  - ${{ if eq(parameters.environment, 'dev') }}:
+      - group: McspMAIN
+  - ${{ if eq(parameters.environment, 'test') }}:
+      - group: McspMAIN
+ 
+  - ${{ if eq(parameters.harborServiceConnection, 'HarborRegistryConnectionAShore') }}:
+      - name: HARBOR_REGISTRY
+        value: $(HARBOR_REGISTRY_ASHORE)
+      - name: HARBOR_HELM_REPO
+        value: $(HARBOR_HELM_REPO_ASHORE)
+      - name: HARBOR_PASSWORD
+        value: $(HARBOR_PASSWORD_ASHORE)
+      - name: HARBOR_CLUSTER
+        value: 'ashore'
+ 
+  - ${{ if eq(parameters.harborServiceConnection, 'HarborRegistryConnectionEdge') }}:
+      - name: HARBOR_REGISTRY
+        value: $(HARBOR_REGISTRY_EDGE)
+      - name: HARBOR_HELM_REPO
+        value: $(HARBOR_HELM_REPO_EDGE)
+      - name: HARBOR_PASSWORD
+        value: $(HARBOR_PASSWORD_EDGE)
+      - name: HARBOR_CLUSTER
+        value: 'edge'
+
+steps:
+  # 1) Checkout del codice
+  - checkout: self
+
+  # 2) Install Node.js e build di MCSP
+  #- task: NodeTool@0
+  #  displayName: 'Install Node.js 18.x'
+  #  inputs:
+  #    versionSpec: '18.x'
+
+  #- script: |
+  #    npm ci
+  #    npm run build-mcsp
+  #  displayName: 'Install dependencies & Build MCSP'
+
+
+
+
+
+  # - task: Maven@4
+  #           displayName: 'Build and Test with Coverage'
+  #           inputs:
+  #             sonarQubeRunAnalysis: true
+  #             sqMavenPluginVersionChoice: 'latest'
+  #             mavenPomFile: 'pom.xml'
+  #             goals: 'clean package'
+  #             javaHomeOption: 'Path'
+  #             jdkDirectory: '/usr/lib/jvm/graalvm-jdk21'
+
+  # - task: SonarQubePrepare@7
+  #           inputs:
+  #             SonarQube: 'CockpitSonarScan'
+  #             scannerMode: 'other'
+  #             extraProperties: |
+  #               # Additional properties that will be passed to the scanner,
+  #               # Put one key=value per line, example:
+  #               # sonar.exclusions=**/*.bin
+  #               sonar.projectKey=MCSP-MAKE_Cockpit_6287b67f-9cf3-438e-8fed-dbce12938805
+  #               sonar.projectName=Cockpit
+
+  # - task: SonarQubePublish@7
+  #           inputs:
+  #             pollingTimeoutSec: '300'
+
+
+
+
+
+  - script:
+      echo "🔓 Logout da Docker registry..."
+      docker logout $(HARBOR_REGISTRY) || true
+
+      echo "🔓 Logout da Helm OCI registry..."
+      helm registry logout $(HARBOR_REGISTRY) || true
+    displayName: "Logout docker and docker"
+  
+  - script: |
+      echo "$REGISTRY_PASSWORD" | docker login "$HARBOR_REGISTRY" -u "$HARBOR_USER" --password-stdin
+    displayName: "Docker login to Mcsp" 
+    env:
+      REGISTRY_PASSWORD: $(HARBOR_PASSWORD)
+
+  - script: |
+      echo "Contenuto del Dockerfile:"
+      cat $(Build.SourcesDirectory)/Dockerfile
+    displayName: '🔍 Debug Dockerfile'
+
+  - script: |
+      echo "📦 Build Docker image whit MCSP..."
+      docker build -f Dockerfile -t $(HARBOR_REGISTRY)/$(HARBOR_PROJECT)/$(IMAGE_NAME):$(IMAGE_TAG) .
+      docker tag $(HARBOR_REGISTRY)/$(HARBOR_PROJECT)/$(IMAGE_NAME):$(IMAGE_TAG) $(HARBOR_REGISTRY)/$(HARBOR_PROJECT)/$(IMAGE_NAME):latest
+    displayName: "🐳 Docker build MCSP image"
+
+  - script: |
+      echo "🚀 Push delle immagini..."
+      docker push $(HARBOR_REGISTRY)/$(HARBOR_PROJECT)/$(IMAGE_NAME):$(IMAGE_TAG)
+      docker push $(HARBOR_REGISTRY)/$(HARBOR_PROJECT)/$(IMAGE_NAME):latest
+    displayName: "📤 Push Docker image"
+
+  # 🚀 Push Docker Image to Mcsp (deve avere un nome immagine)
+  - script: |
+      echo "📦 Pushing Docker image to Mcsp..."
+      docker push $(HARBOR_REGISTRY)/$(HARBOR_PROJECT)/$(IMAGE_NAME):$(IMAGE_TAG)
+    displayName: "Push Docker Image to Mcsp"
+
+  # 🚀 Verifica che la cartella Helm esista
+  - script: |
+      echo "Checking Helm chart directory..." 
+      ls -l $(Build.SourcesDirectory)/helm
+    displayName: "Check Helm Chart Directory"
+
+  - script: |
+      echo "📦 Packaging Helm Chart for environment: ${{ parameters.environment }} $(HARBOR_CLUSTER)"
+      cp helm/values-${{ parameters.environment }}-$(HARBOR_CLUSTER).yaml helm/values.yaml
+      cat $(Build.SourcesDirectory)/helm/values.yaml
+      helm package helm \
+        --version $(CHART_VERSION) \
+        --destination $(Build.ArtifactStagingDirectory)
+    displayName: "Helm Package [${{ parameters.environment }}] [$(HARBOR_CLUSTER)]"
+
+  - script: |
+      echo "🔓 Logout da Docker && Helm OCI registry..."
+      docker logout $(HARBOR_REGISTRY) || true
+      helm registry logout $(HARBOR_REGISTRY) || true
+    displayName: "🚪 Logout da Mcsp (Docker + Helm)"
+
+
+  # ✅ Login per Helm (OCI registry)
+  - script: |
+      echo "$REGISTRY_PASSWORD" | helm registry login "$HARBOR_REGISTRY" -u "$HARBOR_USER" --password-stdin
+    displayName: "Helm Login to Mcsp Registry (OCI)"
+    env:
+      REGISTRY_PASSWORD: $(HARBOR_PASSWORD)
+
+  # 🚀 Push Helm Chart
+  - script: |
+      echo "📦 Push Helm Chart..."
+      ls -l $(Build.ArtifactStagingDirectory)
+      helm push $(Build.ArtifactStagingDirectory)/$(CHART_NAME)-$(CHART_VERSION).tgz $(HARBOR_HELM_REPO)
+    displayName: "Push Helm Chart"

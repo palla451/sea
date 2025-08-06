@@ -1,0 +1,8 @@
+<div
+  class="alert-circle"
+  [ngStyle]="{ backgroundColor: alertColor }"
+  role="img"
+  [attr.aria-label]="'Alert level: ' + alertLevel + ', Value: ' + number"
+>
+  <span class="alert-number">{{ number }}</span>
+</div>

@@ -1,0 +1,52 @@
+@if(timelineEvents() && timelineEvents().length) {
+<div class="incident-timeline">
+  <div class="incident-timeline__header">
+    <p class="incident-timeline__header--title">
+      {{ "incidentDetailPage.incidentTimeline.title" | transloco }}
+    </p>
+    <p class="incident-timeline__header--count">
+      {{ timelineEvents().length }}
+    </p>
+  </div>
+  <p-timeline
+    [value]="timelineEvents()"
+    class="incident-timeline__container"
+    [ngClass]="getDinamicCOntainerHeight()"
+  >
+    <ng-template #marker let-timelineEvent>
+      <span class="incident-timeline__container__number-icons">
+        <p>{{ timelineEvent.icon }}</p>
+      </span>
+    </ng-template>
+    <ng-template #content let-timelineEvent>
+      <div class="incident-timeline__container__incident">
+        <div class="incident-timeline__container__incident__message">
+          <p>{{ timelineEvent.name }}</p>
+          <p class="incident-timeline__container__incident__message__assets">
+            Assets: {{ getAssetInvolvedDescription(timelineEvent) }}
+          </p>
+        </div>
+        <div class="incident-timeline__container__incident__date">
+          <p>{{ timelineEvent.creationDate }}</p>
+          <p>{{ timelineEvent.creationTime }}</p>
+        </div>
+      </div>
+    </ng-template>
+  </p-timeline>
+</div>
+
+<div class="full-details">
+  <a (click)="toggleFullTimeline()" class="full-details__link">
+    <img src="assets/svg/show.svg" alt="Show Icon" />
+    {{ "incidentDetailPage.incidentTimeline.detail" | transloco }}</a
+  >
+</div>
+
+<app-base-readonly-modal
+  [isModalVisible]="isDetailsModalOpened"
+  [modalTitle]="'Timeline'"
+  (modalClosed)="manageModalClosedState()"
+>
+  <app-incident-timeline-modal></app-incident-timeline-modal>
+</app-base-readonly-modal>
+}

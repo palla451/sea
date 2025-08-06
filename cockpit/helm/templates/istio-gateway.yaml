@@ -1,0 +1,21 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: {{ .Values.gateway.name }}-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - hosts:
+        {{- range $item := .Values.hosts | split "," }}
+        - {{ trim $item }}
+        {{- end }}
+      port:
+        name: {{ .Values.gateway.portName }}
+        number: {{ .Values.gateway.port }}
+        protocol: {{ .Values.gateway.portProtocol }}
+    {{- if .Values.gateway.sslEnabled }}
+      tls:
+        credentialName: {{ .Values.gateway.credentialName }}
+        mode: SIMPLE
+    {{- end }}

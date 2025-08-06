@@ -1,0 +1,22 @@
+replicaCount: 1
+
+image:
+  repository: registry.ship.dev.fde.local/mcsp-apps-containers/fe-mcsp
+  tag: latest
+  pullPolicy: Always
+
+hosts: fe-mcsp.ship.mcsp.dev.fde.local
+
+gateway:
+  name: fe-mcsp
+  port: 443
+  portName: https
+  portProtocol: HTTPS
+  sslEnabled: true
+  credentialName: fe-mcsp-credential
+  createSslCertificate: true
+  vaultIssuer: fnc-vault
+service:
+  name: fe-mcsp-service
+  version: v1
+  port: 80

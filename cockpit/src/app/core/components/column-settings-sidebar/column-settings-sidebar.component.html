@@ -1,0 +1,133 @@
+<main class="sidebar" [class.sidebar--open]="isOpen">
+  <div class="sidebar__overlay" (click)="close()"></div>
+  <div class="sidebar__content">
+    <div class="sidebar__content__header">
+      <h2 class="sidebar__content__header__title">
+        {{ "settings.title" | transloco }}
+      </h2>
+      <button class="sidebar__content__header__close-button" (click)="close()">
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+    @switch (_tableFeature) { @case ('dashboard') {
+    <ul class="sidebar__content__list">
+      @for ( column of columns; track column.field ){ @if (column.header !== ''
+      && column.header !=='Description'){
+      <li class="sidebar__content__list__item">
+        <div class="sidebar__content__list__item__card">
+          <div class="sidebar__content__list__item__card__ckbox">
+            <p-checkbox
+              [inputId]="column.field"
+              name="group"
+              [value]="column"
+              [(ngModel)]="selectedColumns"
+              (onChange)="onColumnsCkboxesChange($event, column)"
+            />
+          </div>
+          <label
+            [for]="column.field"
+            class="sidebar__content__list__item__card__label"
+          >
+            {{ column.header }}
+          </label>
+        </div>
+      </li>
+      } }
+    </ul>
+    }@case ('assetsMgmt') {
+    <ul class="sidebar__content__list">
+      @for ( column of assetsColumns; track column.field ){ @if (column.header
+      !== ''){
+      <li class="sidebar__content__list__item">
+        <div class="sidebar__content__list__item__card">
+          <div class="sidebar__content__list__item__card__ckbox">
+            <p-checkbox
+              [inputId]="column.field"
+              name="group"
+              [value]="column"
+              [(ngModel)]="selectedAssetColumns"
+              (onChange)="onColumnsCkboxesChange($event, column)"
+            />
+          </div>
+          <label
+            [for]="column.field"
+            class="sidebar__content__list__item__card__label"
+          >
+            {{ column.header }}
+          </label>
+        </div>
+      </li>
+      } }
+    </ul>
+    } @case ('history') {
+    <ul class="sidebar__content__list">
+      @for ( column of historyColumns; track column.field ){ @if (column.header
+      !== '' && column.header !== 'DESCRIPTION'){
+      <li class="sidebar__content__list__item">
+        <div class="sidebar__content__list__item__card">
+          <div class="sidebar__content__list__item__card__ckbox">
+            <p-checkbox
+              [inputId]="column.field"
+              name="group"
+              [value]="column"
+              [(ngModel)]="selectedHistoryColumns"
+              (onChange)="onColumnsCkboxesChange($event, column)"
+            />
+          </div>
+          <label
+            [for]="column.field"
+            class="sidebar__content__list__item__card__label"
+          >
+            {{ column.header }}
+          </label>
+        </div>
+      </li>
+      } }
+    </ul>
+    } @case ('remediationList') {
+    <ul class="sidebar__content__list">
+      @for ( column of incidentRemediationsColumns; track column.field ){ @if
+      (column.header !== '' && column.header !== 'INCIDENT DESCRIPTION' &&
+      column.header !== 'ACTION DESCRIPTION'){
+      <li class="sidebar__content__list__item">
+        <div class="sidebar__content__list__item__card">
+          <div class="sidebar__content__list__item__card__ckbox">
+            <p-checkbox
+              [inputId]="column.field"
+              name="group"
+              [value]="column"
+              [(ngModel)]="selectedRemediationsColumns"
+              (onChange)="onColumnsCkboxesChange($event, column)"
+            />
+          </div>
+          <label
+            [for]="column.field"
+            class="sidebar__content__list__item__card__label"
+          >
+            {{ column.header }}
+          </label>
+        </div>
+      </li>
+      } }
+    </ul>
+    } }
+
+    <div class="sidebar__content__footer">
+      <button
+        class="sidebar__content__footer__button sidebar__content__footer__button--cancel"
+        (click)="reset()"
+      >
+        {{ "common.button.reset" | transloco }}
+      </button>
+      <button
+        class="sidebar__content__footer__button sidebar__content__footer__button--save"
+        [ngClass]="{
+          saveBtnActive: isSelectedColumnsChanhged
+        }"
+        (click)="save()"
+      >
+        {{ "common.button.confirm" | transloco }}
+      </button>
+    </div>
+  </div>
+</main>

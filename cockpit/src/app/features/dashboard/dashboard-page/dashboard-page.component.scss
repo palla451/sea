@@ -1,0 +1,140 @@
+@use "../../../../variables" as variables;
+@use "../../../../fonts" as fonts;
+
+// :host {
+//   display: block;
+//   height: 100%;
+//   overflow: hidden;
+// }
+
+// .row-container {
+//   display: flex;
+//   height: 100%;
+//   overflow-y: auto;
+//   padding: 0 3rem;
+
+//   .col-left {
+//     flex: 1;
+//     padding: 0;
+//     overflow: hidden;
+//     display: flex;
+//     flex-direction: column;
+//     min-height: 0;
+//     gap: 48px;
+
+//     .shipData{
+//       flex: 1;
+//     }
+
+//     .cyberResilience{
+//       flex: 8;
+//     }
+
+//     .assetsStatement{
+//       flex: 3.6;
+//     }
+//   }
+
+//   .col-right {
+//     flex: 3;
+//     padding: 0 0;
+//     min-height: 0;
+//     display:flex;
+//     flex-direction: column;
+//   }
+
+//   // .row {
+//   //   display: flex;
+//   //   flex-wrap: wrap;
+//   //   gap: 1rem;
+//   //   min-height: min-content;
+
+    
+
+//   //   // app-assets-statement,
+//   //   // app-vessel-performance,
+//   //   // app-incident-overview-table {
+//   //   //   display: flex;
+//   //   //   flex-direction: column;
+//   //   //   flex: 1;
+//   //   //   min-height: 0; // Cruciale per il corretto funzionamento dello scroll
+//   //   //   overflow-y: auto; // Scroll interno se il contenuto eccede
+//   //   // }
+
+//   //   // @media (max-width: 1024px) {
+//   //   //   flex-direction: column;
+//   //   //   .col-left,
+//   //   //   .col-right {
+//   //   //     flex: 1;
+//   //   //     width: 100%;
+//   //   //   }
+//   //   // }
+//   // }
+// }
+
+// .section-title {
+//   padding-left: 0.5rem;
+//   flex-shrink: 0;
+// }
+
+:host {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  padding-bottom: 80px;
+}
+
+.row-container {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  padding: 24px 3rem 0;
+  gap: 24px;
+
+  .col-left,
+  .col-right {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden; // Aggiunto per sicurezza
+  }
+
+  .col-left {
+    flex: 0 0 20%;
+    max-width: 20%;
+    gap: 24px;
+    border-right: 1px solid rgba(255, 255, 255, 0.4);
+    padding-right: 16px;
+
+    > div {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden; // Assicura che il contenuto non ecceda
+    }
+  }
+
+  .col-right {
+    flex: 1; // Modificato per usare lo spazio rimanente
+    min-width: 0; // Cruciale per permettere il ridimensionamento
+    gap: 24px;
+
+    > div {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      width: 100%; // Assicura che rispetti la larghezza del padre
+      overflow: hidden; // Nasconde eventuali overflow  
+    }
+  }
+}
+
+.cyber-resilience-title {
+  @include fonts.heading-100;
+  padding-left: 0;
+  padding-bottom: 1rem;
+  flex-shrink: 0;
+}

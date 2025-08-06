@@ -1,0 +1,30 @@
+<div class="menu-container">
+  <div class="menu-wrapper">
+    <div class="vertical-menu-container">
+      <div class="vertical-menu-title">
+        <button class="circle-button" (click)="navigateToDashboard()">
+          <img src="assets/svg/arrow-left.svg" alt="Back" class="arrow-icon" />
+        </button>
+        <span class="vertical-menu-title__text">{{
+          "cyberReliabilityPage.title" | transloco
+        }}</span>
+      </div>
+      <ul class="vertical-menu">
+        <li
+          *ngFor="let item of menuItems()"
+          [class.active]="currentActivePerformance() === item"
+          (click)="selectItem(item)"
+        >
+          <span class="menu-item-text"
+            >{{ item["description"] }} ({{
+              item["operatingPercentage"]
+            }}%)</span
+          >
+        </li>
+      </ul>
+    </div>
+    <div class="detail-content">
+      <app-tree-view-integrity></app-tree-view-integrity>
+    </div>
+  </div>
+</div>

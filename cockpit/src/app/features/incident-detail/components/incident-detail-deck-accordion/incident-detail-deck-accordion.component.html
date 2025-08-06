@@ -1,0 +1,51 @@
+<div class="deck-accordion">
+  <span class="deck-accordion__top-left-corner"></span>
+  <span class="deck-accordion__top-right-corner"></span>
+  <span class="deck-accordion__bottom-left-corner"></span>
+  <span class="deck-accordion__bottom-right-corner"></span>
+
+  <div class="deck-accordion__panel">
+    <input type="checkbox" id="deck-accordion" checked />
+    <div class="deck-accordion__panel__header">
+      <label for="deck-accordion" class="deck-accordion__panel__header__label">
+        <img
+          [src]="
+            isAccordionOpen
+              ? 'assets/svg/FrameUp.svg'
+              : 'assets/svg/FrameDown.svg'
+          "
+          class="deck-accordion__panel__header__label__arrow"
+          alt="HeaderArrow"
+          (click)="toggleAccordion()"
+        />
+        <p class="deck-accordion__panel__header__label__title">
+          {{ "incidentDetailPage.incidentDetailAccordion.title" | transloco }}
+        </p>
+      </label>
+      <div class="deck-accordion__panel__header__deck-selection">
+        <p class="deck-accordion__panel__header__deck-selection__label">
+          {{ "incidentDetailPage.incidentDetailAccordion.label" | transloco }}
+        </p>
+        <p-select
+          [options]="uniqueIncidentDecks()"
+          [(ngModel)]="selectedDeck"
+          optionLabel="number"
+          class="deck-accordion__panel__header__deck-selection__select"
+          (onChange)="onDeckSelect($event)"
+        />
+      </div>
+    </div>
+
+    <div class="deck-accordion__panel__content">
+      <div class="deck-accordion__panel__content__container">
+        <app-svg-viewer
+          [selectedDeck]="selectedDeck"
+          [viewBoxLength]="1776"
+          [viewBoxHeight]="330"
+          [zeroFrameCompensation]="33"
+          [lastFrame]="257"
+        ></app-svg-viewer>
+      </div>
+    </div>
+  </div>
+</div>

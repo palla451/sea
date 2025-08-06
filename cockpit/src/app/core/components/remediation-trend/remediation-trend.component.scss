@@ -1,0 +1,23 @@
+.impact-value-container {
+  display: flex;
+}
+
+.triangle-icon-loss {
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+  color: #f64d4d;
+}
+
+.triangle-icon-gain {
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+  color: #4caf50;
+}
+
+.impact-value {
+  font-weight: bold;
+  display: inline-block;
+  color: #fff;
+}

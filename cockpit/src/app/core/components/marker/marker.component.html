@@ -1,0 +1,8 @@
+<span
+  class="marker"
+  [class.active]="active"
+  [class.diamond]="shape === 'diamond'"
+  [class.rounded]="shape === 'rounded'"
+>
+  <img *ngIf="icon" [src]="icon" alt="icon" />
+</span>

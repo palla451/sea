@@ -1,0 +1,19 @@
+<div class="card flex justify-center product-card-modal">
+  <p-dialog
+    [modal]="true"
+    [(visible)]="isModalVisible"
+    [showHeader]="false"
+    (onHide)="closeModal()"
+    [dismissableMask]="true"
+    [style]="{
+      width: modalWidth,
+      backgroundColor: '#000D1A',
+      height: '738px',
+      border: 'none'
+    }"
+  >
+    <div class="product-card-modal__projected-content">
+      <ng-content></ng-content>
+    </div>
+  </p-dialog>
+</div>

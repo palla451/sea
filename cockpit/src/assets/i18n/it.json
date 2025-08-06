@@ -1,0 +1,216 @@
+{
+  "common": {
+    "button": {
+      "close": "Chiudi",
+      "save": "Salva",
+      "back": "Indietro",
+      "cancel": "Annulla",
+      "edit": "Modifica",
+      "delete": "Cancella",
+      "acknowledge": "Accetta",
+      "proceed": "Procedi",
+      "reset": "Resetta",
+      "confirm": "Conferma",
+      "manage": "Gestisci",
+      "filters": "Filtri",
+      "settings": "Settings"
+    }
+  },
+  "navbar": {
+    "overview": "Panoramica",
+    "assets": "Assets",
+    "remediation": "Remediation",
+    "incidents": "Incidenti",
+    "history": "Storico",
+    "administration": "Amministrazione"
+  },
+  "dashboardPage": {
+    "cyberReliability": "Affidabilità Cyber",
+    "assetsStatement": {
+      "title": "Stato degli Assets"
+    },
+    "incidentOverviewTable": {
+      "title": "Lista Incidenti",
+      "noIncidentsFound": "Nessun incidente trovato"
+    }
+  },
+  "assetManagementPage": {
+    "assetsTable": {
+      "title": "Gestione Assets"
+    },
+    "assetModal": {
+      "title": "Modifica stato asset",
+      "status": "Stato"
+    }
+  },
+  "remediationManagementPage": {
+    "remediationTable": {
+      "title": "Gestione Remediation"
+    },
+    "rollbackModal": {
+      "title": "Rollback Azione",
+      "body": "Stai per annullare l'azione. Vuoi procedere?"
+    }
+  },
+  "historyPage": {
+    "historyTable": {
+      "title": "Storico incidenti"
+    }
+  },
+  "administrationPage": {
+    "title": "Amministrazione",
+    "readMore": "Dettaglio"
+  },
+  "incidentDetailPage": {
+    "incidentDetailAccordion": {
+      "title": "Profilo Nave",
+      "label": "Deck: "
+    },
+    "incidentDetailHeader": {
+      "impactedSystem": {
+        "title": "Sistemi impattati"
+      },
+      "date": {
+        "title": "Data"
+      },
+      "alertLevel": {
+        "title": "Livello Allarme"
+      },
+      "status": {
+        "title": "Stato"
+      }
+    },
+    "incidentTimeline": {
+      "title": "Timeline",
+      "detail": "Lista completa"
+    },
+    "assetsInvolved": {
+      "title": "Asset coinvolti"
+    },
+    "remediationOverview": {
+      "title": "Dettaglio Remediation",
+      "eventName": "Event {{index}}"
+    }
+  },
+  "cyberReliabilityPage": {
+    "title": "Affidabilità Cyber",
+    "operational": "Asset Operativo",
+    "compromised": "Asset Compromesso",
+    "systemBreakdown": "System Breakdown",
+    "reliability": "Affidabilità",
+    "searchPlaceholder": "Cerca qui.."
+  },
+  "remediationManagementModal": {
+    "stepper": {
+      "assisted": {
+        "retry": "Riprova..",
+        "apply": "Applica"
+      }
+    },
+    "textArea": {
+      "placeholder": "Aggiungi una nota che descriva l'azione eseguita...",
+      "label": "Nota(*)",
+      "readonlyLabel": "Nota Operatore",
+      "noteNotFound": "Non è stata trovata alcuna nota per questa azione completata.",
+      "noteNotFoundFalsePositive": "Non è stata trovata alcuna nota per questo evento falso positivo."
+    },
+    "remediationImpact": {
+      "button": "Mostra impatti remediation",
+      "title": "Impatti Remediation",
+      "reliability": {
+        "title": "Affidabilità",
+        "impact": "Impatto"
+      }
+    },
+    "remediation": {
+      "title": "Remediation",
+      "genericHint": {
+        "warningTitles": {
+          "falsePositive": "Falso positivo",
+          "warning": "Attenzione"
+        },
+        "assistedAction": {
+          "warningMessage": "Questa azione richiede l'ingaggio di un servizio di terze parti e potrebbe richiedere del tempo."
+        }
+      }
+    },
+    "markAsFalsePositive": {
+      "warningMessage": "Stai per contrassegnare l'intero evento come falso positivo. Inserisci il motivo per procedere.",
+      "buttonLabel": "Contrassegna come falso positivo",
+      "confirmFalsePositive": "Questo evento è stato contrassegnato come falso positivo.",
+      "confirmButton": "Procedi e contrassegna come falso positivo"
+    }
+  },
+  "settings": {
+    "title": "Settings Tabella"
+  },
+  "filters": {
+    "dates": {
+      "startDate": "Data Inizio",
+      "endDate": "Data Fine",
+      "datePlaceholder": "Seleziona yyyy-mm-dd hh:mm"
+    },
+    "accordionTitles": {
+      "alertLevels": "Livello Allarme",
+      "event": "Event",
+      "dates": "Data",
+      "location": "Location",
+      "assets": "Assets",
+      "status": "Stato",
+      "assetStatus": "Stato Asset",
+      "incident": "Incident",
+      "action": "Azione"
+    },
+    "multiselect": {
+      "titles": {
+        "incident": "Incident",
+        "deck": "Deck",
+        "frame": "Frame",
+        "mvz": "MVZ",
+        "markPiece": "Marca pezzo",
+        "description": "Descrizione",
+        "name": "Nome"
+      },
+      "hints": {
+        "search": "Cerca o digita",
+        "description": "Cerca o digita la descrizione",
+        "incident": "Cerca o digita ID o descrizione"
+      }
+    },
+    "incidentStatuses": {
+      "solved": "Gestito",
+      "falsePositive": "Falso positivo"
+    },
+    "remediationStatuses": {
+      "actionCompleted": "Completata",
+      "actionRollbacked": "Rollbacked"
+    },
+    "remediationTypes": {
+      "assisted": "Assistita",
+      "human": "Umana",
+      "automated": "Automatizzata"
+    },
+    "alertLevel": {
+      "critical": "Critico",
+      "low": "Basso",
+      "medium": "Medio",
+      "high": "Alto"
+    },
+    "assetStatus": {
+      "operational": "Operativo",
+      "turnedOff": "Spento",
+      "maintenance": "Manutenzione",
+      "compromised": "Compromesso"
+    }
+  },
+  "alerts": {
+    "error": "Errore riscontrato!",
+    "genericWarn": "Attenzione!",
+    "successfullOperation": "Operazione effettuata correttamente!"
+  },
+  "genericTootltipInfo": {
+    "title": "Info",
+    "ipAddress": "Questo è l'indirizzo IP dell'asset di origine",
+    "assetRole": "Questo è l'indirizzo di sonda della risorsa sorgente"
+  }
+}

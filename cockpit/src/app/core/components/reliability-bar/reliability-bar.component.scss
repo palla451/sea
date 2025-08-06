@@ -1,0 +1,161 @@
+@use "../../../../fonts" as fonts;
+@use "../../../../variables" as variables;
+
+.metric-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: #010d17;
+  padding: 20px;
+  color: #ffffff;
+  font-family: "Arial", sans-serif;
+  max-width: 100%;
+}
+
+.left-section .label {
+  font-size: 18px;
+  margin-bottom: 4px;
+  color: #d4d4d4;
+}
+
+.bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.bar {
+  width: 440px;
+  height: 4px;
+  background-color: #5e6366;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+.fill {
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.trendFill {
+  height: 100%;
+  opacity: 0.4;
+  position: absolute;
+  top: 0;
+}
+
+.threshold {
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 100%; /* posizionato sotto la barra */
+  margin-top: 4px;
+  left: 25%; /* o dinamico via style */
+  transform: translateX(-50%);
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #f64d4d; /* punta verso l’alto */
+}
+
+.bar-value {
+  font-size: 20px;
+  font-weight: 300;
+  color: white;
+  position: absolute;
+  top: 18px;
+  transform: translateX(-50%);
+}
+
+.right-section {
+  text-align: right;
+}
+
+.metric-title {
+  text-align: start;
+  font-size: 12px;
+  color: #cccccc;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.metric-value {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.value {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.unit {
+  font-size: 18px;
+  margin-left: 2px;
+}
+
+.divider {
+  width: 1px;
+  height: 32px;
+  background-color: #444;
+}
+
+.impact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #f64d4d;
+  font-size: 16px;
+}
+
+.impact-value-container {
+  display: flex;
+}
+
+.triangle-icon {
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.impact-value {
+  font-weight: bold;
+  display: inline-block;
+  color: #fff;
+}
+
+.impact-label {
+  font-size: 12px;
+  color: #a0a0a0;
+  margin-left: -8px;
+}
+
+// Classes for progress bar colors
+.progress-red {
+  background: #ff3d32 !important;
+}
+
+.progress-yellow {
+  background: #ffb300 !important;
+}
+
+.progress-green {
+  background: #4caf50 !important;
+}
+
+// Classes for arrow colors
+.arrow-red {
+  border-bottom-color: #ff3d32 !important;
+}
+
+.arrow-yellow {
+  border-bottom-color: #ffb300 !important;
+}
+
+.arrow-green {
+  border-bottom-color: #4caf50 !important;
+}

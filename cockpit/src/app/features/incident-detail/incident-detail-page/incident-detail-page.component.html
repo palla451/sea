@@ -1,0 +1,37 @@
+<div class="incident-detail__container">
+  <div class="incident-detail__container__header">
+    <app-incident-detail-header></app-incident-detail-header>
+  </div>
+  <div class="incident-detail__container__deck-accordion">
+    <app-incident-detail-deck-accordion
+      (toggle)="isAccordionOpen = $event"
+    ></app-incident-detail-deck-accordion>
+  </div>
+
+  <!-- TODO: Controllare nuovamente la transizione dei componenti nel wrapper alla chiusura dell'accordion superiore -->
+
+  <div
+    class="incident-detail__container__wrapper"
+    [ngClass]="{
+      'incident-detail__container__wrapper__extend': !isAccordionOpen
+    }"
+  >
+    <div class="incident-detail__container__wrapper__timeline">
+      <app-incident-timeline
+        class="incident-detail__container__wrapper__timeline__extend"
+      ></app-incident-timeline>
+    </div>
+    <div class="incident-detail__container__wrapper__divider"></div>
+    <div class="incident-detail__container__wrapper__timeline">
+      <app-assets-involved
+        class="incident-detail__container__wrapper__assets-involved__extend"
+      ></app-assets-involved>
+    </div>
+    <div class="incident-detail__container__wrapper__divider"></div>
+    <div class="incident-detail__container__wrapper__remediation-overview">
+      <app-remediation-overview
+        class="incident-detail__container__wrapper__remediation__extend"
+      ></app-remediation-overview>
+    </div>
+  </div>
+</div>

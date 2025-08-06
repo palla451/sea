@@ -1,0 +1,111 @@
+@if(getDataId(data)) {
+<div class="no-results-message">{{ data.title }}</div>
+} @else {
+<div class="accordion" [class.expanded]="isExpanded">
+  <button class="accordion__header" (click)="toggle()">
+    @if(data && data.children){
+    <div class="accordion__arrow">
+      <svg width="16" height="16" viewBox="0 0 24 24">
+        <path
+          fill="currentColor"
+          d="M8.58,7.41L13.17,12L8.58,16.59L10,18L16,12L10,6L8.58,7.41Z"
+        />
+      </svg>
+    </div>
+    <div class="accordion__header__content">
+      <span class="accordion__header__content__title">{{ data.title }}</span>
+      <div class="accordion__header__content__trend">
+        <span class="accordion__header__content__trend__integrity">
+          {{ getNodeFinalOperatingPercentage() }}%
+        </span>
+        @if(isHostRemediationManagement){
+        <div class="accordion__header__content__trend__percentage">
+          <app-remediation-trend
+            [trendPercentage]="calculateRemediationPercentage()"
+          ></app-remediation-trend>
+        </div>
+        }
+      </div>
+    </div>
+    } @else if (data && !data.children){
+    <div class="accordion__header__content">
+      <div class="accordion__header__content__leaf">
+        <span class="accordion__header__content__leaf__assetName">{{
+          data.title
+        }}</span>
+        <span class="accordion__header__content__leaf__assetState">
+          <span>
+            @switch (data.assetState) { @case ('Compromised') {
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+            >
+              <circle opacity="0.2" cx="6" cy="7" r="6" fill="#F64D4D" />
+              <circle cx="6" cy="7" r="4" fill="#F64D4D" />
+            </svg>
+            } @case ('Operational') {
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+            >
+              <circle opacity="0.2" cx="6" cy="7" r="6" fill="#67CA00" />
+              <circle cx="6" cy="7" r="4" fill="#67CA00" />
+            </svg>
+
+            } @case ('Maintenance') {
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+            >
+              <circle opacity="0.2" cx="6" cy="7" r="6" fill="#67CA00" />
+              <circle cx="6" cy="7" r="4" fill="#FFCF26" />
+            </svg>
+            } @case ('Turned Off') {
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+            >
+              <circle opacity="0.2" cx="6" cy="7" r="6" fill="#67CA00" />
+              <circle cx="6" cy="7" r="4" fill="#737B82" />
+            </svg>
+            }}
+          </span>
+          <span>
+            {{ data.assetState }}
+          </span>
+        </span>
+      </div>
+    </div>
+    }
+  </button>
+
+  @if(isExpanded && data && data.children?.length){
+  <div class="accordion__content">
+    <ul class="accordion__list">
+      @for (child of data.children; track child?.id ?? child) {
+      <li class="accordion__item">
+        <div class="connector-line"></div>
+        <app-tree-view-node
+          [isHostRemediationManagement]="isHostRemediationManagement"
+          [data]="child"
+          [initiallyExpanded]="child.isExpanded || false"
+        ></app-tree-view-node>
+      </li>
+      }
+    </ul>
+  </div>
+  }
+</div>
+}

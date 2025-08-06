@@ -1,0 +1,46 @@
+:root {
+  --background-gradient-step1: #001c35;
+  --background-gradient-step2: #000;
+}
+
+$base-app-text-color: #ffffff;
+$text-secondary-default: rgba(255, 255, 255, 0.6);
+$base-app-bg-color: #001c35;
+$table-bg-color: rgba(255, 255, 255, 0.1);
+$table-border-color: rgba(255, 255, 255, 0.3);
+$no-bg-color: transparent;
+$overview-table-border-radius: 0.5rem 0.5rem 0 0;
+$overview-table-cell-height: 52px;
+$overview-table-cell-padding: 16px 32px;
+$overview-table-cell-gap: 8px;
+$overview-table-cell-border-bottom: 1px solid $base-app-text-color;
+$overview-table-header-bg-color: #ffffff0d;
+$dashboard-sidebar-checkbox-bg-color: #007bff;
+$dashboard-sidebar-checkbox-bg-color-accent: #0069d9;
+$sidebar-footer-border: #555;
+$sidebar-card-shadow-color: rgba(0, 0, 0, 0.1);
+$sidebar-overlay-bg-color: rgba(0, 0, 0, 0.5);
+$app-transparent-bg: transparent;
+$border-primary-default: rgba(255, 255, 255, 0.1);
+$border-secondary-default: rgba(255, 255, 255, 0.3);
+$background-primary-default: rgba(255, 255, 255, 0.05);
+$background-secondary-default: rgba(255, 255, 255, 0.1);
+$background-tertiary-default: #000d1a;
+$background-accent-default: #3c66ef;
+$background-secondary-default-04: rgba(255, 255, 255, 0.4);
+$utilities-ghost: rgba(255, 255, 255, 0);
+$icon-dark: rgba(0, 0, 0, 1);
+$error-default: rgba(246, 77, 77, 1);
+
+//font
+$typography-weight-regular: 400;
+
+$base-app-background: var(
+  --background,
+  linear-gradient(
+    318deg,
+    var(--background-gradient-step2) 21.26%,
+    var(--background-gradient-step1) 51.17%,
+    var(--background-gradient-step2) 81.84%
+  )
+);

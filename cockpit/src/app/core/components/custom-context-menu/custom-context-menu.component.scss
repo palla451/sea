@@ -1,0 +1,59 @@
+@use "../../../../variables" as variables;
+@use "../../../../fonts" as fonts;
+
+:host {
+  position: relative;
+  display: inline-block;
+}
+
+.menu-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 4px;
+
+  .dot {
+    width: 4px;
+    height: 4px;
+    background-color: #000;
+    border-radius: 50%;
+    margin: 2px auto;
+  }
+}
+
+.tooltip {
+  position: absolute;
+  width: 165px;
+  height: 112px;
+  right: calc(100% + 14px);
+  top: -24px;
+  background-color: variables.$border-primary-default;
+  color: #fff;
+  border-radius: 4px;
+  padding: 1.5rem 0.25rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  backdrop-filter: blur(calc(30px / 2));
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    li {
+      padding: 4px 32px;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

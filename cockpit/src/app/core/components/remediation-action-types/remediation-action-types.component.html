@@ -1,0 +1,33 @@
+<div>
+  <label class="remediation-action-types__title">Type</label>
+</div>
+<div class="remediation-action-types">
+  <div class="remediation-action-types__button-group">
+    <p-toggleButton
+      [(ngModel)]="selectedRemediationActionTypes['assisted']"
+      (onChange)="updateFilters()"
+      [onLabel]="'filters.remediationTypes.assisted' | transloco"
+      [offLabel]="'filters.remediationTypes.assisted' | transloco"
+      styleClass="remediation-action-types__button-group__btn-element"
+    >
+    </p-toggleButton>
+
+    <p-toggleButton
+      [(ngModel)]="selectedRemediationActionTypes['human']"
+      (onChange)="updateFilters()"
+      [onLabel]="'filters.remediationTypes.human' | transloco"
+      [offLabel]="'filters.remediationTypes.human' | transloco"
+      styleClass="remediation-action-types__button-group__btn-element"
+    >
+    </p-toggleButton>
+
+    <p-toggleButton
+      [(ngModel)]="selectedRemediationActionTypes['automated']"
+      (onChange)="updateFilters()"
+      [onLabel]="'filters.remediationTypes.automated' | transloco"
+      [offLabel]="'filters.remediationTypes.automated' | transloco"
+      styleClass="remediation-action-types__button-group__btn-element"
+    >
+    </p-toggleButton>
+  </div>
+</div>

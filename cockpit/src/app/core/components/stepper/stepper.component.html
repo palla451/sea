@@ -1,0 +1,89 @@
+@if (!isMarkIncidentAsFalsePositiveRequired) {
+<p-stepper [(value)]="selectedStepperAction" class="stepper">
+  <div class="scroll-wrapper">
+    <p-step-list>
+      @for (action of actions; track action.id; let i = $index) {
+      <p-step
+        [value]="i"
+        class="stepper__step"
+        [ngClass]="{ 'stepper__step--completed': isActionCompleted(action) }"
+      >
+        <ng-template
+          #content
+          let-activateCallback="activateCallback"
+          let-value="value"
+        >
+          <div class="actionStep">
+            <button
+              #stepperButtons
+              class="stepper__step__button"
+              (click)="activateCallback(i)"
+              [ngClass]="{
+                'stepper__step__button--clickable': isReadOnlyMode()
+              }"
+            >
+              <app-marker
+                (click)="onStepClick(i)"
+                [active]="i === selectedStepperAction"
+                [shape]="getMarkerShape(action, i === selectedStepperAction)"
+                [icon]="getMarkerIcon(action, i === selectedStepperAction)"
+              ></app-marker>
+            </button>
+            <span class="actionStep__actionType">{{
+              formatActionsFeatures(action.actionType)
+            }}</span>
+          </div>
+        </ng-template>
+      </p-step>
+      }
+    </p-step-list>
+  </div>
+
+  <p-step-panels>
+    @for (action of actions; track action.id; let i = $index) {
+    <p-step-panel [value]="i" class="stepper__panel">
+      <ng-template #content>
+        <div class="stepper__panel__action">
+          @if(!isCurrentlySelectedEventMarkedAsFalsePositive()){
+          <app-stepper-action-details
+            [currentAction]="action"
+          ></app-stepper-action-details>
+          } 
+
+          @if(isWarningComponentVisible){
+          <app-generic-hint></app-generic-hint>
+          }
+
+          <app-stepper-action-note
+            [isStepperInReadonly]="isReadOnlyMode()"
+            [currentAction]="action"
+          ></app-stepper-action-note>
+
+          <app-stepper-call-to-action-bar
+            [currentAction]="action"
+          ></app-stepper-call-to-action-bar>
+        </div>
+      </ng-template>
+    </p-step-panel>
+    }
+  </p-step-panels>
+</p-stepper>
+} @else {
+<div class="false-positive-panel">
+  @if(isWarningComponentVisible){
+
+  <app-generic-hint></app-generic-hint>
+  }
+
+  <div class="false-positive-panel__note">
+    <app-stepper-action-note
+      [isStepperInReadonly]="isReadOnlyMode()"
+      [currentAction]="null"
+    ></app-stepper-action-note>
+  </div>
+
+  <app-stepper-call-to-action-bar
+    [currentAction]="null"
+  ></app-stepper-call-to-action-bar>
+</div>
+}

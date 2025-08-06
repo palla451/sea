@@ -1,0 +1,39 @@
+<div class="filter-buttons-container">
+  <div class="filter-buttons-container__button-group">
+    <p-toggleButton
+      [(ngModel)]="selectedLevels['critical']"
+      (onChange)="updateFilters()"
+      [onLabel]="'filters.alertLevel.critical' | transloco"
+      [offLabel]="'filters.alertLevel.critical' | transloco"
+      styleClass="filter-buttons-container__button-group__btn-element"
+    >
+    </p-toggleButton>
+
+    <p-toggleButton
+      [(ngModel)]="selectedLevels['high']"
+      (onChange)="updateFilters()"
+      [onLabel]="'filters.alertLevel.high' | transloco"
+      [offLabel]="'filters.alertLevel.high' | transloco"
+      styleClass="filter-buttons-container__button-group__btn-element"
+    >
+    </p-toggleButton>
+
+    <p-toggleButton
+      [(ngModel)]="selectedLevels['medium']"
+      (onChange)="updateFilters()"
+      [onLabel]="'filters.alertLevel.medium' | transloco"
+      [offLabel]="'filters.alertLevel.medium' | transloco"
+      styleClass="filter-buttons-container__button-group__btn-element"
+    >
+    </p-toggleButton>
+
+    <p-toggleButton
+      [(ngModel)]="selectedLevels['low']"
+      (onChange)="updateFilters()"
+      [onLabel]="'filters.alertLevel.low' | transloco"
+      [offLabel]="'filters.alertLevel.low' | transloco"
+      styleClass="filter-buttons-container__button-group__btn-element"
+    >
+    </p-toggleButton>
+  </div>
+</div>

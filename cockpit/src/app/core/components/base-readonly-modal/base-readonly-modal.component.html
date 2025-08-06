@@ -1,0 +1,84 @@
+<!-- <div class="card flex justify-center base-readonly-modal">
+  <p-dialog
+    [header]="remediationImpactModalOpened() ? 'ciao' : modalTitle"
+    [modal]="true"
+    [(visible)]="isModalVisible"
+    [style]="{
+      width: modalWidth,
+      backgroundColor: '#000D1A',
+      height: '738px',
+      padding: '40px',
+      border: 'none'
+    }"
+    [contentStyle]="{
+      'backdrop-filter': isModalVisible ? 'blur(5px)' : 'none',
+      '-webkit-backdrop-filter': isModalVisible ? 'blur(5px)' : 'none'
+    }"
+    [maskStyle]="{
+      'backdrop-filter': isModalVisible ? 'blur(5px)' : 'none',
+      '-webkit-backdrop-filter': isModalVisible ? 'blur(5px)' : 'none',
+      'background-color': 'rgba(0, 13, 26, 0.5)'
+    }"
+    (onHide)="closeModal()"
+  >
+    <div class="base-readonly-modal__projected-content">
+      <ng-content></ng-content>
+    </div>
+  </p-dialog>
+</div> -->
+
+<div class="card flex justify-center base-readonly-modal">
+  <p-dialog
+    [modal]="true"
+    [(visible)]="isModalVisible"
+    [style]="{
+      width: modalWidth,
+      backgroundColor: '#000D1A',
+      padding: '40px',
+      border: 'none'
+    }"
+    [contentStyle]="{
+      'backdrop-filter': isModalVisible ? 'blur(5px)' : 'none',
+      '-webkit-backdrop-filter': isModalVisible ? 'blur(5px)' : 'none'
+    }"
+    [maskStyle]="{
+      'backdrop-filter': isModalVisible ? 'blur(5px)' : 'none',
+      '-webkit-backdrop-filter': isModalVisible ? 'blur(5px)' : 'none',
+      'background-color': 'rgba(0, 13, 26, 0.5)'
+    }"
+    (onHide)="closeModal()"
+    [closable]="remediationImpactModalOpened() ? false : true"
+    [ngStyle]="setCustomHeight"
+  >
+    <ng-template pTemplate="header">
+      <div class="flex align-items-center">
+        <button
+          *ngIf="remediationImpactModalOpened()"
+          class="p-button-text p-button-plain"
+          (click)="goBack()"
+          style="
+            color: white;
+            border: none;
+            background: none;
+            cursor: pointer;
+            padding: 0;
+            margin-right: 10px;
+          "
+        >
+          <span style="font-weight: bold; margin-right: 2px">&lt;</span>
+          <span class="remediation-impacts-title">
+            {{
+              "remediationManagementModal.remediationImpact.title" | transloco
+            }}
+            - {{ currentStepperEventSel }}</span
+          >
+        </button>
+        <span>{{ modalTitle }}</span>
+      </div>
+    </ng-template>
+
+    <div class="base-readonly-modal__projected-content">
+      <ng-content></ng-content>
+    </div>
+  </p-dialog>
+</div>

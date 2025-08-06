@@ -1,0 +1,82 @@
+@if(remediationImpactModalOpened()){
+
+<div class="scrollable-content">
+  @for(macrofunc of impactedFunctionIdsByMacroFunction(); track macrofunc; let i
+  = $index) {
+
+  <app-reliability-bar
+    [reliabilityBarTitle]="macrofunc.macroFunctionName"
+    [finalPercentage]="
+      calculateOperatingPercentageByRiskEngine(macrofunc.macroFunctionId)
+    "
+    [macrofuncTrendPercentage]="
+      calculateMacrofuncTrendingPercentage(macrofunc.macroFunctionId)
+    "
+    [macrofuncOVPercentage]="
+      calculateCyberResiliencePercentageByMacrofunc(macrofunc.macroFunctionId)
+    "
+  ></app-reliability-bar>
+
+  @for(accordionItem of getAccordionData(macrofunc.macroFunctionName); track
+  accordionItem.id; let i = $index) {
+  @if(checkIfAccordionItemIsInCurrentMacroFunction(accordionItem,macrofunc.functionIds)){
+  <app-tree-view-node
+    [isHostRemediationManagement]="true"
+    [data]="accordionItem"
+    [initiallyExpanded]="accordionItem.isExpanded ?? false"
+  >
+  </app-tree-view-node>
+  } } }
+</div>
+
+}@else{
+<div class="incident-management">
+  <app-dinamic-tabs [tabs]="eventTabs()" [tabContentTemplate]="eventTemplate" />
+  <ng-template #eventTemplate let-event="event" let-index="index">
+    <div class="incident-management__tab">
+      <div class="incident-management__tab__false-positive">
+        <div class="incident-management__tab__false-positive__details">
+          <span
+            class="incident-management__tab__false-positive__details__description"
+            >{{ event.name }}</span
+          >
+          <span
+            class="incident-management__tab__false-positive__details__date"
+            >{{ event.creationDate | date : "dd/MM/yyyy - HH:mm" }}</span
+          >
+        </div>
+        @if(selectedActionIndex() === 0 && !falsePositiveMode()) {
+        <button
+          #btnMarkAsFalsePositive
+          class="incident-management__tab__false-positive__button"
+          (click)="enableFalsePositiveMode()"
+          [disabled]="
+            isMarkAsFalsePositiveRequired() ||
+            isCurrEventMarkedAsFalsePositive() ||
+            isCurrentEventJustManaged()
+          "
+          [ngStyle]="isBtnMarkAsFalsePositiveClickable()"
+        >
+          {{
+            "remediationManagementModal.markAsFalsePositive.buttonLabel"
+              | transloco
+          }}
+        </button>
+        }
+      </div>
+      <div class="incident-management__tab__remediation">
+        <span class="incident-management__tab__remediation__title">{{
+          "remediationManagementModal.remediation.title" | transloco
+        }}</span>
+        <div class="incident-management__tab__remediation__container">
+          <div
+            class="incident-management__tab__remediation__container__stepper"
+          >
+            <app-stepper [currentEvent]="currentEvent"></app-stepper>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+}

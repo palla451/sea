@@ -1,0 +1,40 @@
+<div custom-scroll class="vessel-perfomance">
+  @for (shipMacroFunction of shipMacroFunctions(); track shipMacroFunction.id) {
+  <div class="vessel-perfomance__progressBar">
+    <p-card
+      [header]="shipMacroFunction['description']"
+      class="vessel-perfomance__progressBar__card"
+    >
+      <div class="progress-container">
+        <div class="progress-wrapper">
+          <p-progressBar
+            [value]="shipMacroFunction['operatingPercentage']"
+            [showValue]="false"
+            [ngClass]="getProgressBarClass(shipMacroFunction['operatingPercentage'])"
+          ></p-progressBar>
+          <div
+            class="vessel-perfomance__progressBar__card__indicator-container"
+          >
+            <div
+              class="vessel-perfomance__progressBar__card__indicator-container--arrow"
+              [style.left]="calculateArrowPosition(shipMacroFunction['operatingPercentage']) + '%'"
+              [ngClass]="getArrowClass(shipMacroFunction['operatingPercentage'])"
+            ></div>
+            <div
+              class="vessel-perfomance__progressBar__card__indicator-container--value"
+              [style.marginLeft]="
+                calculateArrowPosition(shipMacroFunction['operatingPercentage']) + '%'
+              "
+            >
+              <span>{{ shipMacroFunction['operatingPercentage'] }}%</span>
+            </div>
+          </div>
+        </div>
+        <i class="pi pi-angle-right link-icon" (click)="goToCyberResilienceOV(shipMacroFunction)"></i>
+      </div>
+      <div class="vessel-perfomance__progressBar__card__corner-cut"></div>
+      <div class="vessel-perfomance__progressBar__card__corner-cut-cover"></div>
+    </p-card>
+  </div>
+  }
+</div>

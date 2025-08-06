@@ -1,0 +1,107 @@
+@use "../../../../variables" as variables;
+@use "../../../../fonts" as fonts;
+
+.dialog {
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: variables.$base-app-text-color;
+    &--title {
+      font-size: 1.25rem;
+      font-weight: 500;
+      font-style: normal;
+      letter-spacing: 0.2px;
+      color: #fff !important;
+    }
+    &--subtitle {
+      color: variables.$text-secondary-default;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 1rem;
+      letter-spacing: 0.16px;
+      color: #fff !important;
+    }
+  }
+  &__footer {
+    &--save-button {
+      display: flex;
+      height: 2rem;
+      min-width: 5.375rem;
+      min-height: 2rem;
+      max-height: 2rem;
+      padding: 1rem 0.5rem;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0.25rem;
+      background: variables.$background-accent-default;
+      border: 1px solid rgba(255, 255, 255, 0);
+      font-family: Montserrat, sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: normal;
+      cursor: pointer;
+      color: #fff !important;
+    }
+    &--back-button {
+      display: flex;
+      height: 2rem;
+      min-width: 5.375rem;
+      min-height: 2rem;
+      max-height: 2rem;
+      padding: 1rem 0.5rem;
+      justify-content: center;
+      align-items: center;
+      border-radius: 0.25rem;
+      border: 1px solid variables.$base-app-text-color;
+      background: variables.$utilities-ghost;
+      cursor: pointer;
+      color: #fff !important;
+    }
+  }
+}
+
+::ng-deep .dialog .p-dialog-mask {
+  background: rgba(181, 181, 181, 0.05);
+  backdrop-filter: blur(15px);
+}
+
+::ng-deep .dialog .p-dialog {
+  width: 726px;
+  min-width: 526px;
+  max-width: 726px;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  background: variables.$background-tertiary-default;
+  border: variables.$border-primary-default;
+}
+::ng-deep .p-dialog .p-dialog-header {
+  height: 4rem;
+  padding: 0;
+}
+::ng-deep p-dialog timesicon {
+  width: 1rem;
+  height: 1rem;
+}
+
+::ng-deep .p-dialog .p-dialog-footer,
+::ng-deep .p-dialog .p-dialog-content {
+  padding: 0;
+}
+
+::ng-deep .p-dialog .p-dialog-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1.5rem;
+}
+
+.dialog.rollback-size {
+  width: 426px !important;
+}
+.dialog__footer--save-button:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.3);
+}

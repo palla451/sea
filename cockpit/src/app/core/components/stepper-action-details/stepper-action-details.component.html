@@ -1,0 +1,14 @@
+@if(currAction){
+<section class="stepper-action-details">
+  <span class="stepper-action-details__action-description">
+    {{ currAction.description }}
+  </span>
+  @if(checkIfActionStatusIsVisible()){
+  <div>
+    <app-assisted-action-status
+      [currentAction]="currAction"
+    ></app-assisted-action-status>
+  </div>
+  }
+</section>
+}

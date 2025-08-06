@@ -1,0 +1,992 @@
+@use "./variables" as variables;
+
+@use "./base" as baseStyle;
+@use "./mixins" as mixins;
+@use "./fonts" as fonts;
+@import "primeicons/primeicons.css";
+
+body {
+  @include mixins.typography; // Applica il mixin di tipografia al body
+  background: variables.$base-app-background;
+}
+
+.p-toast {
+  opacity: 1 !important;
+  display: block !important;
+}
+
+.p-datatable {
+  background-color: variables.$no-bg-color;
+}
+
+/* Header della tabella */
+.p-datatable .p-datatable-thead > tr {
+  background-color: variables.$overview-table-header-bg-color;
+  border-radius: variables.$overview-table-border-radius;
+}
+
+.p-datatable .p-datatable-thead > tr > th {
+  background-color: transparent;
+  color: variables.$base-app-text-color;
+  height: variables.$overview-table-cell-height;
+  align-items: center;
+  padding: variables.$overview-table-cell-padding;
+  gap: variables.$overview-table-cell-gap;
+  border-bottom: variables.$overview-table-cell-border-bottom;
+  @include fonts.monts_500_12p_uppercase;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  background-color: variables.$no-bg-color;
+  color: variables.$base-app-text-color;
+  height: variables.$overview-table-cell-height;
+  gap: variables.$overview-table-cell-gap;
+  @include fonts.monts_500;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  align-items: center;
+  padding: variables.$overview-table-cell-padding;
+}
+
+.p-datatable .p-datatable-tbody > tr > td a {
+  color: variables.$base-app-text-color; // Colore del link (azzurro esempio)
+  transition: color 0.3s ease-in-out; // Animazione al passaggio del mouse
+  @include fonts.monts_500_underline;
+
+  // &:hover {
+  //   color: #ffcc00; // Cambia colore al passaggio del mouse
+  // }
+
+  // &:active {
+  //   color: #ff6600; // Colore quando il link viene cliccato
+  // }
+}
+
+.custom-sort-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.313rem;
+
+  img {
+    width: 0.875rem;
+    height: 0.875rem;
+    filter: brightness(0) invert(1); // Rende le icone bianche per il tema scuro
+    transition: opacity 0.3s ease-in-out;
+  }
+}
+
+.p-paginator .incident-overview-table__paginator-container__pagination {
+  background-color: variables.$no-bg-color !important;
+  // color: variables.$base-app-text-color !important;
+  @include fonts.monts_500;
+}
+
+.p-select-label,
+.p-select-dropdown {
+  color: variables.$base-app-text-color !important;
+  @include fonts.monts_500;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.p-select-dropdown {
+  margin-bottom: 0.188rem;
+}
+
+.p-timeline .p-timeline-event-connector {
+  border-left: 2px dashed rgba(255, 255, 255, 0.4) !important;
+}
+.p-timeline-event-opposite {
+  display: none !important;
+}
+
+.p-timeline-event-content {
+  margin-left: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.incident-overview-table__paginator-container__selectAndReport {
+  @include fonts.monts_500;
+}
+
+.vessel-perfomance .p-card {
+  background-color: variables.$table-bg-color;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: variables.$base-app-text-color;
+  //@include fonts.monts_500;
+}
+
+.vessel-perfomance__progressBar__card__corner-cut {
+  border-color: rgba(255, 255, 255, 0.1) transparent transparent transparent; /* Colore del bordo */
+}
+
+.vessel-perfomance__progressBar__card__corner-cut-cover {
+  border-color: #00060c transparent transparent transparent; /* Colore del bordo */
+}
+
+.vessel-perfomance .p-progressbar {
+  height: 0.625rem; /* Cambia lo spessore della barra */
+}
+
+.vessel-perfomance .p-progressbar,
+.vessel-perfomance .p-progressbar .p-progressbar-value {
+  border-radius: 0;
+}
+
+/* Stili per la Progress Bar */
+.vessel-perfomance .progress-red .p-progressbar-value {
+  background-color: #f64d4d;
+}
+
+.vessel-perfomance .progress-yellow .p-progressbar-value {
+  background-color: #ffcf26;
+}
+
+.vessel-perfomance .progress-green .p-progressbar-value {
+  background-color: #67ca00;
+}
+
+/* Stili per la Freccia Indicatrice */
+.vessel-perfomance .arrow-red {
+  border-bottom-color: #f64d4d !important;
+}
+
+.vessel-perfomance .arrow-yellow {
+  border-bottom-color: #ffcf26 !important;
+}
+
+.vessel-perfomance .arrow-green {
+  border-bottom-color: #67ca00 !important;
+}
+
+.vessel-perfomance .progress-wrapper .p-progressbar {
+  height: 4px;
+}
+
+.vessel-perfomance .p-card-body {
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+.vessel-perfomance .p-card .p-card-title {
+  @include fonts.body-sans-50;
+  margin-top: 8px;
+  padding-bottom: 0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-corner {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2pt solid rgba(255, 255, 255, 0.3);
+  border-radius: 3pt;
+  background-clip: content-box;
+}
+
+.incident-overview-table__paginator-container__pagination .p-paginator {
+  background-color: variables.$no-bg-color !important;
+}
+
+.incident-overview-table__paginator-container__pagination
+  .p-paginator
+  .p-paginator-page:not(.p-selected):not(.p-paginator-page-selected):hover {
+  color: variables.$base-app-text-color !important;
+  background-color: variables.$no-bg-color !important;
+}
+
+.incident-overview-table__paginator-container__pagination
+  .p-paginator
+  .p-paginator-page-selected {
+  color: variables.$base-app-text-color !important;
+  background-color: variables.$no-bg-color !important;
+}
+
+.incident-overview-table__paginator-container__pagination
+  .p-paginator
+  .p-paginator-prev:hover {
+  color: variables.$base-app-text-color !important;
+  background-color: variables.$no-bg-color !important;
+}
+
+.incident-overview-table__paginator-container__pagination
+  .p-paginator
+  .p-paginator-next:hover {
+  color: variables.$base-app-text-color !important;
+  background-color: variables.$no-bg-color !important;
+}
+
+.incident-overview-table__header--call-to-actions--settings .p-button-label {
+  order: 1;
+  text-decoration: underline;
+  color: variables.$base-app-text-color;
+}
+
+.incident-overview-table__header--call-to-actions--settings {
+  &:hover {
+    text-decoration: none;
+    border: 1px solid variables.$base-app-text-color;
+  }
+}
+
+.incident-overview-table__header--call-to-actions--settings .p-button-icon {
+  order: 2;
+  color: variables.$base-app-text-color;
+}
+
+.incident-overview-table__header--call-to-actions--filters .p-button-label {
+  order: 1;
+  text-decoration: underline;
+  color: variables.$base-app-text-color;
+}
+
+.incident-overview-table__header--call-to-actions--filters .p-button-icon {
+  order: 2;
+  color: variables.$base-app-text-color;
+}
+
+.p-checkbox.p-highlight .p-checkbox-box {
+  background-color: variables.$dashboard-sidebar-checkbox-bg-color !important;
+}
+
+.p-checkbox.p-highlight:hover .p-checkbox-box {
+  background-color: variables.$dashboard-sidebar-checkbox-bg-color-accent !important;
+}
+
+.incident-overview-table .p-datatable-tbody > tr {
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1); // sfondo più scuro
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+  }
+}
+
+// styles.scss
+
+/* Stile per la colonna sortable quando è attiva (cliccata) */
+.incident-overview-table .p-datatable .p-sortable-column.p-highlight {
+  background-color: #f0f8ff; // Colore di sfondo personalizzato
+  color: #2c3e50; // Colore del testo personalizzato
+
+  &:hover {
+    background-color: #e1f0ff; // Colore di sfondo al hover
+  }
+}
+
+.incident-overview-table
+  .p-datatable-thead
+  > tr
+  > th.p-datatable-column-sorted {
+  background-color: transparent;
+  color: variables.$base-app-text-color;
+}
+
+.incident-overview-table .p-datatable-thead > tr > th {
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: variables.$base-app-text-color;
+  }
+}
+
+.incident-overview-table p-button {
+  min-height: 2.5rem; // fissa altezza
+
+  .p-button {
+    padding: 0.5rem 1.25rem !important; // padding fisso
+    transition: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    min-height: 2.75rem;
+    line-height: 1.5rem;
+    box-sizing: border-box;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    font-weight: 500;
+
+    &:hover {
+      background-color: transparent !important; // rimuove sfondo bianco
+      transform: none !important;
+      box-shadow: none !important;
+      padding: 0.5rem 1.25rem; // Rassicura che non cambi
+      min-height: 2.5rem;
+    }
+
+    &:active {
+      background-color: transparent;
+      box-shadow: none !important;
+      padding: 0.5rem 1.25rem; // Rassicura che non cambi
+    }
+
+    &:focus {
+      background-color: transparent !important;
+      box-shadow: none !important;
+      padding: 0.5rem 1.25rem; // Rassicura che non cambi
+    }
+  }
+}
+
+.incident-overview-table .p-datatable .p-datatable-tbody > tr {
+  height: 60px;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0.14px;
+}
+
+.incident-overview-table div.p-paginator.p-component {
+  display: flex;
+  justify-content: flex-end !important;
+  align-items: center;
+  background-color: transparent;
+  padding: 0;
+  margin-top: 23px;
+}
+
+.incident-overview-table .paginator-right-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.incident-overview-table .p-paginator-page.p-paginator-page-selected {
+  background-color: transparent;
+  color: variables.$base-app-text-color;
+  @include fonts.paginator_font;
+  width: 40px;
+  border-bottom: 2px solid variables.$base-app-text-color;
+  border-radius: 0;
+}
+
+.incident-overview-table .p-paginator-page {
+  @include fonts.unSelected_paginator_page;
+}
+
+.incident-overview-table
+  .p-paginator-page:not(.p-disabled):not(.p-paginator-page-selected):hover {
+  background-color: transparent;
+}
+
+.incident-overview-table button.p-ripple.p-paginator-prev:hover,
+.incident-overview-table button.p-ripple.p-paginator-next:hover {
+  background-color: transparent;
+}
+
+.incident-overview-table button.p-ripple.p-paginator-prev:enabled,
+.incident-overview-table button.p-ripple.p-paginator-next:enabled {
+  color: variables.$base-app-text-color;
+}
+
+.incident-overview-table button.p-ripple.p-paginator-prev:disabled,
+.incident-overview-table button.p-ripple.p-paginator-next:disabled {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.incident-overview-table table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+// .incident-overview-table .p-table .p-datatable-tbody > tr > td {
+//   cursor: default !important;
+// }
+
+.ship-state h3.ship-state__title {
+  @include fonts.heading-150;
+}
+
+.multiselect-container__checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  @include fonts.body-sans-50;
+}
+
+.multiselect-container__checkbox-item input[type="checkbox"] {
+  // width: 16px;
+  // height: 16px;
+  // border-radius: 4px;
+  // background-color: #F64D4D;
+  // accent-color: #3C66EF;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid #fff;
+  background-color: transparent;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+
+  &:checked {
+    background-color: #3c66ef;
+    border: none;
+  }
+
+  &:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+}
+
+.cyber-resilience-ov .p-card {
+  background-color: variables.$no-bg-color;
+  color: variables.$base-app-text-color;
+}
+
+.cyber-resilience-ov .p-progressbar {
+  height: 0.625rem; /* Cambia lo spessore della barra */
+}
+
+.cyber-resilience-ov .p-progressbar,
+.cyber-resilience-ov .p-progressbar .p-progressbar-value {
+  border-radius: 0;
+}
+
+/* Stili per la Progress Bar */
+.cyber-resilience-ov .progress-red .p-progressbar-value {
+  background-color: #f64d4d;
+}
+
+.cyber-resilience-ov .progress-yellow .p-progressbar-value {
+  background-color: #ffcf26;
+}
+
+.cyber-resilience-ov .progress-green .p-progressbar-value {
+  background-color: #67ca00;
+}
+
+/* Stili per la Freccia Indicatrice */
+.cyber-resilience-ov .arrow-red {
+  border-bottom-color: #f64d4d !important;
+}
+
+.cyber-resilience-ov .arrow-yellow {
+  border-bottom-color: #ffcf26 !important;
+}
+
+.cyber-resilience-ov .arrow-green {
+  border-bottom-color: #67ca00 !important;
+}
+
+.cyber-resilience-ov .progress-wrapper .p-progressbar {
+  height: 4px;
+}
+
+.cyber-resilience-ov .p-card-body {
+  padding: 24px 24px;
+}
+
+.cyber-resilience-ov .p-card .p-card-title {
+  @include fonts.body-sans-150-light;
+  padding-bottom: 0;
+}
+
+div.p-datepicker-panel {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: variables.$base-app-text-color;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: absolute;
+  //right: 0;
+  backdrop-filter: blur(5px);
+  @include fonts.body-mono-25-light;
+}
+
+/* Stile principale del pannello del datepicker */
+div.p-datepicker {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: variables.$base-app-text-color;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  box-shadow: none;
+  padding: 0.5rem;
+  min-width: 250px;
+}
+
+/* Header del datepicker */
+div.p-datepicker-header {
+  background-color: transparent;
+  border: none;
+  padding: 0.5rem;
+  @include fonts.body-sans-25;
+
+  .p-datepicker-title {
+    margin: 0 auto;
+  }
+
+  .p-datepicker-prev,
+  .p-datepicker-next {
+    color: variables.$base-app-text-color;
+    width: 1.5rem;
+    height: 1.5rem;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+  }
+}
+
+/* Corpo del datepicker */
+div.p-datepicker-calendar-container {
+  table {
+    margin: 0;
+
+    th {
+      padding: 0.5rem;
+      color: variables.$base-app-text-color;
+      @include fonts.body-sans-25;
+    }
+
+    td {
+      padding: 0.3rem;
+
+      span {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+
+        &:not(.p-disabled):hover {
+          background: rgba(255, 255, 255, 0.1);
+        }
+
+        &.p-highlight {
+          background: rgba(255, 255, 255, 0.2);
+          color: variables.$base-app-text-color;
+        }
+      }
+    }
+  }
+}
+
+/* Footer del datepicker */
+div.p-datepicker-footer {
+  padding: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    background: transparent;
+    border: none;
+    color: variables.$base-app-text-color;
+    @include fonts.body-sans-25;
+    padding: 0.25rem 0.5rem;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+  }
+}
+
+input.p-inputtext {
+  background: rgba(255, 255, 255, 0) !important;
+}
+
+/* Stile dell'input */
+input.p-inputtext.p-datepicker-input.p-component {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  @include fonts.body-sans-25;
+  padding: 0.5rem;
+  width: 100%;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 0;
+
+  &:focus {
+    box-shadow: none;
+    border-bottom-color: variables.$base-app-text-color;
+  }
+}
+
+/* Contenitore dell'input */
+span.p-inputwrapper.p-datepicker {
+  background-color: rgba(255, 255, 255, 0.05);
+  width: 100%;
+  position: relative;
+  display: flex;
+}
+
+button.p-datepicker-dropdown {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.3);
+  width: 2.5rem;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 0;
+
+  &:hover {
+    color: variables.$base-app-text-color;
+  }
+
+  .pi-calendar {
+    font-size: 1rem;
+  }
+}
+
+span.p-datepicker-weekday {
+  color: variables.$base-app-text-color;
+  @include fonts.body-sans-15-strong;
+}
+
+span.p-datepicker-day {
+  color: variables.$base-app-text-color;
+  @include fonts.body-mono-25-light;
+}
+
+button.p-datepicker-select-year,
+button.p-datepicker-select-month {
+  @include fonts.body-sans-25-strong;
+
+  &:hover {
+    background: variables.$no-bg-color;
+  }
+}
+
+.p-button-icon-only.p-button-rounded.p-button-text {
+  color: variables.$base-app-text-color;
+
+  :hover {
+    color: rgba(255, 255, 255, 0.3);
+  }
+}
+
+span.p-datepicker-day.p-datepicker-day-selected {
+  background: #3c66ef;
+}
+
+.p-datepicker-buttonbar .p-button {
+  background: #3c66ef;
+  border: none;
+  height: 32px;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.p-datepicker-buttonbar .p-button:not(:disabled):hover {
+  background: #3c66ef;
+  border: none;
+  height: 32px;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+div.p-datepicker-buttonbar {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+}
+
+div.p-datepicker-time-picker {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.filter-buttons-container__button-group__btn-element {
+  border-radius: 20px;
+  padding: 0;
+}
+
+.filter-buttons-container__button-group__btn-element .p-togglebutton-label {
+  @include fonts.utilities-button-100;
+}
+
+.filter-buttons-container__button-group__btn-element .p-togglebutton {
+  background: variables.$no-bg-color;
+  border: none;
+  padding: 12px;
+  width: 90px;
+  min-width: 90px;
+
+  &:hover {
+    background-color: variables.$no-bg-color !important;
+  }
+}
+
+.remediation-action-types__button-group__btn-element {
+  border-radius: 20px;
+  padding: 0;
+}
+
+.remediation-action-types__button-group__btn-element .p-togglebutton-label {
+  @include fonts.utilities-button-100;
+}
+
+.remediation-action-types__button-group__btn-element .p-togglebutton {
+  background: variables.$no-bg-color;
+  border: none;
+  padding: 12px;
+  width: 90px;
+  min-width: 90px;
+
+  &:hover {
+    background-color: variables.$no-bg-color !important;
+  }
+}
+
+.remediation-action-statuses__button-group__btn-element {
+  border-radius: 20px;
+  padding: 0;
+}
+
+.remediation-action-statuses__button-group__btn-element .p-togglebutton-label {
+  @include fonts.utilities-button-100;
+}
+
+.remediation-action-statuses__button-group__btn-element .p-togglebutton {
+  background: variables.$no-bg-color;
+  border: none;
+  padding: 12px;
+  width: 90px;
+  min-width: 90px;
+
+  &:hover {
+    background-color: variables.$no-bg-color !important;
+  }
+}
+
+.asset-status-buttons-container__button-group__btn-element {
+  border-radius: 20px;
+  padding: 0;
+}
+
+.asset-status-buttons-container__button-group__btn-element
+  .p-togglebutton-label {
+  @include fonts.utilities-button-100;
+}
+
+.asset-status-buttons-container__button-group__btn-element .p-togglebutton {
+  background: variables.$no-bg-color;
+  border: none;
+  padding: 12px;
+  width: 175px;
+  min-width: 175px;
+
+  &:hover {
+    background-color: variables.$no-bg-color !important;
+  }
+}
+
+.p-togglebutton:not(.p-togglebutton-checked) {
+  background-color: variables.$no-bg-color !important;
+  border: 1px solid variables.$base-app-text-color !important;
+  border-radius: 20px !important;
+
+  &:hover {
+    background-color: variables.$no-bg-color !important;
+  }
+}
+
+.p-togglebutton.p-togglebutton-checked {
+  background-color: #3c66ef !important;
+  border-radius: 20px !important;
+
+  &:hover {
+    background-color: variables.$no-bg-color !important;
+  }
+}
+
+.p-togglebutton.p-togglebutton-checked::before {
+  background-color: #3c66ef !important;
+  border-radius: 20px !important;
+}
+
+.p-togglebutton-checked .p-togglebutton-content {
+  background-color: #3c66ef !important;
+  border: none;
+  border-radius: 20px !important;
+  width: 100%;
+}
+
+.p-datepicker-input-icon {
+  color: variables.$base-app-text-color;
+}
+
+div.p-checkbox-box {
+  border: none !important;
+}
+
+.deck-accordion__panel__header__deck-selection__select {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  height: 40px;
+  border: 1px solid transparent !important;
+  border-top-right-radius: 4px !important;
+  border-top-left-radius: 4px !important;
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-bottom: 1px solid variables.$base-app-text-color !important;
+}
+
+.deck-accordion__panel__header__deck-selection__select .p-select-overlay {
+  background-color: #00060c !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: variables.$base-app-text-color !important;
+}
+
+.deck-accordion__panel__header__deck-selection__select
+  .p-select-option.p-select-option-selected.p-focus {
+  background-color: variables.$no-bg-color !important;
+  color: variables.$base-app-text-color !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.base-readonly-modal .p-dialog {
+  backdrop-filter: blur(5px);
+}
+
+.base-readonly-modal .p-dialog-header {
+  padding: 0 0 1.5rem 0;
+  color: variables.$base-app-text-color;
+  @include fonts.heading-100;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.base-readonly-modal .p-dialog-content {
+  padding: 0;
+  scrollbar-width: none;
+}
+
+.product-card-modal .p-dialog-content {
+  padding: 0;
+  scrollbar-width: none;
+  overflow: hidden;
+}
+
+//scrollbar
+
+//Firefox and newer Chrome and Edge versions
+//questo blocco nasconde in modo indifferenziato
+//sia le scrollbar orizzontali che verticali
+//mentre le orizzontali serve che si vedano
+//al momento viene eliminato - da monitorare se serve
+// * {
+//   scrollbar-width: none; //none
+//   -ms-overflow-style: none; /* IE 10+ */
+// }
+
+//Chrome, Safari and Edge older versions
+
+*::-webkit-scrollbar:vertical {
+  display: none;
+}
+
+div.p-toast.p-component.p-toast-top-right {
+  top: 78px !important;
+  right: 131px !important;
+}
+
+.p-toast-message-error {
+  width: 519px !important;
+  background-color: #192f41 !important;
+  border-radius: 4px;
+  border: none !important;
+  border-bottom: 4px solid #f64d4d !important;
+  @include fonts.body-sans-50-strong;
+  color: variables.$base-app-text-color !important;
+}
+
+.p-toast-message-success {
+  width: 519px !important;
+  background-color: #192f41 !important;
+  border-radius: 4px !important;
+  border: none !important;
+  border-bottom: 4px solid #3c66ef !important;
+  @include fonts.body-sans-50-strong;
+  color: variables.$base-app-text-color !important;
+}
+
+.p-toast-message-success .p-toast-detail {
+  @include fonts.body-sans-50;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.p-toast-message-error .p-toast-detail {
+  @include fonts.body-sans-50;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.p-toast-message-success .p-toast-close-button:hover {
+  background: none !important;
+}
+
+.p-stepper-separator {
+  height: 0 !important;
+  border-top: 2px dashed variables.$background-secondary-default-04 !important;
+  background: none !important;
+}
+
+.stepper__step--completed .p-stepper-separator {
+  border-top: 2px solid variables.$background-secondary-default-04 !important;
+}
+
+button.incident-management__tab__false-positive__button {
+  @include fonts.utilities-button-100;
+}
+
+div.stepper__call_to_action_bar__show-remediation button {
+  @include fonts.utilities-button-100;
+}
+
+.stepper__panel__action__description {
+  font-size: 16px !important;
+  font-style: normal !important;
+  font-weight: 300 !important;
+  line-height: normal !important;
+  letter-spacing: 0.16px !important;
+}
+
+.p-dialog-mask {
+  backdrop-filter: blur(5px) !important;
+  -webkit-backdrop-filter: blur(5px) !important;
+  background-color: rgba(0, 13, 26, 0.5) !important;
+}
+
+.p-dialog {
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3) !important;
+}
+
+.p-button-icon-only.p-button-rounded.p-button-text:hover {
+  background: none !important;
+  color: variables.$base-app-text-color !important;
+}
+
+//BLOCCO PER ABILITAZIONE SCROLLING IN TUTTE LE PAGINE DELL APP
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+
+//BLOCCO PER ABILITAZIONE SCROLLING IN TUTTE LE PAGINE DEL ROUTER OUTLET
+router-outlet + * {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}

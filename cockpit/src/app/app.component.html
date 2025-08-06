@@ -1,0 +1,11 @@
+<div>
+  <app-toast-container [inputMessages]="messages()"></app-toast-container>
+</div>
+
+<div>
+  @if (showSpinner()) {
+    <app-loader />
+  }
+</div>
+
+<app-main-layout />

@@ -1,0 +1,8 @@
+<div class="impact-value-container">
+  @if(trendPercentage < 0 ) {
+  <span class="triangle-icon-gain">&#x25B2;</span>
+  }@else {
+  <span class="triangle-icon-loss">&#x25BC;</span>
+  }
+  <span class="impact-value">{{ getNumberAbsValue(trendPercentage) }}%</span>
+</div>

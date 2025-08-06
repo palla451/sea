@@ -1,0 +1,24 @@
+@use "../../../../fonts" as fonts;
+
+.tooltip-container {
+  bottom: 50%;
+  transform: translateY(50%);
+  width: 260px;
+  background-color: #252f39;
+  color: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.tooltip-title {
+  margin-bottom: 8px;
+  display: block;
+  @include fonts.body-sans-25-strong;
+}
+
+.tooltip-text {
+  display: inline-block;
+  @include fonts.body-sans-25-ligth;
+  text-transform: uppercase;
+}

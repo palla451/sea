@@ -1,0 +1,45 @@
+<div class="product-cart-grid">
+  <h1>{{ "administrationPage.title" | transloco }}</h1>
+  <div class="product-cart-grid__product-grid">
+    @for ( product of products; track product.id ){
+    <div class="product-cart-grid__product-grid__product-card">
+      <a
+        class="product-cart-grid__product-grid__product-card__image"
+        (click)="openProductLink(product)"
+        href="javascript:void(0)"
+      >
+        <img [src]="`${imagesPath}${product.image}`" [alt]="product.name" />
+      </a>
+      <div class="product-cart-grid__product-grid__product-card__info">
+        <div class="product-cart-grid__product-grid__product-card__info--name">
+          {{ product.name }}
+        </div>
+        <div
+          class="product-cart-grid__product-grid__product-card__info--description"
+        >
+          {{ product.description }}
+        </div>
+        <a
+          class="product-cart-grid__product-grid__product-card__info--read-more"
+          (click)="toggleFullCard(product)"
+        >
+          {{ "administrationPage.readMore" | transloco }}
+        </a>
+      </div>
+    </div>
+    }
+  </div>
+</div>
+
+@if(selectedProduct() !== null) {
+<app-product-card
+  [isModalVisible]="showFullCard"
+  (modalClosed)="manageModalClosedState()"
+  [modalWidth]="'45rem'"
+>
+  <app-product-cart-modal
+    [product]="selectedProduct()!"
+    [imagesPath]="imagesPath"
+  ></app-product-cart-modal>
+</app-product-card>
+}

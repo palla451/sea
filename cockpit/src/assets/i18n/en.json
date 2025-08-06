@@ -1,0 +1,216 @@
+{
+  "common": {
+    "button": {
+      "close": "Close",
+      "save": "Save",
+      "back": "Back",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "acknowledge": "Acknowledge",
+      "proceed": "Proceed",
+      "reset": "Reset",
+      "confirm": "Confirm",
+      "manage": "Manage",
+      "filters": "Filters",
+      "settings": "Settings"
+    }
+  },
+  "navbar": {
+    "overview": "Overview",
+    "assets": "Assets",
+    "remediation": "Remediation",
+    "incidents": "Incidents",
+    "history": "History",
+    "administration": "Administration"
+  },
+  "dashboardPage": {
+    "cyberReliability": "Cyber reliability",
+    "assetsStatement": {
+      "title": "Assets statement"
+    },
+    "incidentOverviewTable": {
+      "title": "Incident overview",
+      "noIncidentsFound": "There are no incidents found"
+    }
+  },
+  "assetManagementPage": {
+    "assetsTable": {
+      "title": "Assets management"
+    },
+    "assetModal": {
+      "title": "Edit assets",
+      "status": "Status"
+    }
+  },
+  "remediationManagementPage": {
+    "remediationTable": {
+      "title": "Remediation management"
+    },
+    "rollbackModal": {
+      "title": "Rollback Action",
+      "body": "You are about to rollback the action, are you sure you want to proceed?"
+    }
+  },
+  "historyPage": {
+    "historyTable": {
+      "title": "Incident history"
+    }
+  },
+  "administrationPage": {
+    "title": "Administration",
+    "readMore": "Read more"
+  },
+  "incidentDetailPage": {
+    "incidentDetailAccordion": {
+      "title": "Whole ship",
+      "label": "Deck: "
+    },
+    "incidentDetailHeader": {
+      "impactedSystem": {
+        "title": "Impacted System"
+      },
+      "date": {
+        "title": "Date"
+      },
+      "alertLevel": {
+        "title": "Alert level"
+      },
+      "status": {
+        "title": "Status"
+      }
+    },
+    "incidentTimeline": {
+      "title": "Timeline",
+      "detail": "Full list"
+    },
+    "assetsInvolved": {
+      "title": "Assets Involved"
+    },
+    "remediationOverview": {
+      "title": "Remediation overview",
+      "eventName": "Event {{index}}"
+    }
+  },
+  "cyberReliabilityPage": {
+    "title": "Cyber reliability",
+    "operational": "Operational assets",
+    "compromised": "Compromised assets",
+    "systemBreakdown": "System Breakdown",
+    "reliability": "Reliability",
+    "searchPlaceholder": "Search here.."
+  },
+  "remediationManagementModal": {
+    "stepper": {
+      "assisted": {
+        "retry": "Retry action",
+        "apply": "Apply action"
+      }
+    },
+    "textArea": {
+      "placeholder": "Add a note describing the action performed...",
+      "label": "Notes(*)",
+      "readonlyLabel": "Operator Note",
+      "noteNotFound": "No note was found for this completed action.",
+      "noteNotFoundFalsePositive": "No note was found for this false positive event."
+    },
+    "remediationImpact": {
+      "button": "Show remediation impact",
+      "title": "Remediation impacts",
+      "reliability": {
+        "title": "Reliability",
+        "impact": "Impact"
+      }
+    },
+    "remediation": {
+      "title": "Remediation",
+      "genericHint": {
+        "warningTitles": {
+          "falsePositive": "False Positive",
+          "warning": "Warning"
+        },
+        "assistedAction": {
+          "warningMessage": "This action requires a third-party service and it might require some time."
+        }
+      }
+    },
+    "markAsFalsePositive": {
+      "warningMessage": "You are about to mark the whole event as false positive. Fill in the the reason to proceed.",
+      "buttonLabel": "Mark as false positive",
+      "confirmFalsePositive": "This event was marked as false positive.",
+      "confirmButton": "Proceed and mark as false positive"
+    }
+  },
+  "settings": {
+    "title": "Table settings"
+  },
+  "filters": {
+    "dates": {
+      "startDate": "Start date and time",
+      "endDate": "End date and time",
+      "datePlaceholder": "Select yyyy-mm-dd hh:mm"
+    },
+    "accordionTitles": {
+      "alertLevels": "Alert levels",
+      "event": "Event",
+      "dates": "Dates",
+      "location": "Location",
+      "assets": "Assets",
+      "status": "Status",
+      "assetStatus": "Asset Status",
+      "incident": "Incident",
+      "action": "Action"
+    },
+    "multiselect": {
+      "titles": {
+        "incident": "Incident",
+        "deck": "Deck",
+        "frame": "Frame",
+        "mvz": "MVZ",
+        "markPiece": "Mark piece",
+        "description": "Description",
+        "name": "Name"
+      },
+      "hints": {
+        "search": "Search or type",
+        "description": "Search or type for description",
+        "incident": "Search or type for ID or description"
+      }
+    },
+    "incidentStatuses": {
+      "solved": "Solved",
+      "falsePositive": "False positive"
+    },
+    "remediationStatuses": {
+      "actionCompleted": "Completed",
+      "actionRollbacked": "Rollbacked"
+    },
+    "remediationTypes": {
+      "assisted": "Assisted",
+      "human": "Human",
+      "automated": "Automated"
+    },
+    "alertLevel": {
+      "critical": "Critical",
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    },
+    "assetStatus": {
+      "operational": "Operational",
+      "turnedOff": "Turned-Off",
+      "maintenance": "Maintenance",
+      "compromised": "Compromised"
+    }
+  },
+  "alerts": {
+    "error": "An error occurred!",
+    "genericWarn": "Warning!",
+    "successfullOperation": "Operation Successfully Performed!"
+  },
+  "genericTootltipInfo": {
+    "title": "Info",
+    "ipAddress": "This is the IP address of the source asset",
+    "assetRole": "This is the probe address of the source asset"
+  }
+}

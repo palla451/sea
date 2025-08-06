@@ -1,0 +1,101 @@
+<header class="header" role="banner" aria-label="Application header">
+  <!-- Application logo/name -->
+  <div class="header__app-brand">
+    <h1 class="header__app-brand__app-name" aria-label="Application name">
+      {{ appName }}
+    </h1>
+  </div>
+
+  <!-- Navigation menu -->
+  <div class="header__nav-container">
+    <nav aria-label="Main navigation">
+      <ul class="header__nav-container__nav-list" role="menubar">
+        @for (item of navItems; track item.label; let i = $index) {
+
+        <li
+          *ngIf="
+            item.label !== 'navbar.administration' || isUserEnabledToAdminPage()
+          "
+          role="none"
+        >
+          <a
+            role="menuitem"
+            [routerLink]="item.routerLink"
+            class="header__nav-container__nav-list__nav-item"
+            [class.active]="activeMenuItem() === item.label"
+            (click)="setActiveMenuItem(item.label)"
+            [attr.aria-current]="
+              activeMenuItem() === item.label ? 'page' : null
+            "
+            [attr.aria-label]="item.label | transloco"
+            [tabIndex]="0"
+            pRipple
+          >
+            {{ item.label | transloco }}
+          </a>
+        </li>
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <!-- User profile section -->
+  <div class="header__profile-section">
+    <!-- Avatar a sinistra -->
+    <!-- <div class="avatar-wrapper" aria-hidden="true">
+      <img
+        src="assets/svg/Ellipse 94.svg"
+        alt=""
+        class="avatar-frame"
+        aria-hidden="true"
+      />
+      <p-avatar
+        [image]="user.avatar"
+        shape="circle"
+        styleClass="avatar-inner"
+      ></p-avatar>
+    </div> -->
+
+    <!-- Select language-->
+    <p-select
+      [options]="languageOptions"
+      [(ngModel)]="selectedLanguage"
+      (onChange)="changeLanguage($event.value)"
+      optionLabel="label"
+      optionValue="value"
+      styleClass="w-full header__profile-section__language-select"
+      class="deck-accordion__panel__header__deck-selection__select"
+    ></p-select>
+
+    <!-- Separatore verticale -->
+    <div class="header__profile-section__separator" aria-hidden="true"></div>
+    <!-- Dati utente -->
+    <div
+      class="header__profile-section__user-info"
+      aria-label="User information"
+    >
+      <span class="header__profile-section__user-info--user-role">{{
+        getLoggedUserRole()
+      }}</span>
+      <span class="header__profile-section__user-info--user-name">
+        {{ getLoggedUserEmail() }}</span
+      >
+    </div>
+
+    <!-- Icona logout -->
+    <button
+      class="header__profile-section__logout-button"
+      type="button"
+      aria-label="Logout"
+      (click)="logout()"
+      pRipple
+    >
+      <img
+        src="assets/svg/Log-out icon.svg"
+        alt=""
+        class="avatar-frame"
+        aria-hidden="true"
+      />
+    </button>
+  </div>
+</header>
