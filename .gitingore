@@ -1,0 +1,43 @@
+# === Global exclusions ===
+.idea/
+.vscode/
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*.DS_Store
+Thumbs.db
+.env.docker
+docker-compose.override.yml
+.gitmodules
+
+# === Backend (Laravel) ===
+backend/vendor/
+backend/node_modules/
+backend/.env
+backend/.phpunit.result.cache
+backend/storage/*.key
+backend/storage/app/public
+backend/storage/framework/cache/data
+backend/storage/framework/sessions
+backend/storage/framework/views
+backend/storage/logs
+backend/bootstrap/cache/*.php
+backend/_ide_helper.php
+backend/_ide_helper_models.php
+backend/.phpstorm.meta.php
+# Non ignorare la cartella demo (contenente JSON che vogliamo nel repo)
+!backend/storage/app/
+!backend/storage/app/demo/
+
+
+# === Frontend (Angular) ===
+cockpit/node_modules/
+cockpit/dist/
+cockpit/.angular/
+cockpit/.output/
+cockpit/.env
+cockpit/pnpm-lock.yaml
+cockpit/package-lock.json
+cockpit/yarn.lock
