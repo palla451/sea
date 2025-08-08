@@ -1,10 +1,11 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject, computed } from "@angular/core";
+import { Component, inject, computed, OnInit, signal } from "@angular/core";
 import { HoverService } from "../../../services/hover.service";
 import { toSignal } from "@angular/core/rxjs-interop";
-import { filter, map } from "rxjs";
+import { filter, map, noop, tap } from "rxjs";
 import { isNonNull } from "../../../../../core/utils/rxjs-operators/noNullOperator";
 import { GridElement, Incident } from "../../../models/dashboard.models";
+import { IncidentManagementManagerService } from "../../../../../core/services/incident-management-manager.service";
 
 @Component({
   selector: "app-ship-incident-map",
@@ -13,11 +14,18 @@ import { GridElement, Incident } from "../../../models/dashboard.models";
   templateUrl: "./ship-incident-map.component.html",
   styleUrls: ["./ship-incident-map.component.scss"],
 })
-export class ShipIncidentMapComponent {
+export class ShipIncidentMapComponent implements OnInit {
   private hoverService = inject(HoverService);
+  private incidentManagementManagerService = inject(IncidentManagementManagerService);
+
   highlightedIncident = toSignal(
     this.hoverService.hoveredRow$.pipe(filter(isNonNull))
   );
+
+  // currentTablePageImpactedDecks = toSignal(
+  //   this.incidentManagementManagerService.overviewIncidentTableCurrPageImpactedDecks.pipe(filter(isNonNull))
+  // );
+  currentTablePageImpactedDecks = signal<number[]>([]);
 
   highlightedIncidentSeverity = computed<string>(() => {
     return this.highlightedIncident()?.severity?.toLowerCase() || "";
@@ -176,6 +184,15 @@ export class ShipIncidentMapComponent {
     { x1: 948, y1: 28, x2: 948, y2: 359, orientation: "vertical" },
   ];
 
+  ngOnInit(): void {
+    this.incidentManagementManagerService.overviewIncidentTableCurrPageImpactedDecks.pipe(
+      filter(isNonNull),
+      tap(impactedDecks => {
+        this.currentTablePageImpactedDecks.set(impactedDecks);
+      })
+  ).subscribe(noop);
+  }
+
   checkIfDeckHasIncidents(deckLabel: string | undefined): boolean {
     let checkResult = false;
     if (deckLabel) {
@@ -188,6 +205,33 @@ export class ShipIncidentMapComponent {
       ) {
         checkResult = true;
       }
+    }
+
+    return checkResult;
+  }
+
+  private checkIfAreHighlightedIncidentDecks(): boolean {
+    return !!this.highlightedIncidentDecks()?.length
+  }
+
+  checkIfAlertIconIsActive(deckLabel: string | undefined): boolean {
+    let checkResult = false;
+    if (deckLabel) {
+      const cleanedDeckValue =
+        deckLabel[0] == "0" ? Number(deckLabel[1]) : Number(deckLabel);
+
+        switch (this.checkIfAreHighlightedIncidentDecks()) {
+          case true:
+            checkResult = this.checkIfDeckHasIncidents(deckLabel);
+            break;
+        
+          case false:
+            checkResult = this.currentTablePageImpactedDecks()?.some(
+              (deck) => deck == cleanedDeckValue
+            )
+            break;
+        }
+
     }
 
     return checkResult;
@@ -289,7 +333,7 @@ export class ShipIncidentMapComponent {
   });
 
   getDeckLabelColor(lineLabel: string | undefined): string {
-    return lineLabel && this.checkIfDeckHasIncidents(lineLabel)
+    return lineLabel && this.checkIfAlertIconIsActive(lineLabel)
       ? "#fff"
       : "rgba(255, 255, 255, 0.6)";
   }

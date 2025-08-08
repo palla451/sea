@@ -10,27 +10,61 @@
           <p-progressBar
             [value]="shipMacroFunction['operatingPercentage']"
             [showValue]="false"
-            [ngClass]="getProgressBarClass(shipMacroFunction['operatingPercentage'])"
+            [ngClass]="
+              getProgressBarClass(shipMacroFunction['operatingPercentage'])
+            "
           ></p-progressBar>
           <div
             class="vessel-perfomance__progressBar__card__indicator-container"
           >
             <div
               class="vessel-perfomance__progressBar__card__indicator-container--arrow"
-              [style.left]="calculateArrowPosition(shipMacroFunction['operatingPercentage']) + '%'"
-              [ngClass]="getArrowClass(shipMacroFunction['operatingPercentage'])"
+              [style.left]="
+                calculateArrowPosition(
+                  shipMacroFunction['operatingPercentage']
+                ) + '%'
+              "
+              [ngClass]="
+                getArrowClass(shipMacroFunction['operatingPercentage'])
+              "
             ></div>
             <div
               class="vessel-perfomance__progressBar__card__indicator-container--value"
               [style.marginLeft]="
-                calculateArrowPosition(shipMacroFunction['operatingPercentage']) + '%'
+                calculateArrowPosition(
+                  shipMacroFunction['operatingPercentage']
+                ) + '%'
               "
             >
-              <span>{{ shipMacroFunction['operatingPercentage'] }}%</span>
+              <span
+                [ngClass]="
+                  getFunctionPercentagePosition(
+                    shipMacroFunction['operatingPercentage']
+                  )
+                "
+              >
+                {{ shipMacroFunction["operatingPercentage"] }}%</span
+              >
             </div>
           </div>
         </div>
-        <i class="pi pi-angle-right link-icon" (click)="goToCyberResilienceOV(shipMacroFunction)"></i>
+        <span
+          class="link-icon"
+          (click)="goToCyberResilienceOV(shipMacroFunction)"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M7.75781 17.8995L9.17203 19.3137L16.2431 12.2427L9.17206 5.17158L7.75784 6.58578L13.4147 12.2427L7.75781 17.8995Z"
+              fill="white"
+            />
+          </svg>
+        </span>
       </div>
       <div class="vessel-perfomance__progressBar__card__corner-cut"></div>
       <div class="vessel-perfomance__progressBar__card__corner-cut-cover"></div>

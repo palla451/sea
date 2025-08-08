@@ -8,7 +8,7 @@ import { IconActionPathMap } from "../../models/iconDictionary.model";
 import { IncidentEvent } from "../../../features/incident-detail/models/incident-detail.models";
 import { BaseReadonlyModalComponent } from "../base-readonly-modal/base-readonly-modal.component";
 import { IncidentManagementModalComponent } from "../incident-management-modal/incident-management-modal.component";
-import { selectAllActionDescriptions, selectEvents } from "../../state";
+import { selectAllActionDescriptions, selectEvents, selectIfCurrentIncidentIsNew } from "../../state";
 import { IncidentManageButtonComponent } from "../incident-manage-button/incident-manage-button.component";
 import { ActivatedRoute } from "@angular/router";
 import { map } from "rxjs";
@@ -42,6 +42,7 @@ export class RemediationOverviewComponent {
   iconActionMap = IconActionPathMap;
   store = inject(Store);
   hasPrivilegedAccess$ = this.store.select(hasPrivilegedAccess);
+  checkIfCurrentIncidentIsNew$ = this.store.select(selectIfCurrentIncidentIsNew);
 
   events = toSignal(this.store.select(selectEvents), {
     initialValue: [],

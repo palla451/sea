@@ -278,15 +278,15 @@
           <div class="sidebar__content__accordion_container__description">
             <app-searchable-multiselect-dropdown
               [table]="table"
-              [fieldName]="'description'"
+              [fieldName]="'historyDescription'"
               [multiselectTitle]="
                 'filters.multiselect.titles.incident' | transloco
               "
               [multiselectHint]="
                 'filters.multiselect.hints.incident' | transloco
               "
-              (descriptionsSelectionChange)="
-                descriptionsSelectionChange($event)
+              (historyDescriptionsSelectionChange)="
+                historyDescriptionsSelectionChange($event)
               "
               (decksSelectionChange)="decksSelectionChange($event)"
               (framesSelectionChange)="framesSelectionChange($event)"

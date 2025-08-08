@@ -78,7 +78,7 @@ export class GetIncidentRemediationsEffects {
             messageActions.setMessage({
               message: {
                 id: uuid.v4(),
-                summary: this.transloco.translate("genericWarn"),
+                summary: this.transloco.translate("alerts.genericWarn"),
                 detail: sanitizeErrorMessage(action.error),
                 severity: "error",
                 sticky: true,
@@ -152,7 +152,7 @@ export class GetIncidentRemediationsEffects {
             messageActions.setMessage({
               message: {
                 id: uuid.v4(),
-                summary: this.transloco.translate("genericWarn"),
+                summary: this.transloco.translate("alerts.genericWarn"),
                 detail: sanitizeErrorMessage(action.error),
                 severity: "error",
                 sticky: true,

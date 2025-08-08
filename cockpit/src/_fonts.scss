@@ -375,3 +375,16 @@
   line-height: normal;
   letter-spacing: 0.14px;
 }
+
+@mixin kpi-title-75 {
+  overflow: hidden;
+  color: #fff;
+  text-overflow: ellipsis;
+  font-family: PP Fraktion Sans, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 12.2px;
+  letter-spacing: 0.14px;
+  text-transform: uppercase;
+}

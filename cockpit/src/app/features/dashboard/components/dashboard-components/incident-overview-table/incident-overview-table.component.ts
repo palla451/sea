@@ -21,7 +21,15 @@ import {
   IncidentOVTableColumns,
   SidebarService,
 } from "../../../services/dashboard-sidebar.service";
-import { filter, noop, Subject, Subscription, switchMap, takeUntil, tap } from "rxjs";
+import {
+  filter,
+  noop,
+  Subject,
+  Subscription,
+  switchMap,
+  takeUntil,
+  tap,
+} from "rxjs";
 import { HoverService } from "../../../services/hover.service";
 import { Incident } from "../../../models/dashboard.models";
 import { Router } from "@angular/router";
@@ -44,7 +52,11 @@ import {
   IncidentDetail,
   IncidentEvent,
 } from "../../../../incident-detail/models/incident-detail.models";
-import { fromDashboardCore, fromIncidentDetail, selectEvents } from "../../../../../core/state";
+import {
+  fromDashboardCore,
+  fromIncidentDetail,
+  selectEvents,
+} from "../../../../../core/state";
 import { hasPrivilegedAccess } from "../../../../../auth/state";
 import { IncidentManagementManagerService } from "../../../../../core/services/incident-management-manager.service";
 import { SharedModule } from "../../../../../shared/shared.module";
@@ -78,7 +90,6 @@ export class IncidentOverviewTableComponent implements OnInit, OnDestroy {
   );
   private readonly store = inject(Store);
   private originalIncidents: Incident[] = [];
-  private filterSubscription!: Subscription;
   private resetSubscription!: Subscription;
   @ViewChild("incidentOVtable") incidentOVtable!: Table;
   private _incidents: readonly Incident[] | null = null;
@@ -124,13 +135,10 @@ export class IncidentOverviewTableComponent implements OnInit, OnDestroy {
     } else {
       this.incidentsSignal.set(null);
     }
-
-    this.first.set(0);
   }
 
   @Input() set rowsPerPage(pageRow: number) {
     this.rows.set(pageRow);
-    this.first.set(0);
   }
 
   get incidents(): readonly Incident[] | null {
@@ -172,8 +180,6 @@ export class IncidentOverviewTableComponent implements OnInit, OnDestroy {
     }
   );
 
-  // activeSidebarFiltersCount$!: Observable<number>;
-
   dashboardService = inject(DashboardService);
   currentIncidentId = signal<number>(-1);
 
@@ -182,6 +188,24 @@ export class IncidentOverviewTableComponent implements OnInit, OnDestroy {
 
   events = toSignal(this.store.select(selectEvents), {
     initialValue: [],
+  });
+
+  visibleIncidents = signal<Incident[]>([]);
+
+  visibleIncidentsUniqueDecks = computed<number[]>(() => {
+    const incidents = this.visibleIncidents();
+
+    if (!incidents || incidents.length === 0) {
+      return [];
+    }
+
+    // Estrai tutti i decks (array di array) e appiattisci
+    const allDecks = incidents.flatMap((incident) => incident.decks);
+
+    // Rimuovi duplicati usando Set e converti in array
+    const uniqueDecks = [...new Set(allDecks)];
+
+    return uniqueDecks.sort((a, b) => a - b);
   });
 
   constructor(private router: Router) {
@@ -194,28 +218,51 @@ export class IncidentOverviewTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.select(fromDashboardCore.selectAllIncidentsList).pipe(
-          takeUntil(this.onDestroy$),
-          filter(isNonNull),
-          tap(incidentList => {
-            this.originalIncidents = [...(incidentList ?? [])];
-            this.isTableDataLoading = false;
-          }),
-          switchMap(_ => this.sidebarService.currentFilters.pipe(
-            tap(filters => {
+    this.store
+      .select(fromDashboardCore.selectAllIncidentsList)
+      .pipe(
+        takeUntil(this.onDestroy$),
+        filter(isNonNull),
+        tap((incidentList) => {
+          this.originalIncidents = [...(incidentList ?? [])];
+          this.isTableDataLoading = false;
+
+          // Inizializza gli incidents visibili alla prima pagina all'inizio e alla pagina correntemente selezionata in generale
+
+          //this.visibleIncidents.set(this.originalIncidents.slice(this.first(), this.rows()));
+
+          // this.visibleIncidents.set(
+          //   (this.incidentsSignal() ?? []).slice(
+          //     this.first(),
+          //     this.first() + this.rows()
+          //   )
+          // );
+
+          this.visibleIncidents.set(
+            this.originalIncidents && this.originalIncidents.length > 0
+              ? this.originalIncidents.slice(
+                  Math.min(this.first(), this.originalIncidents.length - 1),
+                  Math.min(
+                    this.first() + this.rows(),
+                    this.originalIncidents.length
+                  )
+                )
+              : []
+          );
+
+          this.incidentManagementManagerService.updateIncidentOvTableCurrPageImpactedDecks(
+            this.visibleIncidentsUniqueDecks()
+          );
+        }),
+        switchMap((_) =>
+          this.sidebarService.currentFilters.pipe(
+            tap((filters) => {
               this.applyFilters(filters);
             })
-          ))
-        ).subscribe(noop);
-
-    
-
-    // Sottoscrizione ai filtri
-    // this.filterSubscription = this.sidebarService.currentFilters.subscribe(
-    //   (filters) => {
-    //     this.applyFilters(filters);
-    //   }
-    // );
+          )
+        )
+      )
+      .subscribe(noop);
 
     // Sottoscrizione al reset
     this.resetSubscription = this.sidebarService.resetTriggered.subscribe(
@@ -226,16 +273,30 @@ export class IncidentOverviewTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    //this.filterSubscription.unsubscribe();
     this.resetSubscription.unsubscribe();
     this.onDestroy$.next();
     this.onDestroy$.complete();
   }
 
   private applyFilters(filters: any) {
+    // if (!filters || Object.keys(filters).length === 0) {
+    //   this.incidentsSignal.set([...this.originalIncidents]);
+    //   this.visibleIncidents.set([
+    //     ...this.originalIncidents.slice(0, this.rows()),
+    //   ]);
+    //   return;
+    // }
+
     if (!filters || Object.keys(filters).length === 0) {
-      this.incidentsSignal.set([...this.originalIncidents]);
-      return;
+        this.incidentsSignal.set([...this.originalIncidents]);
+           this.visibleIncidents.set([
+        ...this.originalIncidents.slice(0, this.rows()),
+      ]);
+        this.first.set(0);
+        if (this.incidentOVtable) {
+            this.incidentOVtable.first = 0;
+        }
+        return;
     }
 
     let filteredData = [...this.originalIncidents];
@@ -252,7 +313,6 @@ export class IncidentOverviewTableComponent implements OnInit, OnDestroy {
 
     // Filtra per date
     if (filters?.dates?.start || filters.dates?.end) {
-      
       filteredData = filteredData.filter((incident) => {
         //TODO - OGGI - RIMETTERE A POSTO ANCHE IL DISCORSO DELLE DATE E RELATIVO FILTRO
 
@@ -327,29 +387,34 @@ export class IncidentOverviewTableComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.incidentsSignal.set(filteredData);
-    this.first.set(0); // Resetta alla prima pagina
-  }
+    if (this.activeSidebarFiltersCount() > 0) {
+      this.incidentsSignal.set(filteredData);
+      this.first.set(0);
+      // Forza il reset della pagina nella tabella PrimeNG
+      if (this.incidentOVtable) {
+          this.incidentOVtable.first = 0;
+          this.incidentOVtable.reset();
+      }
 
-  private isValidIncidentKey(key: string): key is keyof Incident {
-    const validKeys: (keyof Incident)[] = [
-      "id",
-      "description",
-      "decks",
-      "frames",
-      "mvz",
-      "assetsInvolved",
-      "severity",
-      "createdAt",
-      "status",
-      // Aggiungi tutte le proprietà valide dell'interfaccia Incident
-    ];
-    return validKeys.includes(key as keyof Incident);
+      this.visibleIncidents.set(filteredData.slice(0, this.rows()));
+      this.incidentManagementManagerService.updateIncidentOvTableCurrPageImpactedDecks(
+            this.visibleIncidentsUniqueDecks()
+          );
+    }
+
+    // if (this.activeSidebarFiltersCount() > 0) {
+    //   this.incidentsSignal.set(filteredData);
+    //   this.first.set(0);
+    //   this.visibleIncidents.set(filteredData.slice(0, this.rows()));
+    // }
   }
 
   private resetFilters() {
     this.incidentsSignal.set([...this.originalIncidents]);
     this.first.set(0); // Resetta alla prima pagina
+    this.incidentManagementManagerService.updateIncidentOvTableCurrPageImpactedDecks(
+            this.visibleIncidentsUniqueDecks()
+          );
 
     // // Se stai usando PrimeNG Table, potresti aver bisogno di:
     // if (this.incidentOVtable) {
@@ -364,6 +429,16 @@ export class IncidentOverviewTableComponent implements OnInit, OnDestroy {
   onPageChange(event: any) {
     this.first.set(event.first);
     this.rows.set(event.rows);
+
+    // Aggiorna gli incidents visibili
+    const startIndex = event.first;
+    const endIndex = startIndex + event.rows;
+    this.visibleIncidents.set(
+      (this.incidentsSignal() ?? []).slice(startIndex, endIndex)
+    );
+    this.incidentManagementManagerService.updateIncidentOvTableCurrPageImpactedDecks(
+      this.visibleIncidentsUniqueDecks()
+    );
   }
 
   getAlertSeverityColor(alertLevel: string): string {

@@ -101,6 +101,7 @@
     "searchPlaceholder": "Cerca qui.."
   },
   "remediationManagementModal": {
+    "title": "Gestione incidente",
     "stepper": {
       "assisted": {
         "retry": "Riprova..",
@@ -117,9 +118,12 @@
     "remediationImpact": {
       "button": "Mostra impatti remediation",
       "title": "Impatti Remediation",
-      "reliability": {
-        "title": "Affidabilità",
-        "impact": "Impatto"
+      "actualReliability": {
+        "title": "Affidabilità Attuale"
+      },
+      "forseenReliability": {
+        "title": "Affidabilità Prevista",
+        "impact": "Delta"
       }
     },
     "remediation": {

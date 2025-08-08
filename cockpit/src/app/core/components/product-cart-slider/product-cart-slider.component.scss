@@ -26,7 +26,7 @@
       border-radius: 0.25rem;
       border-width: 1px;
       background-color: variables.$background-primary-default;
-      border: 1px solid #{variables.$utilities-ghost};
+      border: 1px solid #{variables.$sidebar-overlay-bg-color};
       backdrop-filter: blur(5px);
 
       &__container {

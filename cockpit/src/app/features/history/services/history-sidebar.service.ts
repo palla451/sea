@@ -24,7 +24,7 @@ export class HistorySidebarService {
       sortable: false,
     },
     {
-      field: "description",
+      field: "historyDescription",
       header: "DESCRIPTION",
       visible: true,
       sortable: true,
@@ -157,8 +157,7 @@ export class HistorySidebarService {
     return this.closedIncidentsListSubject.pipe(
       map((incidents) => {
         if (!Array.isArray(incidents)) return [];
-
-        return incidents
+        return incidents.filter(incident => incident?.status.toLowerCase()!=='new')
           .map((incident) => incident?.description) // Estrai le descrizioni
           .filter((desc): desc is string => !!desc) // Filtra valori null/undefined
           .filter((desc, index, array) => array.indexOf(desc) === index); // Rimuovi duplicati

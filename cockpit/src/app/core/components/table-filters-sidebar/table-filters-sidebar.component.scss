@@ -26,12 +26,11 @@
     width: 100vw;
     height: 100vh;
     background: variables.$sidebar-overlay-bg-color;
-    backdrop-filter: blur(0.313rem);
+    backdrop-filter: blur(0.9375rem);
     z-index: 90;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease-in-out;
-    clip-path: inset(0 30rem 0 0);
   }
 
   &--open &__overlay {
@@ -40,7 +39,6 @@
   }
 
   &__content {
-    padding: 1rem 0;
     background: linear-gradient(
       180deg,
       rgba(0, 13, 26, 0) -16.67%,
@@ -50,20 +48,23 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 100;
+    border-left: 1px solid variables.$border-primary-default;
 
     &__header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 1rem;
+      padding: 1.5rem 2.5rem;
 
       &__title {
-        @include fonts.monts_300_title;
+        @include fonts.heading-100;
         margin: 0;
       }
 
       &__close-button {
-        background: variables.$app-transparent-bg;
+        background: variables.$no-bg-color;
         border: none;
         color: variables.$base-app-text-color;
         font-size: 1.5rem;
@@ -77,7 +78,7 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       position: relative;
 
-      &__select-markPiece, 
+      &__select-markPiece,
       &__select-description,
       &__select-name {
         padding-bottom: 1rem;
@@ -118,17 +119,17 @@
       display: flex;
       justify-content: space-between;
       margin-top: auto;
-      padding: 1rem 2rem;
-      border-top: 0.063rem solid variables.$sidebar-footer-border;
+      padding: 1.5rem 2.5rem;
+      border-top: 0.063rem solid variables.$border-primary-default;
       width: 100%;
 
       &__button {
-        padding: 0.5rem 1rem;
+        padding: 1rem;
         border: none;
         cursor: pointer;
 
         &--cancel {
-          background: variables.$app-transparent-bg;
+          background: variables.$no-bg-color;
           color: variables.$base-app-text-color;
           text-decoration: underline;
           width: 30%;
@@ -139,11 +140,12 @@
           display: inline-block;
           //background: variables.$dashboard-sidebar-checkbox-bg-color;
           background-color: rgba(255, 255, 255, 0.1);
-          color: variables.$base-app-text-color;
+          color: variables.$text-secondary-default;
           text-decoration: none;
           border-radius: 5%;
           text-align: center;
-          width: 30%;
+          min-width: 5.625rem;
+          width: 40%;
           @include fonts.monts_300_content;
         }
       }
@@ -153,11 +155,11 @@
 
 .btnSaveActive {
   display: inline-block;
-          background: variables.$dashboard-sidebar-checkbox-bg-color;
-          color: variables.$base-app-text-color;
-          text-decoration: none;
-          border-radius: 5%;
-          text-align: center;
-          width: 30%;
-          @include fonts.monts_300_content;
+  background: variables.$background-accent-default;
+  color: variables.$base-app-text-color;
+  text-decoration: none;
+  border-radius: 5%;
+  text-align: center;
+  width: 30%;
+  @include fonts.monts_300_content;
 }

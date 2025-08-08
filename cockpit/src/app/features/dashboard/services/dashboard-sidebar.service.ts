@@ -24,7 +24,7 @@ export class SidebarService {
     { field: "id", header: "ID", visible: true, sortable: false },
     {
       field: "description",
-      header: "Description",
+      header: "Title",
       visible: true,
       sortable: true,
     },

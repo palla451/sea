@@ -16,6 +16,14 @@ import { IconEventPathMap } from "../models/iconDictionary.model";
   providedIn: "root",
 })
 export class IncidentManagementManagerService {
+  _overviewIncidentTableCurrPageImpactedDecks = new BehaviorSubject<number[]>([]);
+  overviewIncidentTableCurrPageImpactedDecks =
+    this._overviewIncidentTableCurrPageImpactedDecks.asObservable();
+
+  updateIncidentOvTableCurrPageImpactedDecks(impactedDecks: number[]) {
+    this._overviewIncidentTableCurrPageImpactedDecks.next(impactedDecks);
+  }
+
   _manageIncidentRemediationStepperAPICounter = new BehaviorSubject<number>(0);
   manageIncidentRemediationStepperAPICounter =
     this._manageIncidentRemediationStepperAPICounter.asObservable();

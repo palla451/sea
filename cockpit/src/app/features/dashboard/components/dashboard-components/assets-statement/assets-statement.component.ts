@@ -1,4 +1,5 @@
 import { Component, Input, signal } from "@angular/core";
+import { CountUpDirective } from "../../../../../core/directives/count-up.directive";
 import { SharedModule } from "../../../../../shared/shared.module";
 
 @Component({

@@ -9,6 +9,7 @@ import { AppMenuListEnum } from "../../../core/enums/app-menu-list";
 import { ActivatedRoute } from "@angular/router";
 import { map } from "rxjs";
 import { incidentDetailActions } from "../../../core/state/actions";
+import { shipFunctionsActions } from "../../dashboard/state/actions";
 
 @Component({
   selector: "app-incident-detail-page",
@@ -35,6 +36,8 @@ export class IncidentDetailPageComponent implements OnInit {
   );
 
   constructor() {
+    this.store.dispatch(shipFunctionsActions.getAllShipFunctions());
+    
     effect(() => {
       this.store.dispatch(
         incidentDetailActions.getAllIncidentDetail({

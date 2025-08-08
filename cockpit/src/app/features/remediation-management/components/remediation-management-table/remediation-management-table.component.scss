@@ -84,10 +84,12 @@
   &__editModal {
     text-align: center;
   }
-  &__description {
+  
+  &__action-description,
+  &__incident-description {
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    white-space: wrap;
   }
 
   &__status {
@@ -118,32 +120,6 @@
       @include fonts.body-sans-25;
     }
   }
-
-  // &__paginator-container {
-  //   display: flex;
-  //   justify-content: space-between;
-  //   align-items: center;
-  //   width: 100%;
-  //   padding: 0;
-
-  //   &__report {
-  //     display: flex;
-  //     justify-content: space-between;
-  //     align-items: center;
-  //     align-self: stretch;
-  //     gap: 1rem;
-  //     padding: 0;
-  //     @include fonts.body-sans-25;
-
-  //     &__itemsPerPageDD {
-  //       //height: 2.25rem;
-  //       background-color: variables.$no-bg-color;
-  //       width: 5.125rem;
-  //       z-index: 2;
-  //       padding: 0;
-  //     }
-  //   }
-  // }
 }
 
 .ascendingSortIcon {
@@ -184,10 +160,6 @@
     border: 2px solid white;
     border-radius: 8px;
   }
-
-  &:active {
-    // Nessuna modifica visiva
-  }
 }
 
 .filtersBtn {
@@ -203,25 +175,25 @@
 }
 
 .incidentIdWidth {
-  width: 10%;
+  width: 7% !important;
 }
 
 .incidentDescriptionWidth {
-  width: 30%;
+  width: 30% !important;
 }
 .actionTypeWidth {
-  width: 15%;
+  width: 8% !important;
 }
 
 .actionDescriptionWidth {
-  width: 25%;
+  width: 25% !important;
 }
 
 .statusWidth {
-  width: 10%;
+  width: 6% !important;
 }
 .actionWidth {
-  width: 5%;
+  width: 2% !important;
 }
 
 .context-menu-cell {

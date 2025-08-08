@@ -14,20 +14,27 @@
         <span class="cyber-resilience-params__values__data__label">{{
           "cyberReliabilityPage.operational" | transloco
         }}</span>
-        <span
+        <!-- con countup bug su update del signal - per ora viene escluso <span
           [appCountUp]="countOperatingAssetsNumber()"
           [duration]="700"
           class="cyber-resilience-params__values__data__value"
-          >{{ countOperatingAssets() }}</span
-        >
+          >{{ countOperationalAssets() }}</span
+        > -->
+        <span class="cyber-resilience-params__values__data__value">{{
+          countOperatingAssets()
+        }}</span>
       </div>
       <div class="cyber-resilience-params__values__data__last">
         <span class="cyber-resilience-params__values__data__label">{{
           "cyberReliabilityPage.compromised" | transloco
         }}</span>
-        <span
+        <!-- <span
           [appCountUp]="countCompromisedAssetsNumber()"
           [duration]="700"
+          class="cyber-resilience-params__values__data__value"
+          >{{ countCompromisedAssets() }}</span
+        > -->
+         <span
           class="cyber-resilience-params__values__data__value"
           >{{ countCompromisedAssets() }}</span
         >

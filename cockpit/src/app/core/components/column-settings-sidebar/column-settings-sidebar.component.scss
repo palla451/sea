@@ -25,12 +25,11 @@
     width: 100vw;
     height: 100vh;
     background: variables.$sidebar-overlay-bg-color;
-    backdrop-filter: blur(0.313rem);
+    backdrop-filter: blur(0.9375rem);
     z-index: 90;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s ease-in-out;
-    clip-path: inset(0 30rem 0 0);
   }
 
   &--open &__overlay {
@@ -39,27 +38,30 @@
   }
 
   &__content {
-    padding: 1rem 0;
     height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
+    z-index: 100;
+    border-left: 1px solid variables.$border-primary-default;
+    background: variables.$background-tertiary-default;
 
     &__header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1rem 1rem;
-      border-bottom: 0.063rem solid variables.$sidebar-footer-border;
+      padding: 1.5rem 2.5rem;
+      border-bottom: 0.063rem solid variables.$border-primary-default;
       margin-bottom: 2rem;
 
       &__title {
-        @include fonts.monts_300_title;
+        @include fonts.heading-100;
         margin: 0;
       }
 
       &__close-button {
-        background: variables.$app-transparent-bg;
+        background: variables.$no-bg-color;
         border: none;
         color: variables.$base-app-text-color;
         font-size: 1.5rem;
@@ -78,11 +80,10 @@
         padding: 0;
 
         &__card {
-          border: 0.063rem solid variables.$sidebar-footer-border;
+          border: 0.063rem solid variables.$border-secondary-default;
           border-radius: 0.5rem;
           padding: 0.5rem 0.5rem;
           margin: 0 0.5rem 1rem;
-          box-shadow: 0 0.125rem 0.25rem variables.$sidebar-card-shadow-color;
           @include fonts.body-sans-50;
           display: flex;
           text-align: center;
@@ -106,17 +107,17 @@
       display: flex;
       justify-content: space-between;
       margin-top: auto;
-      padding: 1rem 2rem;
-      border-top: 0.063rem solid variables.$sidebar-footer-border;
+      padding: 1.5rem 2.5rem;
+      border-top: 0.063rem solid variables.$border-primary-default;
       width: 100%;
 
       &__button {
-        padding: 0.5rem 1rem;
+        padding: 1rem;
         border: none;
         cursor: pointer;
 
         &--cancel {
-          background: variables.$app-transparent-bg;
+          background: variables.$no-bg-color;
           color: variables.$base-app-text-color;
           text-decoration: underline;
           width: 30%;
@@ -125,12 +126,13 @@
 
         &--save {
           display: inline-block;
-          background: variables.$border-primary-default;
-          color: variables.$base-app-text-color;
+          background: variables.$background-secondary-default;
+          color: variables.$text-secondary-default;
           text-decoration: none;
           border-radius: 5%;
           text-align: center;
-          width: 30%;
+          min-width: 5.625rem;
+          width: 40%;
           @include fonts.monts_300_content;
         }
       }
@@ -138,6 +140,6 @@
   }
 }
 
-.saveBtnActive{
-  background: variables.$dashboard-sidebar-checkbox-bg-color;
+.saveBtnActive {
+  background: variables.$background-accent-default;
 }

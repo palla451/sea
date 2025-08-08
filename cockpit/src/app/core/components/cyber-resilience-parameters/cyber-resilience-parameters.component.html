@@ -1,84 +1,43 @@
-<!-- <div class="cyber-resilience-ov">
-    @if (cyberResilienceFunctionality()) {
-    <div class="cyber-resilience-ov__progressBar">
-      <p-card
-        [header]="cyberResilienceFunctionality()?.['description'] || '' "
-        class="cyber-resilience-ov__progressBar__card"
-      >
-        <div class="progress-container">
-          <div class="progress-wrapper">
-            <p-progressBar
-              [value]="cyberResilienceFunctionalityPercent()"
-              [showValue]="false"
-              [ngClass]="getProgressBarClass()"
-            ></p-progressBar>
-            <div
-              class="cyber-resilience-ov__progressBar__card__indicator-container"
-            >
-              <div
-                class="cyber-resilience-ov__progressBar__card__indicator-container--arrow"
-                [style.left]="calculateArrowPosition() + '%'"
-                [ngClass]="getArrowClass()"
-              ></div>
-              <div
-                class="cyber-resilience-ov__progressBar__card__indicator-container--value"
-                [style.marginLeft]="
-                  calculateArrowPosition() + '%'
-                "
-              >
-                <span>{{ cyberResilienceFunctionalityPercent() }}%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </p-card>
-    </div>
-    }
-  </div>
-   -->
-
-
-
-
-   <div class="cyber-resilience-ov">
+<div class="cyber-resilience-ov">
   @if (cyberResilienceFunctionality()) {
-    <div class="cyber-resilience-ov__progressBar">
-      <p-card
-        [header]="cyberResilienceFunctionality()?.['description'] || ''"
-        class="cyber-resilience-ov__progressBar__card"
-      >
-        <div class="progress-container">
-          <div class="progress-wrapper">
-            <p-progressBar
-              [value]="cyberResilienceFunctionalityPercent()"
-              [showValue]="false"
-              [ngClass]="getProgressBarClass()"
-            ></p-progressBar>
-            
+  <div class="cyber-resilience-ov__progressBar">
+    <p-card
+      [header]="cyberResilienceFunctionality()?.['description'] || ''"
+      class="cyber-resilience-ov__progressBar__card"
+    >
+      <div class="progress-container">
+        <div class="progress-wrapper">
+          <p-progressBar
+            [value]="cyberResilienceFunctionalityPercent()"
+            [showValue]="false"
+            [ngClass]="getProgressBarClass()"
+          ></p-progressBar>
 
-            @if (remediationImpact !== null) {
-              <div 
-                [ngClass]="getProgressBarClass()"
-                [style]="getRemediationImpactStyle()"
-              ></div>
-            }
-            
-            <div class="cyber-resilience-ov__progressBar__card__indicator-container">
-              <div
-                class="cyber-resilience-ov__progressBar__card__indicator-container--arrow"
-                [style.left]="calculateArrowPosition() + '%'"
-                [ngClass]="getArrowClass()"
-              ></div>
-              <div
-                class="cyber-resilience-ov__progressBar__card__indicator-container--value"
-                [style.marginLeft]="calculateArrowPosition() + '%'"
-              >
-                <span>{{ cyberResilienceFunctionalityPercent() }}%</span>
-              </div>
+          @if (remediationImpact !== null) {
+          <div
+            [ngClass]="getProgressBarClass()"
+            [style]="getRemediationImpactStyle()"
+          ></div>
+          }
+
+          <div
+            class="cyber-resilience-ov__progressBar__card__indicator-container"
+          >
+            <div
+              class="cyber-resilience-ov__progressBar__card__indicator-container--arrow"
+              [style.left]="calculateArrowPosition() + '%'"
+              [ngClass]="getArrowClass()"
+            ></div>
+            <div
+              class="cyber-resilience-ov__progressBar__card__indicator-container--value"
+              [style.marginLeft]="calculateArrowPosition() + '%'"
+            >
+              <span>{{ cyberResilienceFunctionalityPercent() }}%</span>
             </div>
           </div>
         </div>
-      </p-card>
-    </div>
+      </div>
+    </p-card>
+  </div>
   }
 </div>

@@ -11,6 +11,7 @@ import {
 import { IncidentDetail } from "../../models/incident-detail.models";
 import { selectAllVesselMacroFunctions } from "../../../dashboard/state";
 import { FunctionNode } from "../../../dashboard/models/dashboard.models";
+import { shipFunctionsActions } from "../../../dashboard/state/actions";
 
 @Component({
   selector: "app-incident-detail-header",
@@ -144,6 +145,7 @@ export class IncidentDetailHeaderComponent {
   navigateToIncidentDetailInitiator() {
     switch (this.incidentDetailInitiator()) {
       case "dashboard":
+        this.store.dispatch(shipFunctionsActions.getAllShipFunctions());
         this.router.navigate(["/overview"]);
         break;
 

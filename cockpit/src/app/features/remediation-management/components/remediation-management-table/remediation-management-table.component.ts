@@ -3,13 +3,14 @@ import {
   computed,
   inject,
   Input,
+  OnDestroy,
   OnInit,
   signal,
   ViewChild,
 } from "@angular/core";
 import { ColumnSettingsSidebarComponent } from "../../../../core/components/column-settings-sidebar/column-settings-sidebar.component";
 import { TableFiltersSidebarComponent } from "../../../../core/components/table-filters-sidebar/table-filters-sidebar.component";
-import { Observable, Subscription } from "rxjs";
+import { noop, Observable, Subscription, tap } from "rxjs";
 import {
   RemediationItem,
   RemediationManagementTableColumns,
@@ -30,7 +31,7 @@ import { incidentRemediationsActions } from "../../state/actions";
   selector: "app-remediation-management-table",
   imports: [
     SharedModule,
-    ColumnSettingsSidebarComponent, 
+    ColumnSettingsSidebarComponent,
     TableFiltersSidebarComponent,
     TableModule,
     ColumnSettingsSidebarComponent,
@@ -41,13 +42,14 @@ import { incidentRemediationsActions } from "../../state/actions";
   templateUrl: "./remediation-management-table.component.html",
   styleUrl: "./remediation-management-table.component.scss",
 })
-export class RemediationManagementTableComponent implements OnInit {
+export class RemediationManagementTableComponent implements OnInit, OnDestroy {
   activeMenuId: string | null = null;
   private readonly store = inject(Store);
   dashboardSidebarService = inject(SidebarService);
   router = inject(Router);
 
   hasPrivilegedAccess$ = this.store.select(hasPrivilegedAccess);
+  activeSidebarFiltersCountSignal = signal<number>(0);
 
   sidebarService = inject(RemediationSidebarService);
   private filterSubscription!: Subscription;
@@ -68,21 +70,25 @@ export class RemediationManagementTableComponent implements OnInit {
   private _remediations = signal<RemediationItem[]>([]);
 
   @Input() set remediations(value: RemediationItem[]) {
-    this._remediations.set(value || []);
-    this.first.set(0); // Resetta alla prima pagina quando cambiano i dati
+    if (value) {
+      this._remediations.set(value);
+      this.originalRemediations = [...value];
+    } else {
+      this._remediations.set([]);
+    }
+
+    this.first.set(0);
   }
   get remediations() {
     return this._remediations();
   }
 
-  // Signals per la paginazione
   rows = signal<number>(12);
   first = signal<number>(0);
   shouldShowPaginator = computed<boolean>(
     () => this._remediations().length > this.rows()
   );
 
-  // Computed signal per gli assets paginati
   paginatedAssets = computed<RemediationItem[]>(() => {
     const startIndex = this.first();
     const endIndex = startIndex + this.rows();
@@ -96,21 +102,30 @@ export class RemediationManagementTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.originalRemediations = [...this._remediations()];
+    this.activeSidebarFiltersCount$
+      .pipe(
+        tap((activeSidebarFiltersCount) => {
+          this.activeSidebarFiltersCountSignal.set(activeSidebarFiltersCount);
+        })
+      )
+      .subscribe(noop);
 
-    // Sottoscrizione ai filtri
     this.filterSubscription = this.sidebarService.currentFilters.subscribe(
       (filters) => {
         this.applyFilters(filters);
       }
     );
 
-    // Sottoscrizione al reset
     this.resetSubscription = this.sidebarService.resetTriggered.subscribe(
       () => {
         this.resetFilters();
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.filterSubscription.unsubscribe();
+    this.resetSubscription.unsubscribe();
   }
 
   checkIfActionIsRollbackable(remediation: RemediationItem): boolean {
@@ -149,40 +164,42 @@ export class RemediationManagementTableComponent implements OnInit {
   private applyFilters(filters: any) {
     if (!filters || Object.keys(filters).length === 0) {
       this._remediations.set([...this.originalRemediations]);
+      this.first.set(0);
+      if (this.remediationMNGMTtable) {
+        this.remediationMNGMTtable.first = 0;
+      }
       return;
     }
 
     let filteredData = [...this.originalRemediations];
 
-    
     // Filtra per remediation types
-    if (filters?.remediationActionTypes && (filters?.remediationActionTypes as string[])?.length) {
+    if (
+      filters?.remediationActionTypes &&
+      (filters?.remediationActionTypes as string[])?.length
+    ) {
       filteredData = filteredData.filter((remediation) => {
         return (filters?.remediationActionTypes as string[]).some(
           (remediationActionType) =>
-            remediationActionType.toUpperCase() === remediation?.actionType.toUpperCase()
+            remediationActionType.toUpperCase() ===
+            remediation?.actionType.toUpperCase()
         );
       });
     }
 
     // Filtra per remediation status
-    if (filters?.remediationActionStatuses && (filters?.remediationActionStatuses as string[])?.length) {
+    if (
+      filters?.remediationActionStatuses &&
+      (filters?.remediationActionStatuses as string[])?.length
+    ) {
       filteredData = filteredData.filter((remediation) => {
         return (filters?.remediationActionStatuses as string[]).some(
           (remediationActionStatus) =>
-            remediationActionStatus.toUpperCase() === remediation?.status.toUpperCase()
+            remediationActionStatus.toUpperCase() ===
+            remediation?.status.toUpperCase()
         );
       });
     }
-
-    // // Filtra per incidentId
-    // if (filters?.incidentId && (filters?.incidentId as string[])?.length) {
-    //   filteredData = filteredData.filter((remediation) => {
-    //     return (filters?.incidentId as string[]).some(
-    //       (status) => status === remediation?.status.toUpperCase()
-    //     );
-    //   });
-    // }
 
     // Filtra per remediation incident description
     if (
@@ -215,37 +232,23 @@ export class RemediationManagementTableComponent implements OnInit {
       });
     }
 
-    // // Filtra per multiselect description
-    // if (
-    //   filters?.typeSelections &&
-    //   (filters?.typeSelections as string[])?.length
-    // ) {
-    //   filteredData = filteredData.filter((asset) => {
-    //     return (filters?.typeSelections as string[])?.some((typeSelection) => {
-    //       return typeSelection === asset?.type;
-    //     });
-    //   });
-    // }
-
-    // // Filtra per multiselect name
-    // if (
-    //   filters?.nameSelections &&
-    //   (filters?.nameSelections as string[])?.length
-    // ) {
-    //   filteredData = filteredData.filter((asset) => {
-    //     return (filters?.nameSelections as string[])?.some((nameSelection) => {
-    //       return nameSelection === asset?.name;
-    //     });
-    //   });
-    // }
+    if (this.activeSidebarFiltersCountSignal() > 0) {
+      this._remediations.set(filteredData);
+      this.first.set(0);
+      // Forza il reset della pagina nella tabella PrimeNG
+      if (this.remediationMNGMTtable) {
+        this.remediationMNGMTtable.first = 0;
+        this.remediationMNGMTtable.reset();
+      }
+    }
 
     this._remediations.set(filteredData);
-    this.first.set(0); // Resetta alla prima pagina
+    this.first.set(0);
   }
 
   private resetFilters() {
     this._remediations.set([...this.originalRemediations]);
-    this.first.set(0); // Resetta alla prima pagina
+    this.first.set(0);
   }
 
   onFiltersSidebarClosing(): void {
@@ -287,10 +290,12 @@ export class RemediationManagementTableComponent implements OnInit {
   }
 
   confirmRollback() {
-    this.store.dispatch(incidentRemediationsActions.rollbackAction({
-      actionId: this.sidebarService._lastRollbackedActionId?.value
-    }));
-    
+    this.store.dispatch(
+      incidentRemediationsActions.rollbackAction({
+        actionId: this.sidebarService._lastRollbackedActionId?.value,
+      })
+    );
+
     this.closeRollbackModal();
   }
 }

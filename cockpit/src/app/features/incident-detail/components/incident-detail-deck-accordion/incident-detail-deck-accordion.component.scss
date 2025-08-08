@@ -5,9 +5,9 @@
   padding: 1.5rem;
   &__top-left-corner {
     position: absolute;
-    width: 1.25rem;
-    height: 1.25rem;
-    border: 1px solid variables.$text-secondary-default;
+    width: 12px;
+    height: 12px;
+    border: 1px solid variables.$base-app-text-color;
     top: 0;
     left: 0;
     border-right: none;
@@ -15,9 +15,9 @@
   }
   &__top-right-corner {
     position: absolute;
-    width: 1.25rem;
-    height: 1.25rem;
-    border: 1px solid variables.$text-secondary-default;
+    width: 12px;
+    height: 12px;
+    border: 1px solid variables.$base-app-text-color;
     top: 0;
     right: 0;
     border-left: none;
@@ -25,9 +25,9 @@
   }
   &__bottom-left-corner {
     position: absolute;
-    width: 1.25rem;
-    height: 1.25rem;
-    border: 1px solid variables.$text-secondary-default;
+    width: 12px;
+    height: 12px;
+    border: 1px solid variables.$base-app-text-color;
     bottom: 0;
     left: 0;
     border-right: none;
@@ -35,9 +35,9 @@
   }
   &__bottom-right-corner {
     position: absolute;
-    width: 1.25rem;
-    height: 1.25rem;
-    border: 1px solid variables.$text-secondary-default;
+    width: 12px;
+    height: 12px;
+    border: 1px solid variables.$base-app-text-color;
     bottom: 0;
     right: 0;
     border-left: none;

@@ -123,17 +123,6 @@ export class DinamicTabsComponent implements OnInit {
     }
   }
 
-  constructor() {
-    effect(() => {
-      if (this.currentIncidentEventsStatuses()) {
-        console.log(
-          "currentincidenteventstatuses",
-          this.currentIncidentEventsStatuses()
-        );
-      }
-    });
-  }
-
   ngOnInit(): void {
     this.store
       .select(selectAllCurrentIncidentEventsStatusIcon)

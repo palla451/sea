@@ -62,7 +62,7 @@
           }
 
           &:active {
-            color: variables.$table-border-color;
+            color: variables.$border-secondary-default;
           }
         }
       }
@@ -74,21 +74,10 @@
     }
 
     &__deck,
+    &__frame,
     &__assetInvolved,
-    &__mvz {
+    &__mvz{
       text-align: end;
-    }
-
-    &__frame {
-      text-align: end;
-      position: relative;
-
-      &__text {
-        display: inline-block;
-        position: absolute;
-        right: 32px;
-        bottom: 22px;
-      }
     }
 
     &__alert-level {
@@ -117,32 +106,6 @@
         @include fonts.body-sans-25;
       }
     }
-
-    // &__paginator-container {
-    //   display: flex;
-    //   justify-content: space-between;
-    //   align-items: center;
-    //   width: 100%;
-    //   padding: 0;
-
-    //   &__report {
-    //     display: flex;
-    //     justify-content: space-between;
-    //     align-items: center;
-    //     align-self: stretch;
-    //     gap: 1rem;
-    //     padding: 0;
-    //     @include fonts.body-sans-25;
-
-    //     &__itemsPerPageDD {
-    //       //height: 2.25rem;
-    //       background-color: variables.$no-bg-color;
-    //       width: 5.125rem;
-    //       z-index: 2;
-    //       padding: 0;
-    //     }
-    //   }
-    // }
   }
 
   .ascendingSortIcon {
@@ -161,7 +124,7 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 16px;
+    padding: 8px 16px;
     background: none;
     border: none;
     color: white;
@@ -169,6 +132,7 @@
     cursor: pointer;
     transition: border 0.2s ease;
     font-size: 1rem;
+    min-width: 100px;
 
     // Fix per evitare layout shift
     border: 2px solid transparent;
@@ -180,17 +144,14 @@
     }
 
     &:hover {
-      border: 2px solid white;
-      border-radius: 8px;
-    }
-
-    &:active {
-      // Nessuna modifica visiva
+      border: 1px solid white;
     }
   }
 
   .filtersBtn {
     text-decoration: none;
+    border: 1px solid #ffffff;
+    border-radius: 4px;
   }
 
   .settingsBtn {
@@ -198,43 +159,47 @@
   }
 
   .columnTitleEnd {
-    text-align: end;
+    text-align: end !important;
   }
 
   .assetsInvolvedWidth {
-    width: 10%;
+    width: 8% !important;
   }
 
   .mvzWidth {
-    width: 9%;
+    width: 6% !important;
   }
 
-  .linkToIncidentOVWidth {
-    display: inline-block;
-    align-items: center;
-    width: 2%;
-  }
-
-  .linkToIncidentManage {
-    display: inline-block;
-    align-items: center;
-    width: 3%;
+  .incidentIdWidth {
+    width: 7% !important;
   }
 
   .descriptionWidth {
-    width: 21%;
+    width: 33% !important;
+  }
+
+  .decksInvolvedWidth {
+    width: 8% !important;
+  }
+
+  .framesInvolvedWidth {
+    width: 8% !important;
   }
 
   .dateWidth {
-    width: 13%;
-  }
-
-  .frameWidth {
-    width: 13%;
+    width: 14% !important;
   }
 
   .alertLevelWidth {
-    width: 16%;
+    width: 11% !important;
+  }
+
+  .linkToIncidentManageWidth {
+    width: 7% !important;
+  }
+
+  .linkToIncidentOVWidth {
+    width: 4% !important;
   }
 
   .filtersAppliedAmount {

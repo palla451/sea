@@ -2,7 +2,18 @@
 <div class="header-container">
   <div class="header-container__back-info">
     <button class="circle-button" (click)="navigateToIncidentDetailInitiator()">
-      <img src="assets/svg/arrow-left.svg" alt="Back" class="arrow-icon" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 16 16"
+        fill="none"
+      >
+        <path
+          d="M4 7.70625L4.35313 7.35312L10.3531 1.35312L10.7063 1L11.4125 1.70625L11.0594 2.05938L5.4125 7.70625L11.0594 13.3531L11.4125 13.7063L10.7063 14.4125L10.3531 14.0594L4.35313 8.05937L4 7.70625Z"
+          fill="white"
+        />
+      </svg>
     </button>
     <div class="header-container__back-info__info">
       <p class="header-container__back-info__info__incident-name">
@@ -22,7 +33,7 @@
             | transloco
         }}
       </p>
-      <p>{{ getIncidentImpactedSystems() }}</p>
+      <p class="header-container__right-info__impacted-system__list">{{ getIncidentImpactedSystems() }}</p>
     </div>
     <div class="header-container__right-info__divider"></div>
     <div class="header-container__right-info__date">

@@ -136,7 +136,7 @@ export class AssetSidebarService {
         if (!Array.isArray(assets)) return [];
 
         return assets
-          .map((asset) => asset?.type) // Estrai le descrizioni
+          .map((asset) => asset?.systemInfo) // Estrai le descrizioni
           .filter((desc): desc is string => !!desc) // Filtra valori null/undefined
           .filter((desc, index, array) => array.indexOf(desc) === index); // Rimuovi duplicati
       })

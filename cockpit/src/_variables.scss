@@ -3,17 +3,32 @@
   --background-gradient-step2: #000;
 }
 
+//Colors
 $base-app-text-color: #ffffff;
 $text-secondary-default: rgba(255, 255, 255, 0.6);
 $base-app-bg-color: #001c35;
 $table-bg-color: rgba(255, 255, 255, 0.1);
+$table-rows-border-color: rgba(255, 255, 255, 0.2);
 $table-border-color: rgba(255, 255, 255, 0.3);
 $no-bg-color: transparent;
+$sidebar-overlay-bg-color: #b5b5b50d; //rgba(181, 181, 181, 0.05)
+$border-primary-default: #ffffff1a; // rgba(255, 255, 255, 0.1);
+$border-secondary-default: #ffffff4d; //   rgba(255, 255, 255, 0.3);
+$background-primary-default: #ffffff0d; // rgba(255, 255, 255, 0.05);
+$background-secondary-default: #ffffff1a; // rgba(255, 255, 255, 0.1);
+$background-tertiary-default: #000d1a; // rgba(0, 13, 26, 1)
+$background-accent-default: #3c66ef; // rgba(60, 102, 239, 1)
+$background-accent-default-hover: #1344e5; // rgba(19, 68, 229, 1)
+$background-secondary-default-04: #ffffff66; // rgba(255, 255, 255, 0.4)
+$icon-dark: #000000; // rgba(0, 0, 0, 1)
+$error-default: #f64d4d; // rgba(246, 77, 77, 1)
+
+//Sizes
 $overview-table-border-radius: 0.5rem 0.5rem 0 0;
 $overview-table-cell-height: 52px;
-$overview-table-cell-padding: 16px 32px;
+$overview-table-cell-padding: 16px 16px;
 $overview-table-cell-gap: 8px;
-$overview-table-cell-border-bottom: 1px solid $base-app-text-color;
+$overview-table-cell-border-bottom: 1px solid $table-rows-border-color;
 $overview-table-header-bg-color: #ffffff0d;
 $dashboard-sidebar-checkbox-bg-color: #007bff;
 $dashboard-sidebar-checkbox-bg-color-accent: #0069d9;

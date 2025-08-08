@@ -30,7 +30,7 @@ export class CyberResilienceOVManagerService {
    */
   countCompromisedAssets$(): Observable<number> {
     return this.selectedCyberResiliencePerformance$.pipe(
-      map((root) => this.countAssetsByState(root, "Compromised"))
+      map((root) => this.countUniqueAssetsByState(root, "Compromised"))
     );
   }
 
@@ -39,28 +39,53 @@ export class CyberResilienceOVManagerService {
    */
   countOperationalAssets$(): Observable<number> {
     return this.selectedCyberResiliencePerformance$.pipe(
-      map((root) => this.countAssetsByState(root, "Operational"))
+      map((root) => this.countUniqueAssetsByState(root, "Operational"))
     );
   }
 
   /**
    * Metodo privato ricorsivo per contare gli asset in base allo stato
    */
-  private countAssetsByState(node: FunctionNode | null, state: string): number {
+  // private countAssetsByState(node: FunctionNode | null, state: string): number {
+  //   if (!node) return 0;
+
+  //   let count = 0;
+
+  //   if (node.assets?.length) {
+  //     count += node.assets.filter((asset) => asset.status === state).length;
+  //   }
+
+  //   if (node.children?.length) {
+  //     for (const child of node.children) {
+  //       count += this.countAssetsByState(child, state);
+  //     }
+  //   }
+
+  //   return count;
+  // }
+
+
+  private countUniqueAssetsByState(node: FunctionNode | null, state: string): number {
     if (!node) return 0;
 
-    let count = 0;
+    const uniquePieceMarks = new Set<string>();
 
-    if (node.assets?.length) {
-      count += node.assets.filter((asset) => asset.status === state).length;
+    function processNode(currentNode: FunctionNode) {
+        if (currentNode.assets?.length) {
+            currentNode.assets.forEach(asset => {
+                if (asset.status === state && asset.pieceMark) {
+                    uniquePieceMarks.add(asset.pieceMark);
+                }
+            });
+        }
+
+        if (currentNode.children?.length) {
+            currentNode.children.forEach(child => processNode(child));
+        }
     }
 
-    if (node.children?.length) {
-      for (const child of node.children) {
-        count += this.countAssetsByState(child, state);
-      }
-    }
+    processNode(node);
 
-    return count;
-  }
+    return uniquePieceMarks.size;
+}
 }

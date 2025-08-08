@@ -7,15 +7,16 @@ import {
   OnDestroy,
   OnInit,
   signal,
+  ViewChild,
 } from "@angular/core";
-import { TableModule } from "primeng/table";
+import { Table, TableModule } from "primeng/table";
 import { DropdownModule } from "primeng/dropdown";
 import { MenuModule } from "primeng/menu";
 import { MenuItem } from "primeng/api";
 import { PaginatorModule } from "primeng/paginator";
 import { SelectModule } from "primeng/select";
 import { ButtonModule } from "primeng/button";
-import { Observable, Subscription } from "rxjs";
+import { noop, Observable, Subscription, tap } from "rxjs";
 import { IncidentOVTableColumns } from "../../../dashboard/services/dashboard-sidebar.service";
 import { TableModalService } from "../../services/table-modal.service";
 import { AssetSidebarService } from "../../services/asset-sidebar.service";
@@ -24,7 +25,6 @@ import { TableFiltersSidebarComponent } from "../../../../core/components/table-
 import { Asset } from "../../../../core/models/asset.model";
 import { Store } from "@ngrx/store";
 import { hasPrivilegedAccess } from "../../../../auth/state";
-import { toSignal } from "@angular/core/rxjs-interop";
 import { SharedModule } from "../../../../shared/shared.module";
 
 @Component({
@@ -45,28 +45,26 @@ import { SharedModule } from "../../../../shared/shared.module";
   styleUrl: "./asset-table.component.scss",
 })
 export class AssetTableComponent implements OnInit, OnDestroy {
+  @ViewChild("assetsMNGMTtable") assetsMNGMTtable!: Table;
   private filterSubscription!: Subscription;
   private resetSubscription!: Subscription;
 
-  // Input come signal per reattività
   _assets = signal<Asset[]>([]);
 
   @Input() set assets(value: Asset[]) {
     this._assets.set([...value]);
-    this.first.set(0); // Resetta alla prima pagina quando cambiano i dati
+    this.first.set(0);
   }
   get assets() {
     return this._assets();
   }
 
-  // Signals per la paginazione
   rows = signal<number>(12);
   first = signal<number>(0);
   shouldShowPaginator = computed<boolean>(
     () => this._assets().length > this.rows()
   );
 
-  // Computed signal per gli assets paginati
   paginatedAssets = computed<Asset[]>(() => {
     const startIndex = this.first();
     const endIndex = startIndex + this.rows();
@@ -82,14 +80,12 @@ export class AssetTableComponent implements OnInit, OnDestroy {
   showAssetModal = false;
 
   activeSidebarFiltersCount$!: Observable<number>;
+  activeSidebarFiltersCountSignal = signal<number>(0);
 
   originalAssets: Asset[] = [];
 
   private store = inject(Store);
   hasPrivilegedAccess$ = this.store.select(hasPrivilegedAccess);
-  // hasPrivilegedAccess = toSignal(this.store.select(hasPrivilegedAccess), {
-  //   initialValue: false,
-  // });
 
   constructor(private tableModalService: TableModalService) {
     this.selectedColumns$ = this.sidebarService.visibleColumns$;
@@ -98,17 +94,27 @@ export class AssetTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // Salva una copia originale dei dati
+    this.activeSidebarFiltersCount$
+      .pipe(
+        tap((activeSidebarFiltersCount) => {
+          this.activeSidebarFiltersCountSignal.set(activeSidebarFiltersCount);
+        })
+      )
+      .subscribe(noop);
     this.originalAssets = [...this._assets()];
 
-    // Sottoscrizione ai filtri
+    /**
+     * Sottoscrizione ai filtri
+     */
     this.filterSubscription = this.sidebarService.currentFilters.subscribe(
       (filters) => {
         this.applyFilters(filters);
       }
     );
 
-    // Sottoscrizione al reset
+    /**
+     * Sottoscrizione al reset
+     */
     this.resetSubscription = this.sidebarService.resetTriggered.subscribe(
       () => {
         this.resetFilters();
@@ -124,6 +130,10 @@ export class AssetTableComponent implements OnInit, OnDestroy {
   private applyFilters(filters: any) {
     if (!filters || Object.keys(filters).length === 0) {
       this._assets.set([...this.originalAssets]);
+      this.first.set(0);
+      if (this.assetsMNGMTtable) {
+        this.assetsMNGMTtable.first = 0;
+      }
       return;
     }
 
@@ -161,7 +171,7 @@ export class AssetTableComponent implements OnInit, OnDestroy {
     ) {
       filteredData = filteredData.filter((asset) => {
         return (filters?.typeSelections as string[])?.some((typeSelection) => {
-          return typeSelection === asset?.type;
+          return typeSelection === asset?.systemInfo;
         });
       });
     }
@@ -178,8 +188,15 @@ export class AssetTableComponent implements OnInit, OnDestroy {
       });
     }
 
-    this._assets.set([...filteredData]);
-    this.first.set(0); // Resetta alla prima pagina
+    if (this.activeSidebarFiltersCountSignal() > 0) {
+      this._assets.set(filteredData);
+      this.first.set(0);
+      // Forza il reset della pagina nella tabella PrimeNG
+      if (this.assetsMNGMTtable) {
+        this.assetsMNGMTtable.first = 0;
+        this.assetsMNGMTtable.reset();
+      }
+    }
   }
 
   private resetFilters() {
@@ -195,7 +212,6 @@ export class AssetTableComponent implements OnInit, OnDestroy {
     this.showFiltersSidebar = false;
   }
 
-  // Metodo chiamato quando cambia la pagina
   onPageChange(event: any) {
     this.first.set(event.first);
     this.rows.set(event.rows);
@@ -210,23 +226,11 @@ export class AssetTableComponent implements OnInit, OnDestroy {
     { label: "Filter by Severity", icon: "pi pi-filter" },
   ];
 
-  // Metodo per simulare il caricamento dei dati
-  // loadData() {
-  //   // Simula il caricamento dei dati
-  //   this.assets = [
-  //     // ... dati della tabella
-  //   ];
-  // }
-
   handleSecondaryClick(): void {}
 
   toggleSettings() {
     this.showSettingsSidebar = true;
   }
-
-  // onColumnSettingsReset() {
-  //   // La reset viene gestita automaticamente dal componente sidebar
-  // }
 
   onSidebarClosing(): void {
     this.showSettingsSidebar = false;

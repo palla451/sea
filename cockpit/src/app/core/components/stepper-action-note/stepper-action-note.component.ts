@@ -58,7 +58,7 @@ export class StepperActionNoteComponent {
 
   isCurrentEventMarkedAsFalsePositive = computed(() => {
     const currentlySelectedEvent = this.incidentManagementManagerService._currentStepperActiveEventIndex.value;
-    return this.allIncidents()[0].events[currentlySelectedEvent].status.toLowerCase() === ManageIncidentStatesEnum.EVENT_REJECTED;
+    return this.allIncidents()[0].events[currentlySelectedEvent]?.status.toLowerCase() === ManageIncidentStatesEnum.EVENT_REJECTED;
   })
 
   currentlyFalsePositiveEventNote  = computed(() => {

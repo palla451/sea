@@ -82,6 +82,7 @@ export class TableFiltersSidebarComponent implements AfterViewInit, OnInit {
   decksSelectedValues: string[] = [];
   framesSelectedValues: string[] = [];
   descriptionSelectedValues: string[] = [];
+  historyDescriptionSelectedValues: string[] = [];
   mvzSelectedValues: string[] = [];
 
   markPiecesSelectedValues: string[] = [];
@@ -151,6 +152,7 @@ export class TableFiltersSidebarComponent implements AfterViewInit, OnInit {
         end: this.selectedEndDate,
       },
       descriptionsSelections: this.descriptionSelectedValues,
+      historyDescriptionSelections: this.historyDescriptionSelectedValues,
       decksSelections: this.decksSelectedValues,
       framesSelections: this.framesSelectedValues,
       mvzSelections: this.mvzSelectedValues,
@@ -274,6 +276,12 @@ export class TableFiltersSidebarComponent implements AfterViewInit, OnInit {
       returningFiltersAppliedAmount++;
     }
     if (
+      activeFilters?.historyDescriptionSelections &&
+      activeFilters?.historyDescriptionSelections.length
+    ) {
+      returningFiltersAppliedAmount++;
+    }
+    if (
       activeFilters?.decksSelections &&
       activeFilters?.decksSelections.length
     ) {
@@ -342,6 +350,7 @@ export class TableFiltersSidebarComponent implements AfterViewInit, OnInit {
     return (
       !this.selectedAlertsLevels?.length &&
       !this.descriptionSelectedValues?.length &&
+      !this.historyDescriptionSelectedValues?.length &&
       !this.selectedStartDate &&
       !this.selectedEndDate &&
       !this.decksSelectedValues?.length &&
@@ -366,6 +375,7 @@ export class TableFiltersSidebarComponent implements AfterViewInit, OnInit {
     this.selectedStartDate = null;
     this.selectedEndDate = null;
     this.descriptionSelectedValues = [];
+    this.historyDescriptionSelectedValues = [];
     this.decksSelectedValues = [];
     this.framesSelectedValues = [];
     this.mvzSelectedValues = [];
@@ -439,6 +449,7 @@ export class TableFiltersSidebarComponent implements AfterViewInit, OnInit {
     this.selectedStartDate = null;
     this.selectedEndDate = null;
     this.descriptionSelectedValues = [];
+    this.historyDescriptionSelectedValues = [];
     this.decksSelectedValues = [];
     this.framesSelectedValues = [];
     this.mvzSelectedValues = [];
@@ -479,6 +490,7 @@ export class TableFiltersSidebarComponent implements AfterViewInit, OnInit {
     this.selectedStartDate = null;
     this.selectedEndDate = null;
     this.descriptionSelectedValues = [];
+    this.historyDescriptionSelectedValues = [];
     this.decksSelectedValues = [];
     this.framesSelectedValues = [];
     this.mvzSelectedValues = [];
@@ -519,6 +531,7 @@ export class TableFiltersSidebarComponent implements AfterViewInit, OnInit {
     this.selectedStartDate = null;
     this.selectedEndDate = null;
     this.descriptionSelectedValues = [];
+    this.historyDescriptionSelectedValues = [];
     this.decksSelectedValues = [];
     this.framesSelectedValues = [];
     this.mvzSelectedValues = [];
@@ -570,6 +583,21 @@ export class TableFiltersSidebarComponent implements AfterViewInit, OnInit {
     this.sidebarService.updateAppliedFiltersCount(
       this.countAppliedFilters(this.activeFilters)
     );
+
+    this.historyIncidentsSidebarService.updateAppliedFiltersCount(
+      this.countAppliedFilters(this.activeFilters)
+    );
+  }
+
+  historyDescriptionsSelectionChange(selectedValues: any) {
+    this.historyDescriptionSelectedValues = convertSetToArray(
+      selectedValues as Set<string>
+    );
+
+    this.activeFilters = {
+      ...this.activeFilters,
+      historyDescriptionSelections: this.historyDescriptionSelectedValues,
+    };
 
     this.historyIncidentsSidebarService.updateAppliedFiltersCount(
       this.countAppliedFilters(this.activeFilters)

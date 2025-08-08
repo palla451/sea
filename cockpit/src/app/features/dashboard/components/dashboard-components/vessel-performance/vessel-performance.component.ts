@@ -10,6 +10,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
 import { Store } from "@ngrx/store";
 import { selectAllVesselMacroFunctions } from "../../../state";
 import { FunctionNode } from "../../../models/dashboard.models";
+import { shipFunctionsActions } from "../../../state/actions";
 
 @Component({
   selector: "app-vessel-performance",
@@ -23,7 +24,7 @@ import { FunctionNode } from "../../../models/dashboard.models";
   templateUrl: "./vessel-performance.component.html",
   styleUrl: "./vessel-performance.component.scss",
 })
-export class VesselPerformanceComponent  {
+export class VesselPerformanceComponent {
   private readonly store = inject(Store);
   navigationManagerService = inject(NavigationService);
   cyberResilienceOVManager = inject(CyberResilienceOVManagerService);
@@ -33,22 +34,34 @@ export class VesselPerformanceComponent  {
   );
 
   shipMacroFunctions = toSignal(
-        this.store.select(selectAllVesselMacroFunctions),
-        {
-          initialValue: [],
-        }
+    this.store.select(selectAllVesselMacroFunctions),
+    {
+      initialValue: [],
+    }
   );
 
-  constructor(){
-     effect(() => {
-      if(this.shipMacroFunctions()){
-        this.cyberResilienceOVManager.updateCyberPerformancesList(this.shipMacroFunctions());
+  constructor() {
+    effect(() => {
+      if (this.shipMacroFunctions()) {
+        this.cyberResilienceOVManager.updateCyberPerformancesList(
+          this.shipMacroFunctions()
+        );
       }
     });
   }
 
   calculateArrowPosition(value: string): number {
     return Number(value);
+  }
+
+  getFunctionPercentagePosition(operatingPercentage: any): string {
+    const numberOpPercentage = Number(operatingPercentage);
+
+    if (numberOpPercentage <= 20) {
+      return "percentage-left-alligned";
+    } else {
+      return "percentage-right-alligned";
+    }
   }
 
   getProgressBarClass(value: string): string {

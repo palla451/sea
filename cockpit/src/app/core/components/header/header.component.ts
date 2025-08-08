@@ -13,13 +13,16 @@ import { AuthService } from "../../../auth/auth.service";
 import { authActions } from "../../../auth/state/actions";
 import { Store } from "@ngrx/store";
 import { hasAdminExclusiveAccess } from "../../../auth/state";
-import { catchError, EMPTY, noop, tap } from "rxjs";
+import { catchError, EMPTY, map, noop, tap } from "rxjs";
 import { ApiService } from "../../services/api.service";
 import { API_ENDPOINTS } from "../../../../environments/api-endpoints";
 import { HttpParams } from "@angular/common/http";
 import { SelectModule } from "primeng/select";
 import { TranslocoService } from "@jsverse/transloco";
 import { SharedModule } from "../../../shared/shared.module";
+import { AppMenuListEnum } from "../../enums/app-menu-list";
+import { shipFunctionsActions } from "../../../features/dashboard/state/actions";
+import { assetActions, dashboardCoreActions } from "../../state/actions";
 
 @Component({
   selector: "app-header",
@@ -53,9 +56,11 @@ export class HeaderComponent implements OnInit {
   );
 
   activeMenuItem = toSignal(
-    this.navigationManagerService.getSelectedAppMenu(),
+    this.navigationManagerService
+      .getSelectedAppMenu()
+      .pipe(map((menu) => (menu ? menu.toLowerCase() : ""))),
     {
-      initialValue: "Overview",
+      initialValue: "overview",
     }
   );
 
@@ -74,12 +79,24 @@ export class HeaderComponent implements OnInit {
   };
 
   navItems = [
-    { label: "navbar.overview", routerLink: "/overview" },
-    { label: "navbar.assets", routerLink: "/asset-management" },
-    { label: "navbar.remediation", routerLink: "/remediations" },
-    { label: "navbar.incidents", routerLink: "/incidents" },
-    { label: "navbar.history", routerLink: "/history" },
-    { label: "navbar.administration", routerLink: "/administration" },
+    { key: "overview", label: "navbar.overview", routerLink: "/overview" },
+    {
+      key: "assets",
+      label: "navbar.assets",
+      routerLink: "/asset-management",
+    },
+    {
+      key: "remediation",
+      label: "navbar.remediation",
+      routerLink: "/remediations",
+    },
+    { key: "incidents", label: "navbar.incidents", routerLink: "/incidents" },
+    { key: "history", label: "navbar.history", routerLink: "/history" },
+    {
+      key: "administration",
+      label: "navbar.administration",
+      routerLink: "/administration",
+    },
   ];
 
   languageOptions = [
@@ -118,10 +135,12 @@ export class HeaderComponent implements OnInit {
     return this.hasAdminExclusiveAccess();
   });
 
-  setActiveMenuItem(label: string) {
-    this.navigationManagerService.updateSelectedAppMenu(label);
-    if (label === "Overview" && this.isCyberResilienceOVVisible() === true) {
-      this.navigationManagerService.closeCyberResilienceOVPage();
+  setActiveMenuItem(key: string) {
+    this.navigationManagerService.updateSelectedAppMenu(key);
+    if (key.toLowerCase() === AppMenuListEnum.OVERVIEW.toLowerCase()) {
+      if (this.isCyberResilienceOVVisible() === true) {
+        this.navigationManagerService.closeCyberResilienceOVPage();
+      }
     }
   }
 

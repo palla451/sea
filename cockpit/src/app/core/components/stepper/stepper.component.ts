@@ -93,7 +93,7 @@ export class StepperComponent implements AfterViewInit {
       this.currentStepperSelectedEvent() !== -1 &&
       this.allIncidents()[0].events[
         currentlySelectedEvent
-      ].status.toLowerCase() === ManageIncidentStatesEnum.EVENT_REJECTED
+      ]?.status.toLowerCase() === ManageIncidentStatesEnum.EVENT_REJECTED
     );
   });
 

@@ -7,12 +7,7 @@ import { SharedModule } from "../../../shared/shared.module";
 @Component({
   selector: "app-reliability-bar",
   standalone: true,
-  imports: [
-    FormsModule,
-    CommonModule,
-    RemediationTrendComponent,
-    SharedModule,
-  ],
+  imports: [FormsModule, CommonModule, RemediationTrendComponent, SharedModule],
   templateUrl: "./reliability-bar.component.html",
   styleUrl: "./reliability-bar.component.scss",
 })
@@ -66,6 +61,15 @@ export class ReliabilityBarComponent {
     };
   }
 
+  getPercentageLeftPosByForseenPercentage(
+    finalPercentage1: number,
+    finalPercentage2: number
+  ): any {
+    return {
+      left: `${finalPercentage1 - finalPercentage2}%`,
+    };
+  }
+
   getTrendPercentageBarStyle(
     finalPercentage: number,
     macrofuncTrenPercentage: number
@@ -114,6 +118,30 @@ export class ReliabilityBarComponent {
       return "arrow-yellow";
     } else {
       return "arrow-green";
+    }
+  }
+
+  getPercentagePosition(operatingPercentage: any): string {
+    const numberOpPercentage = Number(operatingPercentage);
+
+    if (numberOpPercentage <= 20) {
+      return "percentage-left-alligned";
+    } else {
+      return "percentage-right-alligned";
+    }
+  }
+
+  getForseenPercentagePosition(
+    macrofuncOVPercentage: any,
+    macrofuncTrenPercentage: any
+  ): string {
+    const numberOpPercentage =
+      Number(macrofuncOVPercentage) - Number(macrofuncTrenPercentage);
+
+    if (numberOpPercentage <= 20) {
+      return "percentage-left-alligned";
+    } else {
+      return "percentage-right-alligned";
     }
   }
 }

@@ -125,7 +125,7 @@
           @if(line.orientation === 'horizontal' && line?.lineLabel){
           <image
             [attr.href]="
-              checkIfDeckHasIncidents(line?.lineLabel)
+              checkIfAlertIconIsActive(line?.lineLabel) 
                 ? 'assets/svg/priority-high.svg'
                 : 'assets/svg/priority-high-disabled.svg'
             "
@@ -153,6 +153,7 @@
               [attr.height]="line.sectorTickness || 2"
               fill="url(#deckHighlightGradientError)"
               mask="url(#stripMaskError)"
+              [attr.opacity]="0.3"
             />
           </g>
           } @else if (highlightedIncidentSeverity() === 'low') {
@@ -164,6 +165,7 @@
               [attr.height]="line.sectorTickness || 2"
               fill="url(#deckHighlightGradientWarn)"
               mask="url(#stripMaskWarn)"
+              [attr.opacity]="0.3"
             />
           </g>
           }
@@ -176,6 +178,7 @@
               [attr.height]="line.sectorTickness || 2"
               fill="url(#deckHighlightGradientMedium)"
               mask="url(#stripMaskMedium)"
+              [attr.opacity]="0.3"
             />
           </g>
           }

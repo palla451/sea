@@ -1,16 +1,16 @@
 <div class="table-wrapper">
   @if( isTableDataLoading ){
   <app-local-spinner></app-local-spinner>
-  }@else{
-
+  }@else{ @if(isIncidentModalOpened){
   <app-base-readonly-modal
     [isModalVisible]="isIncidentModalOpened"
-    [modalTitle]="''"
+    [modalTitle]="'remediationManagementModal.title' | transloco"
     [heightPx]="850"
     (modalClosed)="manageModalClosedState()"
   >
     <app-incident-management-modal></app-incident-management-modal>
   </app-base-readonly-modal>
+  }
 
   <main class="incident-overview-table">
     <app-column-settings-sidebar
@@ -43,9 +43,8 @@
         </button>
 
         <button
-          class="custom-button"
+          class="custom-button filtersBtn"
           (click)="toggleFilters()"
-          class="incident-overview-table__header--call-to-actions--filters filtersBtn"
         >
           @if(activeSidebarFiltersCount() > 0){
           <div class="filtersAppliedAmount">
@@ -86,13 +85,10 @@
             columnTitleEnd:
               col.field === 'assetsInvolved' || col.field === 'mvz',
             assetsInvolvedWidth: col.field === 'assetsInvolved',
-            frameWidth: col.field === 'frame',
             mvzWidth: col.field === 'mvz',
-            linkToIncidentOVWidth: col.field === 'linkToIncidentOV',
-            linkToIncidentManageWidth: col.field === 'linkToIncidentManage',
             descriptionWidth: col.field === 'description',
             dateWidth: col.field === 'createdAt',
-            alertLevelWidth: col.field === 'alert',
+            alertLevelWidth: col.field === 'severity',
           }"
           >
             {{ col.header }}
@@ -101,7 +97,12 @@
           } @else {
           <th
             [ngClass]="{
-              columnTitleEnd: col.field === 'deck' || col.field === 'frame'
+              columnTitleEnd: (col.field === 'deck' || col.field === 'frame'),
+              incidentIdWidth: col.field === 'id',
+              decksInvolvedWidth: col.field === 'deck',
+              framesInvolvedWidth: col.field === 'frame',
+              linkToIncidentOVWidth: col.field === 'linkToIncidentOV',
+              linkToIncidentManageWidth: col.field === 'linkToIncidentManage',
             }"
           >
             {{ col.header }}
@@ -142,7 +143,7 @@
           </td>
           } @if (checkIfColumnIsVisible(((selectedColumns())),'description')){
           <td class="incident-overview-table__description">
-            {{ incident.description }}
+            {{ incident.title }}
           </td>
           } @if (checkIfColumnIsVisible(((selectedColumns())),'deck')){
           <td class="incident-overview-table__deck">
@@ -150,7 +151,7 @@
           </td>
           } @if (checkIfColumnIsVisible(((selectedColumns())),'frame')){
           <td class="incident-overview-table__frame">
-            <span class="incident-overview-table__frame__text">
+            <span>
               {{ getFormattedList(incident.frames) }}
             </span>
           </td>
@@ -205,9 +206,7 @@
                 fill="none"
               >
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M5.64645 3.64645C5.84171 3.45118 6.15829 3.45118 6.35355 3.64645L10.3536 7.64645C10.5488 7.84171 10.5488 8.15829 10.3536 8.35355L6.35355 12.3536C6.15829 12.5488 5.84171 12.5488 5.64645 12.3536C5.45118 12.1583 5.45118 11.8417 5.64645 11.6464L9.29289 8L5.64645 4.35355C5.45118 4.15829 5.45118 3.84171 5.64645 3.64645Z"
+                  d="M11.7055 7.99995L11.3523 8.35308L5.35234 14.3531L4.99922 14.7062L4.29297 14L4.64609 13.6468L10.293 7.99995L4.64609 2.35308L4.29297 1.99995L4.99922 1.2937L5.35234 1.64683L11.3523 7.64683L11.7055 7.99995Z"
                   fill="white"
                 />
               </svg>

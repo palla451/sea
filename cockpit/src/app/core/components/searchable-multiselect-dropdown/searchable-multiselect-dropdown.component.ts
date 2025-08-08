@@ -5,10 +5,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output,
-  ElementRef,
-  HostListener,
-  Inject,
+  Output
 } from "@angular/core";
 import { ButtonModule } from "primeng/button";
 import { CheckboxModule } from "primeng/checkbox";
@@ -24,6 +21,7 @@ import { convertSetToArray } from "../../utils/array-functions";
 import { AssetSidebarService } from "../../../features/asset-management/services/asset-sidebar.service";
 import { ClickOutsideDirective } from "../../directives/click-outside.directive";
 import { RemediationSidebarService } from "../../../features/remediation-management/services/remediation-sidebar.service";
+import { HistorySidebarService } from "../../../features/history/services/history-sidebar.service";
 
 @Component({
   selector: "app-searchable-multiselect-dropdown",
@@ -35,7 +33,7 @@ import { RemediationSidebarService } from "../../../features/remediation-managem
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    ClickOutsideDirective
+    ClickOutsideDirective,
   ],
   templateUrl: "./searchable-multiselect-dropdown.component.html",
   styleUrl: "./searchable-multiselect-dropdown.component.scss",
@@ -46,12 +44,14 @@ export class SearchableMultiselectDropdownComponent
   sidebarService = inject(SidebarService);
   assetsMngmtSidebarService = inject(AssetSidebarService);
   remediationsSidebarService = inject(RemediationSidebarService);
+  historySidebarService = inject(HistorySidebarService);
 
   @Input() table!: Table;
   @Input() fieldName?: string;
   @Input() multiselectTitle?: string;
   @Input() multiselectHint?: string;
   @Output() descriptionsSelectionChange = new EventEmitter<Set<string>>();
+  @Output() historyDescriptionsSelectionChange = new EventEmitter<Set<string>>();
   @Output() decksSelectionChange = new EventEmitter<Set<string>>();
   @Output() framesSelectionChange = new EventEmitter<Set<string>>();
   @Output() mvzSelectionChange = new EventEmitter<Set<string>>();
@@ -61,55 +61,65 @@ export class SearchableMultiselectDropdownComponent
   @Output() typeSelectionChange = new EventEmitter<Set<string>>();
   @Output() nameSelectionChange = new EventEmitter<Set<string>>();
 
-  @Output() remediationIncidentDescriptionSelectionChange = new EventEmitter<Set<string>>();
-  @Output() remediationActionDescriptionSelectionChange = new EventEmitter<Set<string>>();
+  @Output() remediationIncidentDescriptionSelectionChange = new EventEmitter<
+    Set<string>
+  >();
+  @Output() remediationActionDescriptionSelectionChange = new EventEmitter<
+    Set<string>
+  >();
 
   dropdownOpen = false;
   searchTerm = "";
   filteredDescriptionOptions!: string[];
+  filteredHistoryDescriptionOptions!: string[];
   filteredDecksOptions!: string[];
   filteredFramesOptions!: string[];
   filteredMVZOptions!: string[];
 
-  fiteredMarkPieceOptions!: string[];
-  fiteredTypeOptions!: string[];
-  fiteredNameOptions!: string[];
-  fiteredActionDescriptionOptions!: string[];
-  fiteredIncidentDescriptionOptions!: string[];
+  filteredMarkPieceOptions!: string[];
+  filteredTypeOptions!: string[];
+  filteredNameOptions!: string[];
+  filteredActionDescriptionOptions!: string[];
+  filteredIncidentDescriptionOptions!: string[];
   selected: Set<string> = new Set();
   selectedDisplayText = "";
 
   private resetSubscriptionDashboard!: Subscription;
   private resetSubscriptionAssetsMngmt!: Subscription;
   private resetSubscriptionRemediationsPage!: Subscription;
+  private resetSubscriptionHistoryPage!: Subscription;
 
   ngOnInit(): void {
     // Sottoscrizione al reset dashboard
-    this.resetSubscriptionDashboard = this.sidebarService.resetTriggered.subscribe(
-      () => {
+    this.resetSubscriptionDashboard =
+      this.sidebarService.resetTriggered.subscribe(() => {
         this.resetFilters();
-      }
-    );
+      });
 
     // Sottoscrizione al reset pagina assets
-    this.resetSubscriptionAssetsMngmt = this.assetsMngmtSidebarService.resetTriggered.subscribe(
-      () => {
+    this.resetSubscriptionAssetsMngmt =
+      this.assetsMngmtSidebarService.resetTriggered.subscribe(() => {
         this.resetFilters();
-      }
-    );
+      });
 
     // Sottoscrizione al reset pagina remediations
-    this.resetSubscriptionRemediationsPage = this.remediationsSidebarService.resetTriggered.subscribe(
-      () => {
+    this.resetSubscriptionRemediationsPage =
+      this.remediationsSidebarService.resetTriggered.subscribe(() => {
         this.resetFilters();
-      }
-    );
+      });
+
+    // Sottoscrizione al reset pagina history
+    this.resetSubscriptionHistoryPage =
+      this.historySidebarService.resetTriggered.subscribe(() => {
+        this.resetFilters();
+      });
   }
 
   ngOnDestroy() {
     this.resetSubscriptionDashboard.unsubscribe();
     this.resetSubscriptionAssetsMngmt.unsubscribe();
     this.resetSubscriptionRemediationsPage.unsubscribe();
+    this.resetSubscriptionHistoryPage.unsubscribe();
   }
 
   private resetFilters() {
@@ -145,6 +155,35 @@ export class SearchableMultiselectDropdownComponent
           );
 
           this.filteredDescriptionOptions =
+            incidentsDescriptionOptionsArr.filter((opt) =>
+              opt.toLowerCase().includes(searchTerm)
+            );
+        })
+      )
+      .subscribe(noop);
+  }
+
+  private getHistoryDescriptionFilterOptions(searchTerm: string): void {
+    this.historySidebarService
+      .getIncidentsDescriptionOptions()
+      .pipe(
+        filter(isNonNull),
+        tap((incidentsDescriptionOptions) => {
+          const incidentsDescriptionOptionsSet: Set<string> = new Set();
+
+          incidentsDescriptionOptions?.forEach((incidentsDescriptionOption) => {
+            if (
+              !incidentsDescriptionOptionsSet.has(incidentsDescriptionOption)
+            ) {
+              incidentsDescriptionOptionsSet.add(incidentsDescriptionOption);
+            }
+          });
+
+          const incidentsDescriptionOptionsArr = convertSetToArray(
+            incidentsDescriptionOptionsSet
+          );
+
+          this.filteredHistoryDescriptionOptions =
             incidentsDescriptionOptionsArr.filter((opt) =>
               opt.toLowerCase().includes(searchTerm)
             );
@@ -213,8 +252,8 @@ export class SearchableMultiselectDropdownComponent
       .pipe(
         filter(isNonNull),
         tap((assetsMarkPiecesOptions) => {
-          this.fiteredMarkPieceOptions = assetsMarkPiecesOptions.filter((opt) =>
-            opt.toLowerCase().includes(searchTerm)
+          this.filteredMarkPieceOptions = assetsMarkPiecesOptions.filter(
+            (opt) => opt.toLowerCase().includes(searchTerm)
           );
         })
       )
@@ -227,7 +266,7 @@ export class SearchableMultiselectDropdownComponent
       .pipe(
         filter(isNonNull),
         tap((assetsTypeOptions) => {
-          this.fiteredTypeOptions = assetsTypeOptions.filter((opt) =>
+          this.filteredTypeOptions = assetsTypeOptions.filter((opt) =>
             opt.toLowerCase().includes(searchTerm)
           );
         })
@@ -241,7 +280,7 @@ export class SearchableMultiselectDropdownComponent
       .pipe(
         filter(isNonNull),
         tap((assetsNameOptions) => {
-          this.fiteredNameOptions = assetsNameOptions.filter((opt) =>
+          this.filteredNameOptions = assetsNameOptions.filter((opt) =>
             opt.toLowerCase().includes(searchTerm)
           );
         })
@@ -255,9 +294,10 @@ export class SearchableMultiselectDropdownComponent
       .pipe(
         filter(isNonNull),
         tap((remediationsActionDescriptionOptions) => {
-          this.fiteredActionDescriptionOptions = remediationsActionDescriptionOptions.filter((opt) =>
-            opt.toLowerCase().includes(searchTerm)
-          );
+          this.filteredActionDescriptionOptions =
+            remediationsActionDescriptionOptions.filter((opt) =>
+              opt.toLowerCase().includes(searchTerm)
+            );
         })
       )
       .subscribe(noop);
@@ -269,9 +309,10 @@ export class SearchableMultiselectDropdownComponent
       .pipe(
         filter(isNonNull),
         tap((remediationsIncidentDescriptionOptions) => {
-          this.fiteredIncidentDescriptionOptions = remediationsIncidentDescriptionOptions.filter((opt) =>
-            opt.toLowerCase().includes(searchTerm)
-          );
+          this.filteredIncidentDescriptionOptions =
+            remediationsIncidentDescriptionOptions.filter((opt) =>
+              opt.toLowerCase().includes(searchTerm)
+            );
         })
       )
       .subscribe(noop);
@@ -280,6 +321,7 @@ export class SearchableMultiselectDropdownComponent
   filterOptions() {
     const term = this.searchTerm.toLowerCase();
     this.getDescriptionFilterOptions(term);
+    this.getHistoryDescriptionFilterOptions(term);
     this.getDecksFilterOptions(term);
     this.getFramesFilterOptions(term);
     this.getMVZFilterOptions(term);
@@ -361,6 +403,10 @@ export class SearchableMultiselectDropdownComponent
 
       case "actionDescription":
         this.remediationActionDescriptionSelectionChange.emit(this.selected);
+        break;
+
+      case "historyDescription":
+        this.historyDescriptionsSelectionChange.emit(this.selected);
         break;
     }
   }

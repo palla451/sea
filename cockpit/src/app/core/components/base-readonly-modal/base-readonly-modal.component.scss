@@ -9,5 +9,10 @@
 }
 
 .remediation-impacts-title {
+  margin-left: 20px;
   @include fonts.heading-100;
+}
+
+.remediation-impacts-back-btn {
+  cursor: pointer;
 }

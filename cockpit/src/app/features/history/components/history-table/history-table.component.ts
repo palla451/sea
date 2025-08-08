@@ -18,16 +18,13 @@ import { Table, TableModule } from "primeng/table";
 import { ColumnSettingsSidebarComponent } from "../../../../core/components/column-settings-sidebar/column-settings-sidebar.component";
 import { TableFiltersSidebarComponent } from "../../../../core/components/table-filters-sidebar/table-filters-sidebar.component";
 import { MenuItem } from "primeng/api";
-import { Observable, Subscription } from "rxjs";
+import { noop, Observable, Subscription, tap } from "rxjs";
 import {
   HistorySidebarService,
   HistoryTableColumns,
 } from "../../services/history-sidebar.service";
-import { Asset } from "../../../../core/models/asset.model";
-import { IncidentDetail } from "../../../incident-detail/models/incident-detail.models";
 import { Incident } from "../../../dashboard/models/dashboard.models";
 import { Store } from "@ngrx/store";
-import { HoverService } from "../../../dashboard/services/hover.service";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { Router } from "@angular/router";
 import { incidentDetailActions } from "../../../../core/state/actions";
@@ -62,8 +59,9 @@ export class HistoryTableComponent implements OnInit, OnDestroy {
 
   // Signal mutabile per PrimeNG
   incidentsSignal = signal<Incident[]>([]);
+  activeSidebarFiltersCountSignal = signal<number>(0);
 
-  rows = signal<number>(0);
+  rows = signal<number>(12);
   first = signal<number>(0);
   shouldShowPaginator = computed<boolean>(
     () => this._incidents.length > this.rows()
@@ -84,7 +82,6 @@ export class HistoryTableComponent implements OnInit, OnDestroy {
     return this._incidents;
   }
 
-  // Computed signal per gli incidenti paginati
   paginatedIncidents = computed<Incident[]>(() => {
     const startIndex = this.first();
     const endIndex = startIndex + this.rows();
@@ -118,15 +115,21 @@ export class HistoryTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.activeSidebarFiltersCount$
+      .pipe(
+        tap((activeSidebarFiltersCount) => {
+          this.activeSidebarFiltersCountSignal.set(activeSidebarFiltersCount);
+        })
+      )
+      .subscribe(noop);
     this.originalIncidents = [...this._incidents];
-    // Sottoscrizione ai filtri
+
     this.filterSubscription = this.sidebarService.currentFilters.subscribe(
       (filters) => {
         this.applyFilters(filters);
       }
     );
 
-    // Sottoscrizione al reset
     this.resetSubscription = this.sidebarService.resetTriggered.subscribe(
       () => {
         this.resetFilters();
@@ -158,6 +161,10 @@ export class HistoryTableComponent implements OnInit, OnDestroy {
   private applyFilters(filters: any) {
     if (!filters || Object.keys(filters).length === 0) {
       this.incidentsSignal.set([...this.originalIncidents]);
+      this.first.set(0);
+      if (this.incidentHistorytable) {
+        this.incidentHistorytable.first = 0;
+      }
       return;
     }
 
@@ -174,7 +181,6 @@ export class HistoryTableComponent implements OnInit, OnDestroy {
     }
 
     // Filtra per incident status
-
     if (
       filters?.incidentStatuses &&
       (filters?.incidentStatuses as string[])?.length
@@ -205,11 +211,11 @@ export class HistoryTableComponent implements OnInit, OnDestroy {
 
     // Filtra per multiselect descrizioni
     if (
-      filters?.descriptionsSelections &&
-      (filters?.descriptionsSelections as string[])?.length
+      filters?.historyDescriptionSelections &&
+      (filters?.historyDescriptionSelections as string[])?.length
     ) {
       filteredData = filteredData.filter((incident) => {
-        return (filters?.descriptionsSelections as string[])?.some(
+        return (filters?.historyDescriptionSelections as string[])?.some(
           (descriptionsSelection) => {
             return descriptionsSelection === incident?.description;
           }
@@ -261,35 +267,20 @@ export class HistoryTableComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.incidentsSignal.set(filteredData);
-    this.first.set(0); // Resetta alla prima pagina
-  }
-
-  private isValidIncidentKey(key: string): key is keyof Incident {
-    const validKeys: (keyof Incident)[] = [
-      "id",
-      "description",
-      "decks",
-      "frames",
-      "status",
-      "mvz",
-      "assetsInvolved",
-      "severity",
-      "createdAt",
-      "status",
-      // Aggiungi tutte le proprietà valide dell'interfaccia Incident
-    ];
-    return validKeys.includes(key as keyof Incident);
+    if (this.activeSidebarFiltersCountSignal() > 0) {
+      this.incidentsSignal.set(filteredData);
+      this.first.set(0);
+      // Forza il reset della pagina nella tabella PrimeNG
+      if (this.incidentHistorytable) {
+        this.incidentHistorytable.first = 0;
+        this.incidentHistorytable.reset();
+      }
+    }
   }
 
   private resetFilters() {
     this.incidentsSignal.set([...this.originalIncidents]);
-    this.first.set(0); // Resetta alla prima pagina
-
-    // // Se stai usando PrimeNG Table, potresti aver bisogno di:
-    // if (this.incidentOVtable) {
-    // this.incidentOVtable.reset(); // Resetta lo stato della tabella (ordinamento, ecc.)
-    // }
+    this.first.set(0);
   }
 
   // Metodo chiamato quando cambia la pagina
@@ -345,23 +336,6 @@ export class HistoryTableComponent implements OnInit, OnDestroy {
     { label: "Filter by Severity", icon: "pi pi-filter" },
   ];
 
-  // Metodo per aggiornare lo stato del paginatore
-  // updatePaginatorState() {
-  // //la prossima istruzione commentata rende il paginatore dinamicamente visibile sulla base dell opzione righe per pagina scelta
-  // //this.shouldShowPaginator = this.incidents.length > this.rows;
-
-  // //la prossima istruzione commentata rende il paginatore sempre visibile a fronte della presenza del selettore di righe per pagina
-  // this.shouldShowPaginator = this.incidents?.length > 0;
-  // }
-
-  // Metodo per simulare il caricamento dei dati
-  loadData() {
-    // Simula il caricamento dei dati
-    this.incidents = [
-      // ... dati della tabella
-    ];
-  }
-
   toggleFilters(): void {
     this.showFiltersSidebar = true;
   }
@@ -369,11 +343,6 @@ export class HistoryTableComponent implements OnInit, OnDestroy {
   toggleSettings() {
     this.showSettingsSidebar = true;
   }
-
-  // onColumnSettingsConfirm(updatedColumns: any[]) {
-  // this.columns = updatedColumns;
-  // // Qui puoi aggiungere logica aggiuntiva se necessario
-  // }
 
   onColumnSettingsReset() {
     // La reset viene gestita automaticamente dal componente sidebar

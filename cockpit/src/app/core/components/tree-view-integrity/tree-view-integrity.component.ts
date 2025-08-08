@@ -24,7 +24,6 @@ import { CyberResilienceSidebarService } from "../../../features/dashboard/servi
 import { Table } from "primeng/table";
 import { NavigationTargetEnum } from "../../enums/navigation-targets.enum";
 import { TableFiltersSidebarComponent } from "../table-filters-sidebar/table-filters-sidebar.component";
-import { CountUpDirective } from "../../directives/count-up.directive";
 import { SharedModule } from "../../../shared/shared.module";
 
 @Component({
@@ -36,7 +35,6 @@ import { SharedModule } from "../../../shared/shared.module";
     FormsModule,
     CommonModule,
     TableFiltersSidebarComponent,
-    CountUpDirective,
     SharedModule,
   ],
   templateUrl: "./tree-view-integrity.component.html",
@@ -58,17 +56,20 @@ export class TreeViewIntegrityComponent implements OnInit, OnDestroy {
   // );
 
   macroFunctioSelected = signal<string>("");
-  countCompromisedAssets = toSignal(
-    this.crOverviewManager.countCompromisedAssets$()
-  );
+  // countCompromisedAssets = toSignal(
+  //   this.crOverviewManager.countCompromisedAssets$()
+  // );
 
   countCompromisedAssetsNumber = computed<number>(() => {
     return this.countCompromisedAssets() as number;
   });
 
-  countOperatingAssets = toSignal(
-    this.crOverviewManager.countOperationalAssets$()
-  );
+  // countOperatingAssets = toSignal(
+  //   this.crOverviewManager.countOperationalAssets$()
+  // );
+
+  countCompromisedAssets = signal<number>(0);
+  countOperatingAssets = signal<number>(0);
 
   countOperatingAssetsNumber = computed<number>(() => {
     return this.countOperatingAssets() as number;
@@ -137,7 +138,32 @@ export class TreeViewIntegrityComponent implements OnInit, OnDestroy {
 
   // Modifica ngOnInit:
 
+  private countNrOfCompromisedAssets(): void {
+    this.crOverviewManager
+      .countCompromisedAssets$()
+      .pipe(
+        tap((compromisedAssetsCount) => {
+          this.countCompromisedAssets.set(compromisedAssetsCount);
+        })
+      )
+      .subscribe(noop);
+  }
+
+  private countNrOfOperatingAssets(): void {
+    this.crOverviewManager
+      .countOperationalAssets$()
+      .pipe(
+        tap((operationalAssetsCount) => {
+          this.countOperatingAssets.set(operationalAssetsCount);
+        })
+      )
+      .subscribe(noop);
+  }
+
   ngOnInit(): void {
+    this.countNrOfCompromisedAssets();
+    this.countNrOfOperatingAssets();
+
     this.crOverviewManager.selectedCyberResiliencePerformance$
       .pipe(
         tap((selectedCyberResiliencePerformance) => {

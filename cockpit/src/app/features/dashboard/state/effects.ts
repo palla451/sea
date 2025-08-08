@@ -35,7 +35,9 @@ export class GetShipFunctionsEffects {
           catchError((error) =>
             of(
               shipFunctionsActions.errorGetAllShipFunctions({
-                error: sanitizeErrorMessage(error.message) || sanitizeErrorMessage(this.transloco.translate("error")),
+                error:
+                  sanitizeErrorMessage(error.message) ||
+                  sanitizeErrorMessage(this.transloco.translate("error")),
               })
             )
           )
@@ -74,7 +76,7 @@ export class GetShipFunctionsEffects {
             messageActions.setMessage({
               message: {
                 id: uuid.v4(),
-                summary: this.transloco.translate("genericWarn"),
+                summary: this.transloco.translate("alerts.genericWarn"),
                 detail: sanitizeErrorMessage(action.error),
                 severity: "error",
                 sticky: true,

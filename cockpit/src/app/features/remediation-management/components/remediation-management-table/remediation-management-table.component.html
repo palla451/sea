@@ -120,9 +120,9 @@
         } @if (checkIfColumnIsVisible(((selectedColumns$ |
         async)??[]),'incidentDescription')){
         <td>
-          <span class="incident-overview-table__incident-description">{{
-            remediation.incidentDescription
-          }}</span>
+          <span class="incident-overview-table__incident-description">
+            {{remediation.incidentDescription}}
+          </span>
         </td>
         } @if (checkIfColumnIsVisible(((selectedColumns$ |
         async)??[]),'actionType')){

@@ -58,7 +58,7 @@
         }
 
         &:active {
-          color: variables.$table-border-color;
+          color: variables.$border-secondary-default;
         }
       }
     }
@@ -106,32 +106,6 @@
       @include fonts.body-sans-25;
     }
   }
-
-  // &__paginator-container {
-  //   display: flex;
-  //   justify-content: space-between;
-  //   align-items: center;
-  //   width: 100%;
-  //   padding: 0;
-
-  //   &__report {
-  //     display: flex;
-  //     justify-content: space-between;
-  //     align-items: center;
-  //     align-self: stretch;
-  //     gap: 1rem;
-  //     padding: 0;
-  //     @include fonts.body-sans-25;
-
-  //     &__itemsPerPageDD {
-  //       //height: 2.25rem;
-  //       background-color: variables.$no-bg-color;
-  //       width: 5.125rem;
-  //       z-index: 2;
-  //       padding: 0;
-  //     }
-  //   }
-  // }
 }
 
 .ascendingSortIcon {
@@ -172,10 +146,6 @@
     border: 2px solid white;
     border-radius: 8px;
   }
-
-  &:active {
-    // Nessuna modifica visiva
-  }
 }
 
 .filtersBtn {
@@ -191,39 +161,41 @@
 }
 
 .assetsInvolvedWidth {
-  width: 10%;
+  width: 10% !important;
 }
 
 .mvzWidth {
-  width: 9%;
+  width: 9% !important;
 }
 
 .linkToIncidentOVWidth {
   display: inline-block;
   align-items: center;
-  width: 2%;
-}
-
-.linkToIncidentManage {
-  display: inline-block;
-  align-items: center;
-  width: 3%;
+  width: 2% !important;
 }
 
 .descriptionWidth {
-  width: 21%;
+  width: 40% !important;
 }
 
 .dateWidth {
-  width: 13%;
+  width: 11% !important;
+}
+
+.deckWidth {
+   width: 8% !important;
+}
+
+.frameWidth {
+   width: 8% !important;
 }
 
 .alertLevelWidth {
-  width: 16%;
+  width: 10% !important;
 }
 
-.statusWidth{
-  width: 10%;
+.statusWidth {
+  width: 10% !important;
 }
 
 .filtersAppliedAmount {
@@ -246,7 +218,7 @@
 
 .manageIncidentBtn {
   width: 86px;
-  padding: 0.5 rem;
+  padding: 0.5rem;
   border-radius: 4px;
   background-color: #3c66ef;
   @include fonts.utilities-button-100;

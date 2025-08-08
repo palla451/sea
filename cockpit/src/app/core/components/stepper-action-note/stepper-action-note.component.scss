@@ -32,7 +32,9 @@
       border-top-right-radius: 0.25rem;
       border-top-left-radius: 0.25rem;
       background-color: variables.$table-bg-color;
+      padding: 12px;
       @include fonts.body-sans-25;
+      font-size: 14px !important;
     }
   }
 

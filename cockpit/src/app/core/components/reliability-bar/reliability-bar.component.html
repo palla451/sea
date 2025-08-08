@@ -29,32 +29,77 @@
       <div
         class="bar-value"
         [ngStyle]="getPercentageLeftPosByFinalPercentage(macrofuncOVPercentage)"
+        [ngClass]="getPercentagePosition(macrofuncOVPercentage)"
       >
         {{ macrofuncOVPercentage }}%
+      </div>
+
+      <div
+        class="forseen-reliability-pipe"
+        [ngStyle]="
+          getPercentageLeftPosByForseenPercentage(
+            macrofuncOVPercentage,
+            macrofuncTrenPercentage
+          )
+        "
+      ></div>
+      <div
+        class="forseen-reliability-value"
+        [ngStyle]="
+          getPercentageLeftPosByForseenPercentage(
+            macrofuncOVPercentage,
+            macrofuncTrenPercentage
+          )
+        "
+        [ngClass]="
+          getForseenPercentagePosition(
+            macrofuncOVPercentage,
+            macrofuncTrenPercentage
+          )
+        "
+      >
+        {{ macrofuncOVPercentage - macrofuncTrenPercentage }}%
       </div>
     </div>
   </div>
 
   <div class="right-section">
-    <div class="metric-title">
-      {{
-        "remediationManagementModal.remediationImpact.reliability.title"
-          | transloco
-      }}
+    <div class="right-section__actualReliability">
+      <div class="metric-title">
+        {{
+          "remediationManagementModal.remediationImpact.actualReliability.title"
+            | transloco
+        }}
+      </div>
+      <div class="metric-value">
+        <span class="value">{{ macrofuncOVPercentage }}</span
+        ><span class="unit">%</span>
+      </div>
     </div>
-    <div class="metric-value">
-      <span class="value">{{ macrofuncOVPercentage }}</span
-      ><span class="unit">%</span>
-      <div class="divider"></div>
-      <div class="impact">
-        <app-remediation-trend
-          [trendPercentage]="macrofuncTrenPercentage"
-        ></app-remediation-trend>
-        <div class="impact-label">
-          {{
-            "remediationManagementModal.remediationImpact.reliability.impact"
-              | transloco
-          }}
+
+    <div class="right-section__forseenReliability">
+      <div class="right-section__forseenReliability__metric-title">
+        {{
+          "remediationManagementModal.remediationImpact.forseenReliability.title"
+            | transloco
+        }}
+      </div>
+      <div class="metric-value">
+        <span class="value">{{
+          macrofuncOVPercentage - macrofuncTrenPercentage
+        }}</span
+        ><span class="unit">%</span>
+        <div class="divider"></div>
+        <div class="impact">
+          <app-remediation-trend
+            [trendPercentage]="macrofuncTrenPercentage"
+          ></app-remediation-trend>
+          <div class="impact-label">
+            {{
+              "remediationManagementModal.remediationImpact.forseenReliability.impact"
+                | transloco
+            }}
+          </div>
         </div>
       </div>
     </div>

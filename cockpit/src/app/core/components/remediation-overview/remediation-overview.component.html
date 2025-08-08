@@ -73,7 +73,7 @@
 
     }
   </div>
-  @if ((hasPrivilegedAccess$ | async)) {
+  @if ((hasPrivilegedAccess$ | async) && (checkIfCurrentIncidentIsNew$ | async)) {
   <div class="manageButtonContainer">
     <app-incident-manage-button
       [onManage]="onManageActionCallback"
@@ -84,7 +84,7 @@
 
 <app-base-readonly-modal
   [isModalVisible]="isIncidentModalOpened"
-  [modalTitle]="''"
+  [modalTitle]="'remediationManagementModal.title' | transloco"
   (modalClosed)="manageModalClosedState()"
   [heightPx]="850"
 >

@@ -1,5 +1,4 @@
 <header class="header" role="banner" aria-label="Application header">
-  <!-- Application logo/name -->
   <div class="header__app-brand">
     <h1 class="header__app-brand__app-name" aria-label="Application name">
       {{ appName }}
@@ -10,23 +9,19 @@
   <div class="header__nav-container">
     <nav aria-label="Main navigation">
       <ul class="header__nav-container__nav-list" role="menubar">
-        @for (item of navItems; track item.label; let i = $index) {
+        @for (item of navItems; track item.key; let i = $index) {
 
         <li
-          *ngIf="
-            item.label !== 'navbar.administration' || isUserEnabledToAdminPage()
-          "
+          *ngIf="item.key !== 'Administration' || isUserEnabledToAdminPage()"
           role="none"
         >
           <a
             role="menuitem"
             [routerLink]="item.routerLink"
             class="header__nav-container__nav-list__nav-item"
-            [class.active]="activeMenuItem() === item.label"
-            (click)="setActiveMenuItem(item.label)"
-            [attr.aria-current]="
-              activeMenuItem() === item.label ? 'page' : null
-            "
+            [class.active]="activeMenuItem() === item.key"
+            (click)="setActiveMenuItem(item.key)"
+            [attr.aria-current]="activeMenuItem() === item.key ? 'page' : null"
             [attr.aria-label]="item.label | transloco"
             [tabIndex]="0"
             pRipple
@@ -39,7 +34,6 @@
     </nav>
   </div>
 
-  <!-- User profile section -->
   <div class="header__profile-section">
     <!-- Avatar a sinistra -->
     <!-- <div class="avatar-wrapper" aria-hidden="true">

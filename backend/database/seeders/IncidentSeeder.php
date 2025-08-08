@@ -2,14 +2,28 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Schema;
 
 class IncidentSeeder extends Seeder
 {
     public function run(): void
     {
+        $table = 'incidents';
+        $connection = "pgsql";
+
+        // effettuo controllo se esiste la tabella incident allora faccio un truncate
+        // evito problema
+        if(Schema::connection($connection)->hasTable($table)) {
+            DB::connection($connection)->table($table)->truncate();
+        }else{
+            $this->command->warn("Table $table does not exist. Skipping truncate.");
+        }
+
+
         DB::table('incidents')->insert([
             'id' => 6826,
             'title' => 'Suspicious Application Or Network Behaviour',

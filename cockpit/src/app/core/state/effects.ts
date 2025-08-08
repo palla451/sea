@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { TranslocoService } from "@jsverse/transloco";
-import { catchError, map, of, switchMap, tap } from "rxjs";
+import { catchError, exhaustMap, map, of, switchMap, tap } from "rxjs";
 import {
   assetActions,
   calculateOperatingPercentageActions,
@@ -70,7 +70,7 @@ export class IncidentDetailEffects {
             messageActions.setMessage({
               message: {
                 id: uuid.v4(),
-                summary: this.transloco.translate("genericWarn"),
+                summary: this.transloco.translate("alerts.genericWarn"),
                 detail: sanitizeErrorMessage(action.error),
                 severity: "error",
                 sticky: true,
@@ -132,7 +132,7 @@ export class DashboardEffects {
             messageActions.setMessage({
               message: {
                 id: uuid.v4(),
-                summary: this.transloco.translate("genericWarn"),
+                summary: this.transloco.translate("alerts.genericWarn"),
                 detail: sanitizeErrorMessage(action.error),
                 severity: "error",
                 sticky: true,
@@ -213,7 +213,7 @@ export class AssetManagementEffects {
             messageActions.setMessage({
               message: {
                 id: uuid.v4(),
-                summary: this.transloco.translate("genericWarn"),
+                summary: this.transloco.translate("alerts.genericWarn"),
                 detail: sanitizeErrorMessage(action.error),
                 severity: "error",
                 sticky: true,
@@ -287,7 +287,7 @@ export class AssetManagementEffects {
             messageActions.setMessage({
               message: {
                 id: uuid.v4(),
-                summary: this.transloco.translate("genericWarn"),
+                summary: this.transloco.translate("alerts.genericWarn"),
                 detail: sanitizeErrorMessage(action.error),
                 severity: "error",
                 sticky: true,
@@ -332,7 +332,7 @@ export class IncidentManagementModalEffects {
   updateIncidentManagementAction$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(IncidentManagementActions.updateIncidentManagementActions),
-      switchMap((action) =>
+      exhaustMap((action) =>
         this.incidentManagementModalService
           .actionManage(action.actionStep)
           .pipe(
@@ -400,7 +400,7 @@ export class IncidentManagementModalEffects {
             messageActions.setMessage({
               message: {
                 id: uuid.v4(),
-                summary: this.transloco.translate("genericWarn"),
+                summary: this.transloco.translate("alerts.genericWarn"),
                 detail: sanitizeErrorMessage(action.error),
                 severity: "error",
                 sticky: true,
@@ -428,6 +428,13 @@ export class IncidentManagementModalEffects {
       )
     );
   });
+
+  reloadAllIncidentListActions$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(IncidentManagementActions.updateIncidentManagementActionsSuccess),
+      map(() => dashboardCoreActions.getAllIncidentsList())
+    );
+  });
 }
 
 @Injectable()
@@ -443,7 +450,7 @@ export class GetShipFunctionsByAssetEffects {
   getShipFunctsByAssetList$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(shipFunctionsByAssetActions.getAllShipFunctionsByAsset),
-      switchMap((action) =>
+      exhaustMap((action) =>
         this.getShipFunctionsByAssetService
           .retrieveShipFunctionForAssetInvolved(action.remediationId)
           .pipe(
@@ -487,7 +494,7 @@ export class GetShipFunctionsByAssetEffects {
             messageActions.setMessage({
               message: {
                 id: uuid.v4(),
-                summary: this.transloco.translate("genericWarn"),
+                summary: this.transloco.translate("alerts.genericWarn"),
                 detail: sanitizeErrorMessage(action.error),
                 severity: "error",
                 sticky: true,
@@ -515,7 +522,7 @@ export class CalculateOperatingPercentageEffects {
       ofType(
         calculateOperatingPercentageActions.getFunctionOperatingPercentage
       ),
-      switchMap((action) =>
+      exhaustMap((action) =>
         this.getShipFunctionsByAssetService
           .calculateOperatingPercentageByActionAsset(
             action.assetIP,
@@ -566,7 +573,7 @@ export class CalculateOperatingPercentageEffects {
             messageActions.setMessage({
               message: {
                 id: uuid.v4(),
-                summary: this.transloco.translate("genericWarn"),
+                summary: this.transloco.translate("alerts.genericWarn"),
                 detail: sanitizeErrorMessage(action.error),
                 severity: "error",
                 sticky: true,
@@ -664,7 +671,7 @@ export class MarkEventAsFalsePositiveEffects {
             messageActions.setMessage({
               message: {
                 id: uuid.v4(),
-                summary: this.transloco.translate("genericWarn"),
+                summary: this.transloco.translate("alerts.genericWarn"),
                 detail: sanitizeErrorMessage(action.error),
                 severity: "error",
                 sticky: true,

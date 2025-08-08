@@ -70,11 +70,9 @@
               col.field === 'assetsInvolved' || col.field === 'mvz',
             assetsInvolvedWidth: col.field === 'assetsInvolved',
             mvzWidth: col.field === 'mvz',
-            linkToIncidentOVWidth: col.field === 'linkToIncidentOV',
-            linkToIncidentManageWidth: col.field === 'linkToIncidentManage',
-            descriptionWidth: col.field === 'description',
+            descriptionWidth: col.field === 'historyDescription',
             dateWidth: col.field === 'createdAt',
-            alertLevelWidth: col.field === 'alert',
+            alertLevelWidth: col.field === 'severity',
             statusWidth: col.field === 'status',
           }"
         >
@@ -84,7 +82,10 @@
         } @else {
         <th
           [ngClass]="{
-            columnTitleEnd: col.field === 'deck' || col.field === 'frame'
+            columnTitleEnd: col.field === 'deck' || col.field === 'frame',
+            deckWidth: col.field === 'deck',
+            frameWidth: col.field === 'frame',
+            linkToIncidentOVWidth: col.field === 'linkToIncidentOV',
           }"
         >
           {{ col.header }}
@@ -119,7 +120,7 @@
         <td>
           <span>{{ incident?.id }}</span>
         </td>
-        } @if (checkIfColumnIsVisible(((selectedColumns())),'description')){
+        } @if (checkIfColumnIsVisible(((selectedColumns())),'historyDescription')){
         <td class="incident-overview-table__description">
           {{ incident.description }}
         </td>
