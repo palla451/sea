@@ -109,10 +109,6 @@ steps:
   #           inputs:
   #             pollingTimeoutSec: '300'
 
-
-
-
-
   - script:
       echo "🔓 Logout da Docker registry..."
       docker logout $(HARBOR_REGISTRY) || true

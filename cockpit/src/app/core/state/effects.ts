@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { TranslocoService } from "@jsverse/transloco";
-import { catchError, exhaustMap, map, of, switchMap, tap } from "rxjs";
+import { catchError, exhaustMap, map, of, switchMap, take, tap } from "rxjs";
 import {
   assetActions,
   calculateOperatingPercentageActions,
@@ -329,44 +329,84 @@ export class IncidentManagementModalEffects {
     }
   );
 
-  updateIncidentManagementAction$ = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(IncidentManagementActions.updateIncidentManagementActions),
-      exhaustMap((action) =>
-        this.incidentManagementModalService
-          .actionManage(action.actionStep)
-          .pipe(
-            map((response) => {
-              if (response) {
-                return IncidentManagementActions.updateIncidentManagementActionsSuccess(
-                  {
-                    actions: response.actions,
-                    incidentId: response.incidentId,
-                  }
-                );
-              } else {
-                return IncidentManagementActions.updateIncidentManagementActionsError(
-                  {
-                    error: sanitizeErrorMessage(
-                      this.transloco.translate("error")
-                    ),
-                  }
-                );
-              }
-            }),
-            catchError((error) =>
-              of(
-                IncidentManagementActions.updateIncidentManagementActionsError({
-                  error:
-                    sanitizeErrorMessage(error.message) ||
-                    sanitizeErrorMessage(this.transloco.translate("error")),
-                })
+  // updateIncidentManagementAction$ = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(IncidentManagementActions.updateIncidentManagementActions),
+  //     exhaustMap((action) =>
+  //       this.incidentManagementModalService
+  //         .actionManage(action.actionStep)
+  //         .pipe(
+  //           map((response) => {
+  //             if (response) {
+  //               return IncidentManagementActions.updateIncidentManagementActionsSuccess(
+  //                 {
+  //                   actions: response.actions,
+  //                   incidentId: response.incidentId,
+  //                 }
+  //               );
+  //             } else {
+  //               return IncidentManagementActions.updateIncidentManagementActionsError(
+  //                 {
+  //                   error: sanitizeErrorMessage(
+  //                     this.transloco.translate("error")
+  //                   ),
+  //                 }
+  //               );
+  //             }
+  //           }),
+  //           catchError((error) =>
+  //             of(
+  //               IncidentManagementActions.updateIncidentManagementActionsError({
+  //                 error:
+  //                   sanitizeErrorMessage(error.message) ||
+  //                   sanitizeErrorMessage(this.transloco.translate("error")),
+  //               })
+  //             )
+  //           )
+  //         )
+  //     )
+  //   );
+  // });
+
+
+  updateIncidentManagementAction$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(IncidentManagementActions.updateIncidentManagementActions),
+    exhaustMap((action) =>
+      this.store.select(fromIncidentDetail.selectIncidentDetailBundle).pipe(
+        take(1),
+        map((incidents) => incidents[0]),
+        switchMap((triggeredIncident) =>
+          this.incidentManagementModalService
+            .actionManage(triggeredIncident, action.actionStep)
+            .pipe(
+              map((response) =>
+                response
+                  ? IncidentManagementActions.updateIncidentManagementActionsSuccess({
+                      actions: response.actions,
+                      incidentId: response.incidentId,
+                    })
+                  : IncidentManagementActions.updateIncidentManagementActionsError({
+                      error: sanitizeErrorMessage(
+                        this.transloco.translate('error')
+                      ),
+                    })
+              ),
+              catchError((error) =>
+                of(
+                  IncidentManagementActions.updateIncidentManagementActionsError({
+                    error:
+                      sanitizeErrorMessage(error.message) ||
+                      sanitizeErrorMessage(this.transloco.translate('error')),
+                  })
+                )
               )
             )
-          )
+        )
       )
-    );
-  });
+    )
+  )
+);
 
   updateIncidentManagementActionSuccess$ = createEffect(() => {
     return this.actions$.pipe(

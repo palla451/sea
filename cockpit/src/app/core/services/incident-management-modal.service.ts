@@ -206,63 +206,111 @@ export class IncidentManagementModalService {
     ],
   };
 
+  // actionManage(
+  //   newActionRequest: IncidentManagementModalRequest
+  // ): Observable<IncidentManagementModalResponse> {
+  //   if (environment.isMockActive) {
+  //     return of(this.mockedResponseActionManage);
+  //   } else {
+  //     // Reset del contatore se ha raggiunto il massimo
+  //     if (this.localCurrentAPICounterValue >= this.maxGlobalRetries) {
+  //       this.localCurrentAPICounterValue = 0;
+  //     }
+
+  //     const apiurl = API_ENDPOINTS["manage_action"];
+  //     return this.store
+  //       .select(fromIncidentDetail.selectIncidentDetailBundle)
+  //       .pipe(
+  //         map((incidents) => incidents[0]),
+  //         switchMap((triggeredIncident) =>
+  //           this.apiService
+  //             .patch<IncidentManagementModalResponse>(apiurl, {
+  //               ...newActionRequest,
+  //               retryCounter: this.localCurrentAPICounterValue
+  //             })
+  //             .pipe(
+  //               // Esegui retry se la prima action ha status 'error' e non abbiamo superato i tentativi globali
+  //               retry({
+  //                 count: this.maxRetryAttempts,
+  //                 delay: (error, retryCount) => {
+  //                   // Verifica se l'errore è una response con actions[0].status === 'error'
+  //                   const isRetryableError = error?.actions?.[0]?.status === 'error';
+                    
+  //                   if (isRetryableError && this.localCurrentAPICounterValue < this.maxGlobalRetries) {
+  //                     this.localCurrentAPICounterValue++;
+  //                     console.log(`Tentativo ${retryCount} di ${this.maxRetryAttempts}. Contatore globale: ${this.localCurrentAPICounterValue}`);
+  //                     // Delay esponenziale tra i retry
+  //                     return timer(1000);
+  //                   }
+  //                   // Se non è un errore retryable o abbiamo superato i tentativi, lancia l'errore
+  //                   return throwError(() => error);
+  //                 }
+  //               }),
+  //               tap((incidentManagementModalResponse) => {
+  //                 // Reset del contatore globale se la chiamata ha successo
+  //                 this.localCurrentAPICounterValue = 0;
+  //                 this.incidentManagementManagerService.updateIncidentRemediationStepperAPICounter(0);
+
+  //                 if (incidentManagementModalResponse) {
+  //                   this.incidentManagementManagerService.setStepperToInitialState(triggeredIncident);
+  //                 }
+  //               }),
+  //               catchError(err => {
+  //                 console.error('Patch fallita dopo retry:', err);
+  //                 return throwError(() => err);
+  //               })
+  //             )
+  //         )
+  //       );
+  //   }
+  // }
+
   actionManage(
+    triggeredIncident: any,
     newActionRequest: IncidentManagementModalRequest
   ): Observable<IncidentManagementModalResponse> {
-    if (environment.isMockActive) {
-      return of(this.mockedResponseActionManage);
-    } else {
-      // Reset del contatore se ha raggiunto il massimo
-      if (this.localCurrentAPICounterValue >= this.maxGlobalRetries) {
-        this.localCurrentAPICounterValue = 0;
-      }
+    const apiurl = API_ENDPOINTS['manage_action'];
 
-      const apiurl = API_ENDPOINTS["manage_action"];
-      return this.store
-        .select(fromIncidentDetail.selectIncidentDetailBundle)
-        .pipe(
-          map((incidents) => incidents[0]),
-          switchMap((triggeredIncident) =>
-            this.apiService
-              .patch<IncidentManagementModalResponse>(apiurl, {
-                ...newActionRequest,
-                retryCounter: this.localCurrentAPICounterValue
-              })
-              .pipe(
-                // Esegui retry se la prima action ha status 'error' e non abbiamo superato i tentativi globali
-                retry({
-                  count: this.maxRetryAttempts,
-                  delay: (error, retryCount) => {
-                    // Verifica se l'errore è una response con actions[0].status === 'error'
-                    const isRetryableError = error?.actions?.[0]?.status === 'error';
-                    
-                    if (isRetryableError && this.localCurrentAPICounterValue < this.maxGlobalRetries) {
-                      this.localCurrentAPICounterValue++;
-                      console.log(`Tentativo ${retryCount} di ${this.maxRetryAttempts}. Contatore globale: ${this.localCurrentAPICounterValue}`);
-                      // Delay esponenziale tra i retry
-                      return timer(1000);
-                    }
-                    // Se non è un errore retryable o abbiamo superato i tentativi, lancia l'errore
-                    return throwError(() => error);
-                  }
-                }),
-                tap((incidentManagementModalResponse) => {
-                  // Reset del contatore globale se la chiamata ha successo
-                  this.localCurrentAPICounterValue = 0;
-                  this.incidentManagementManagerService.updateIncidentRemediationStepperAPICounter(0);
-
-                  if (incidentManagementModalResponse) {
-                    this.incidentManagementManagerService.setStepperToInitialState(triggeredIncident);
-                  }
-                }),
-                catchError(err => {
-                  console.error('Patch fallita dopo retry:', err);
-                  return throwError(() => err);
-                })
-              )
-          )
-        );
-    }
+    return this.apiService
+      .patch<IncidentManagementModalResponse>(apiurl, {
+        ...newActionRequest,
+        retryCounter: this.localCurrentAPICounterValue,
+      })
+      .pipe(
+        retry({
+          count: this.maxRetryAttempts,
+          delay: (error, retryCount) => {
+            const isRetryableError =
+              error?.actions?.[0]?.status === 'error';
+            if (
+              isRetryableError &&
+              this.localCurrentAPICounterValue < this.maxGlobalRetries
+            ) {
+              this.localCurrentAPICounterValue++;
+              console.log(
+                `Tentativo ${retryCount} di ${this.maxRetryAttempts}. Contatore globale: ${this.localCurrentAPICounterValue}`
+              );
+              return timer(1000);
+            }
+            return throwError(() => error);
+          },
+        }),
+        tap((incidentManagementModalResponse) => {
+          this.localCurrentAPICounterValue = 0;
+          this.incidentManagementManagerService.updateIncidentRemediationStepperAPICounter(
+            0
+          );
+          if (incidentManagementModalResponse) {
+            this.incidentManagementManagerService.setStepperToInitialState(
+              triggeredIncident
+            );
+          }
+        }),
+        catchError((err) => {
+          console.error('Patch fallita dopo retry:', err);
+          return throwError(() => err);
+        })
+      );
   }
 }
 

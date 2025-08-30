@@ -27,10 +27,11 @@ backend/bootstrap/cache/*.php
 backend/_ide_helper.php
 backend/_ide_helper_models.php
 backend/.phpstorm.meta.php
+
 # Non ignorare la cartella demo (contenente JSON che vogliamo nel repo)
 !backend/storage/app/
 !backend/storage/app/demo/
-
+!backend/storage/app/demo/**
 
 # === Frontend (Angular) ===
 cockpit/node_modules/

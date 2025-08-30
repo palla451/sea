@@ -42,7 +42,7 @@
   .col-right {
     flex: 1; // Modificato per usare lo spazio rimanente
     min-width: 0; // Cruciale per permettere il ridimensionamento
-    gap: 12px;
+    //gap: 12px;
 
     > div {
       flex: 1;

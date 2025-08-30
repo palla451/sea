@@ -5,26 +5,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9d59db68-8dc3-492b-9e3d-c3bb45fd1592" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/47d40c77-8222-445a-8f2b-ee3ed422f070.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/47d40c77-8222-445a-8f2b-ee3ed422f070/storage_v2/_src_/database/laravel.uWob_Q.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/47d40c77-8222-445a-8f2b-ee3ed422f070/storage_v2/_src_/database/laravel.uWob_Q/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/47d40c77-8222-445a-8f2b-ee3ed422f070/storage_v2/_src_/database/laravel.uWob_Q/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/47d40c77-8222-445a-8f2b-ee3ed422f070/storage_v2/_src_/database/laravel.uWob_Q/schema/public.abK9xQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitingore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitingore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile.backend" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile.backend" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.github/workflows/issues.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.github/workflows/pull-requests.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.github/workflows/tests.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.github/workflows/update-changelog.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/database/seeders/IncidentSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/database/seeders/IncidentSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/app/Http/Controllers/ConfigurationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app/Http/Controllers/ConfigurationController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/api.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/storage/app/demo/asset.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/storage/app/demo/function.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/storage/app/demo/incident.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/storage/app/demo/incident1.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/entrypoint.sh" beforeDir="false" afterPath="$PROJECT_DIR$/entrypoint.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/storage/app/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/storage/app/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/azure-pipelines-1.yml" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/azure-pipelines-1.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/proxy.conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/proxy.conf.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/src/_fonts.scss" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/src/_fonts.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/src/app/app.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/src/app/app.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/src/app/auth/auth-config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/src/app/auth/auth-config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/src/app/auth/auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/src/app/auth/auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/src/app/core/components/header/header.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/src/app/core/components/header/header.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/src/app/core/components/incident-manage-button/incident-manage-button.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/src/app/core/components/incident-manage-button/incident-manage-button.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/src/app/core/services/incident-management-modal.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/src/app/core/services/incident-management-modal.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/src/app/core/state/effects.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/src/app/core/state/effects.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/src/app/features/dashboard/components/dashboard-components/vessel-performance/vessel-performance.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/src/app/features/dashboard/components/dashboard-components/vessel-performance/vessel-performance.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/src/app/features/dashboard/dashboard-page/dashboard-page.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/src/app/features/dashboard/dashboard-page/dashboard-page.component.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/src/environments/environment.prod.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/src/environments/environment.prod.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cockpit/cockpit/src/environments/environment.ts" beforeDir="false" afterPath="$PROJECT_DIR$/cockpit/cockpit/src/environments/environment.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +38,7 @@
     <execution />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/cockpit" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -170,7 +172,7 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "ToolWindow.Database Changes.ShowToolbar": "false",
-    "git-widget-placeholder": "win__develop",
+    "git-widget-placeholder": "new__win__develop",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/DApote Giovanni/Documents/seafuture/original",
     "node.js.detected.package.eslint": "true",
@@ -178,6 +180,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.editor.selected.configurable": "editor.preferences.fonts.default",
     "ts.external.directory.path": "C:\\Program Files\\JetBrains\\PhpStorm 2025.1.4.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
@@ -188,6 +191,13 @@
     ]
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\DApote Giovanni\Documents\seafuture\original" />
+      <recent name="C:\Users\DApote Giovanni\Documents\seafuture\original\backend\storage\app\demo\attack_one" />
+      <recent name="C:\Users\DApote Giovanni\Documents\seafuture\original\backend\storage\app\demo\start" />
+    </key>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -206,7 +216,12 @@
       <workItem from="1754058450326" duration="4137000" />
       <workItem from="1754295209251" duration="40304000" />
       <workItem from="1754634038605" duration="1196000" />
-      <workItem from="1754635269958" duration="17257000" />
+      <workItem from="1754635269958" duration="20087000" />
+      <workItem from="1754667214347" duration="347000" />
+      <workItem from="1756134341830" duration="4178000" />
+      <workItem from="1756196032718" duration="16946000" />
+      <workItem from="1756298870127" duration="10453000" />
+      <workItem from="1756364910237" duration="28723000" />
     </task>
     <servers />
   </component>
@@ -218,8 +233,31 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/cockpit/src/app/app.component.ts</url>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/cockpit/src/app/core/components/header/header.component.ts</url>
+          <line>92</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/backend/app/Http/Controllers/ConfigurationController.php</url>
+          <line>114</line>
+          <properties>
+            <option name="className" value="\App\Http\Controllers\ConfigurationController" />
+            <option name="methodName" value="functionAssetRemediationAttackOne" />
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php-line-method">
+          <url>file://$PROJECT_DIR$/backend/app/Http/Controllers/ConfigurationController.php</url>
+          <line>129</line>
+          <properties>
+            <option name="className" value="\App\Http\Controllers\ConfigurationController" />
+            <option name="methodName" value="restoreOperatingPercentage" />
+          </properties>
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

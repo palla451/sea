@@ -3,7 +3,7 @@ import Keycloak from "keycloak-js";
 import { DecodedToken } from "./models/auth.model";
 
 const keycloak = new Keycloak({
-  url: "https://iam.ship.dev.fde.local",
+  url: "http://localhost:8080",
   realm: "fde",
   clientId: "mcsp-cockpit-oidc",
 });

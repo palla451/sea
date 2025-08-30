@@ -90,13 +90,13 @@ export class HeaderComponent implements OnInit {
       label: "navbar.remediation",
       routerLink: "/remediations",
     },
-    { key: "incidents", label: "navbar.incidents", routerLink: "/incidents" },
-    { key: "history", label: "navbar.history", routerLink: "/history" },
-    {
-      key: "administration",
-      label: "navbar.administration",
-      routerLink: "/administration",
-    },
+    { key: "incidents", label: "navbar.incidents", routerLink: "/incidents" }
+//    { key: "history", label: "navbar.history", routerLink: "/history" },
+//    {
+//      key: "administration",
+//      label: "navbar.administration",
+//      routerLink: "/administration",
+//    },  234  python3 __main__.py -vip 10.192.3.16 -vp 30506 -vm 123456789 -r 0.5 -d 1 -lat 44.356812 -lon 8.948946
   ];
 
   languageOptions = [

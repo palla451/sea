@@ -10,11 +10,21 @@ Route::get('test',function (){
 });
 
 
+Route::get('attack_one',[ConfigurationController::class,'attack_one']);
+
+
 
 Route::get('reset',[ConfigurationController::class,'reset']);
 
 
+Route::prefix('risk')->group(function () {
+    Route::get('restoreOperatingPercentage', [ConfigurationController::class, 'restoreOperatingPercentage']);
+});
+
+
 Route::prefix('case')->group(function () {
+    Route::get('functionAsset', [ConfigurationController::class,'functionAssetRemediationAttackOne']);
+
     Route::prefix('incident')->group(function () {
         Route::get('',[ConfigurationController::class,'all']);
         Route::get('{incidentId}',[ConfigurationController::class,'single_incident']);

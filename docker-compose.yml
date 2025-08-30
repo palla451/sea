@@ -48,14 +48,61 @@ services:
       dockerfile: Dockerfile
     container_name: cockpit-frontend
     ports:
-      - "4200:80"   # se vuoi accedere da http://localhost:4200
+      - "5500:80"
     networks:
       - internal-net
     depends_on:
       - backend
 
+  # --- Keycloak SOLO in rete interna (nessuna porta esposta) ---
+  keycloak-db:
+    image: postgres:16
+    container_name: keycloak-db
+    restart: always
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    volumes:
+      - keycloak_pgdata:/var/lib/postgresql/data
+    networks:
+      - internal-net
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    depends_on:
+      - keycloak-db
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_DB: postgres
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak
+      KC_PROXY: edge
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
+    command:
+      - start
+      - --http-enabled=true
+      - --hostname-strict=false
+      - --import-realm
+    volumes:
+      - ./realm-fde.json:/opt/keycloak/data/import/realm-fde.json:ro
+    ports:
+      - "8080:8080"
+    networks:
+      - internal-net
+    healthcheck:
+      test: [ "CMD", "curl", "-fsS", "http://localhost:8080/health/ready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+
 volumes:
   pgdata:
+  keycloak_pgdata:
 
 networks:
   internal-net:

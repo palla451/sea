@@ -9,6 +9,7 @@ import { LoaderComponent } from "./core/components/loader/loader.component";
 import { SpinnerService } from "./core/services/spinner.service";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { PollingService } from "./core/services/polling.service";
+import { environment } from "../environments/environment";
 
 @Component({
   selector: "app-root",
