@@ -1,0 +1,28 @@
+{
+    "assets" :  [
+        {
+            "id": 936,
+            "pieceMark": "FDE/KN-gwh7j-mkj44",
+            "type": "PLC",
+            "systemInfo": "AC800M PM866",
+            "deck": 7,
+            "mvz": 5,
+            "frame": 195,
+            "position": "CL",
+            "room": "WTD EMERGENCY STATION",
+            "status": "Compromised",
+            "name": "AUT. SYSTEM - PLC - PLC2R011",
+            "functions": [
+                {
+                    "id": 336,
+                    "name": "Monitoring FDE",
+                    "operatingPercentage": 0
+                }
+            ],
+            "creationDate": "2025-07-11T08:54:08.652+00:00",
+            "updateDate": "2025-08-25T09:48:33.409+00:00"
+        }
+    ]
+}
+
+

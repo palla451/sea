@@ -1,0 +1,19 @@
+{
+    "asset": [
+        {
+            "pieceMark": "MCSP/AG-ls01",
+            "functions": [
+                {
+                    "id": 39,
+                    "name": "Monitoring MCSP",
+                    "operatingPercentage": 50,
+                    "parent": {
+                        "id": 37,
+                        "name": "MCSP Supervision",
+                        "operatingPercentage": 50
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "functions": [
+        {
+            "function": "Monitoring MCSP",
+            "asset": {
+                "pieceMark": "MCSP/AG-ls01",
+                "description": "NAV-BRIDGE-PC01"
+            },
+            "id": 270851,
+            "percentage": 0,
+            "creationDate": "2025-08-29T15:03:45.743+00:00"
+        }
+    ]
+}
